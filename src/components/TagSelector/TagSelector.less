@@ -1,0 +1,175 @@
+@import "../../less/variables.less";
+
+.tag-selector {
+    position : relative;
+    display  : block;
+    width    : 100%;
+    color    : #000;
+    min-width: 200px;
+    font-size: small;
+    
+    .tags {
+        margin-bottom: 4px; 
+    }
+
+    input {
+        padding-right: 24px;
+    }
+
+    .tag {
+        margin       : 1px 6px 1px 0px;
+        padding      : 3px 26px 3px 6px;
+        background   : #DC9;
+        box-shadow   : 0 0 1px 0 rgba(0, 0, 0, 0.5) inset;
+        border-radius: 3px;
+        color        : #520;
+        text-shadow  : 0 1px 1px rgba(255, 255, 255, 0.3);
+        display      : inline-block;
+        position     : relative;
+        font-weight  : 500;
+        line-height  : 1.2;
+        font-size    : 12px;
+        cursor       : default;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+
+        .tag-remove {
+            position   : absolute;
+            top        : 4px;
+            right      : 5px;
+            color      : rgba(0, 0, 0, 0.4);
+            text-shadow: none;
+            opacity    : 0.6;
+        }
+
+        &:hover {
+            background-color: darken(#DC9, 5%);
+            .tag-remove {
+                opacity: 0.5;
+
+                &:hover {
+                    opacity: 1;
+                    color: #900;
+                }
+            }
+        }
+
+        &.custom {
+            @c: mix(@color-bg-selection, #FFF, 40%);
+            background   : @c;
+            color: darken(@color-bg-selection, 20%);
+            &:hover {
+                background-color: darken(@c, 5%);
+            }
+        }
+    }
+
+    .menu {
+        padding   : 4px;
+        top       : 100%;
+        width     : 100%;
+        text-align: left;
+        max-height: 50vh;
+        overflow  : auto;
+        z-index   : 10000000000;
+    }
+
+    .menu-item {
+        padding    : 5px 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: default;
+
+        small {
+            line-height: 1.4;
+            font-weight: 400;
+        }
+
+        .code {
+            width: 110px;
+            display: inline-block;
+            text-align: right;
+            padding-right: 1ex;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            float: left;
+            margin: 1px 0 -1px;
+        }
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        &.selected {
+            color: @color-fg-selection;
+            background: @color-bg-selection;
+            text-shadow: 0 0 1px contrast(@color-fg-selection);
+
+            small {
+                color: fade(@color-fg-selection, 60%);
+                text-shadow: none;
+            }
+
+            .tag.custom {
+                box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        &.custom {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 3px 10px;
+
+            + .menu-item {
+                position  : relative;
+                overflow  : visible;
+                margin-top: 9px;
+            
+
+                &:before {
+                    content   : "";
+                    display   : block;
+                    height    : 1px;
+                    background: #CCC;
+                    position  : absolute;
+                    top       : -5px;
+                    left      : 0;
+                    right     : 0;
+                }
+            }
+
+            .tag {
+                margin       : 0 1px;
+                padding      : 3px 6px;
+                line-height: 1;
+            }
+        }
+    }
+
+    &.open {
+
+        outline: none;
+        
+        .input {
+            // border-radius: 5px 5px 0 0;
+            // box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.3);
+            // border-color: #666;
+        }
+        .menu {
+            // display: block;
+            // border-color: #666;
+            // border-top: 0px none;
+            // box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    .fa.fa-caret-down {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        pointer-events: none;
+    }
+}

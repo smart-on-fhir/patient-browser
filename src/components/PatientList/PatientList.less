@@ -1,0 +1,121 @@
+@import "../../less/variables.less";
+
+.patient-search-results {
+    display       : flex;
+    flex-grow     : 1;
+    flex-direction: column;
+    background    : #FFF;
+    overflow      : auto;
+
+    .male {
+        color: #369;
+    }
+
+    .female {
+        color: #936;
+    }
+
+    .patient {
+        position       : relative;
+        padding        : 1ex;
+        cursor         : pointer;
+        flex-flow      : 0;
+        flex-shrink    : 0;
+        align-items    : center;
+        display        : flex;
+        transition     : background 0.1s;
+        color          : @color-fg-body;
+        text-decoration: none;
+        box-shadow     : 0 1px 0 rgba(255, 255, 255, 0.85) inset,
+                         0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+        
+        &:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .patient-select-zone {
+            display: inline-block;
+            vertical-align: middle;
+            height: 54px;
+            line-height: 54px;
+            width: 30px;
+            border-radius: 3px;
+            text-align: center;
+            color: @color-bg-selection;
+
+            &:hover {
+                background: fade(@color-bg-selection, 10%);
+            }
+        }
+
+        .fa-angle-right {
+            opacity  : 0.5;
+            font-size: 20px;
+            display  : flex;
+            flex-basis: 1em;
+        }
+
+        .patient-image-wrap {
+            height: 54px;
+            width : 54px;
+            margin: 0 1ex;
+        }
+
+        .patient-info {
+            flex-grow: 1;
+
+            > b {
+                font-size: 16px;
+                line-height: 1;
+                display: block;
+                margin-bottom: 2px;
+            }
+
+            small {
+                opacity: 0.7;
+                display: block;
+            }
+
+            footer {
+                opacity: 0.7;
+                display: flex;
+                flex-direction: row;
+                margin-top: 5px;
+
+                > span {
+                    display   : flex;
+                    flex-basis: 14em;
+                    flex-grow: 1;
+
+                    + span {
+                        margin-left: 2em;
+                    }
+                }
+            }
+        }
+
+        &.selected {
+            background: @color-bg-selection;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset,
+                    0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+            text-shadow: 0 0 1px #000;
+
+            &, * {
+                color: @color-fg-selection;
+            }            
+
+            .patient-image-wrap {
+                box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3),
+                            0 0 0 0.5px rgba(255, 255, 255, 0.5) inset;
+            }
+
+            .patient-select-zone:hover {
+                background: rgba(255, 255, 255, 0.07)
+            }
+
+            &:hover {
+                background: darken(@color-bg-selection, 3%);
+            }
+        }
+    }
+}

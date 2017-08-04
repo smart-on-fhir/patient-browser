@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>SMART Patient Browser Examples</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="shortcut icon" href="../img/icon.png" type="image/png?_=f8574ece297c673ce634" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Select Patient</h4>
+                    </div>
+                    <div class="modal-body">
+                        <iframe style="width: 100%; height: 600px; border: 1px solid #666; display: block;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <br/>
+            <div class="form-group">
+                <label>
+                    With popup window
+                    <small class="text-danger">
+                        <i class="fa fa-exclamation-circle"></i> Your browser might block it!
+                    </small>
+                </label>
+                <div class="input-group example-1">
+                    <input type="text" class="form-control" readonly />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary">Select patients</button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group example-2">
+                <label>With layer popup (bootstrap modal with iframe)</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" readonly />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary">Select patients</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+            function selectPatients(selection) {
+                return new Promise(function(resolve, reject) {
+                    let origin = "http://localhost:9001";
+                    let query  = selection ? "/#/?_selection=" + encodeURIComponent(selection) : ""
+                    let height = 600;
+                    let width  = 800;
+                    let popup  = window.open(origin + query, "picker", [
+                        "height=" + height,
+                        "width=" + width,
+                        "menubar=0",
+                        "resizable=1",
+                        "status=0",
+                        "top=" + + (screen.height - height) / 2,
+                        "left=" + (screen.width - width) / 2
+                    ].join(","));
+
+                    $(window).on("message.picker", function(e) {
+                        if (e.originalEvent.origin === origin && (
+                            e.originalEvent.data.type == "result" ||
+                            e.originalEvent.data.type == "close")) {
+                            $(window).off("message.picker");
+                            popup.close();
+                            resolve(e.originalEvent.data.data);
+                        }
+                    })
+                })
+            }
+
+            function selectPatientsModal(selection) {
+                return new Promise(function(resolve, reject) {
+                    let origin = "http://localhost:9001";
+                    let query  = selection ? "/#/?_selection=" + encodeURIComponent(selection) : ""
+                    let modal = $(".modal")
+                    let frame = modal.find("iframe")
+                    
+                    modal.one('hidden.bs.modal', function (e) {
+                        frame.prop("src", "about:blank");
+                    });
+
+                    modal.one('shown.bs.modal', function (e) {
+                        frame.prop("src", origin + query)
+                    });
+
+                    // frame.prop("src", origin + query)
+                    modal.modal()
+
+                    $(window).on("message.picker", function(e) {
+                        if (e.originalEvent.origin === origin && (
+                            e.originalEvent.data.type == "result" ||
+                            e.originalEvent.data.type == "close")) {
+                            $(window).off("message.picker");
+                            frame.prop("src", "about:blank")
+                            modal.modal("hide");
+                            resolve(e.originalEvent.data.data);
+                        }
+                    })
+                })
+            }
+
+            jQuery(function($) {
+                $(".example-1").on("click", function() {
+                    let selection = $("input", this).val();
+                    selectPatients(selection).then(sel => {
+                        if (sel || sel === "") { // ignore cancel and close cases
+                            $("input", this).val(sel)
+                        }
+                    })
+                })
+
+                
+                $(".example-2").click(function() {
+                    let selection = $("input", this).val();
+                    selectPatientsModal(selection).then(sel => {
+                        if (sel || sel === "") { // ignore cancel and close cases
+                            $("input", this).val(sel)
+                        }
+                    })
+                })
+
+                
+            })
+
+        </script>
+    </body>
+</html>

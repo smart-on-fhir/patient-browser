@@ -1,0 +1,190 @@
+import React                from "react"
+import { connect }          from "react-redux"
+import { showSelectedOnly } from "../../redux/settings"
+import { setParam, fetch }  from "../../redux/query"
+import { setAll }           from "../../redux/selection"
+import "./DialogFooter.less"
+
+const IS_POPUP  = window.opener && window.name;
+const IS_FRAME  = parent !== self;
+
+class SelectionUI extends React.Component {
+
+    static propTypes = {
+        settings        : React.PropTypes.object.isRequired,
+        selection       : React.PropTypes.object.isRequired,
+        onToggleSelectionVisibility: React.PropTypes.func.isRequired,
+        onResetSelection: React.PropTypes.func.isRequired,
+        canShowSelected : React.PropTypes.bool
+    };
+
+    render() {
+        let len = Object.keys(this.props.selection).filter(key => !!this.props.selection[key]).length;
+        let viewClass = ["btn"];
+        let resetClass = ["btn"];
+
+        if (len === 0) {
+            viewClass.push("disabled");
+            resetClass.push("disabled");
+        }
+
+        if (this.props.settings.renderSelectedOnly) {
+            viewClass.push("active");
+        }
+
+        const hasSelection = this.props.canShowSelected && len > 0
+        return (
+            <label disabled={ len === 0 }>
+                <span>
+                    { `${len} patient${len === 1 ? "" : "s"} selected${hasSelection ? ':' : ''}` }
+                </span>
+                { hasSelection ? (
+                    <div className="btn-group">
+                        <div className={ viewClass.join(" ") } onClick={
+                            () => {
+                                this.props.onToggleSelectionVisibility(
+                                    !this.props.settings.renderSelectedOnly
+                                );
+                            }
+                        }>View Selected</div>
+                        <div className={ resetClass.join(" ") } onClick={
+                            () => { this.props.onResetSelection(); }
+                        }>Clear Selected</div>
+                    </div>
+                ) : null }
+            </label>
+        );
+    }
+}
+
+export class DialogFooter extends React.Component
+{
+    static propTypes = {
+        selection       : React.PropTypes.object.isRequired,
+        settings        : React.PropTypes.object.isRequired,
+        showSelectedOnly: React.PropTypes.func.isRequired,
+        resetSelection  : React.PropTypes.func.isRequired,
+        setParam        : React.PropTypes.func.isRequired,
+        fetch           : React.PropTypes.func.isRequired,
+        canShowSelected : React.PropTypes.bool
+    };
+
+    /**
+     * Generates and returns the object that will be sent back to the client
+     * when the OK button is clicked
+     */
+    export() {
+        // debugger;
+        const selection = this.props.selection;
+
+        switch (this.props.settings.outputMode) {
+
+        case "id-array": // array of patient IDs
+            return Object.keys(selection).filter(k => !!selection[k]);
+
+        case "transactions": // array of JSON transactions objects for each patient
+            return Object.keys(selection).filter(k => !!selection[k]).map(
+                k => this.createPatientTransaction(selection[k])
+            );
+
+        case "patients": // array of patient JSON objects
+            return Object.keys(selection).filter(k => !!selection[k]).map(
+                k => selection[k]
+            );
+
+        case "id-list": // comma-separated list of patient IDs (default)
+            return Object.keys(selection).filter(k => !!selection[k]).join(",")
+        }
+    }
+
+    createPatientTransaction() {
+        throw new Error("No implemented");
+    }
+
+    showSelectedOnly(bOn) {
+        if (bOn) {
+            const selection = this.props.selection;
+            this.props.setParam({
+                name : "_id",
+                value: Object.keys(selection).filter(k => !!selection[k]).join(",")
+            })
+        }
+        else {
+            this.props.setParam({
+                name : "_id",
+                value: undefined
+            })
+        }
+        this.props.showSelectedOnly(bOn)
+    }
+
+    renderDialogButtons() {
+        if (!IS_POPUP && !IS_FRAME) {
+            return null
+        }
+
+        const OWNER = window.opener || window.parent
+
+        return (
+            <div className="col-xs-6 text-right">
+                <button className="btn btn-default" onClick={ () => {
+                    OWNER.postMessage({ type: "close" }, "*")
+                }}>
+                    Cancel
+                </button>
+                <button className="btn btn-primary" onClick={ () => {
+                    OWNER.postMessage(
+                        {
+                            type: "result",
+                            data: this.export()
+                        },
+                        "*"
+                    );
+                }}>
+                    OK
+                </button>
+            </div>
+        );
+    }
+
+    render() {
+        let selection = this.props.selection;
+        selection = Object.keys(selection).filter(k => !!selection[k])
+        return (
+            <div className="row dialog-buttons">
+                <div className="col-xs-6 text-left">
+                    <SelectionUI
+                        selection={ this.props.selection }
+                        settings={ this.props.settings }
+                        onToggleSelectionVisibility={ this.showSelectedOnly.bind(this) }
+                        onResetSelection={ this.props.resetSelection }
+                        canShowSelected={ this.props.canShowSelected }
+                    />
+                </div>
+                { this.renderDialogButtons() }
+            </div>
+        )
+    }
+}
+
+export default connect(
+    state => ({
+        selection: state.selection,
+        settings : state.settings,
+        query    : state.query
+    }),
+    dispatch => ({
+        showSelectedOnly: bValue => {
+            dispatch(showSelectedOnly(bValue))
+            dispatch(fetch())
+        },
+        resetSelection  : () => {
+            dispatch(setAll({}))
+            dispatch(showSelectedOnly(false))
+            dispatch(setParam({ name: "_id", value: undefined }))
+            dispatch(fetch())
+        },
+        setParam: (name, value) => dispatch(setParam(name, value)),
+        fetch: () => dispatch(fetch())
+    })
+)(DialogFooter)

@@ -1,0 +1,124 @@
+@import "../../less/variables";
+
+.age-widget-wrap {
+    display       : flex;
+    flex-direction: row;
+    flex-wrap     : nowrap;
+    white-space   : nowrap;
+    padding       : 0;
+    position      : relative;
+    font-size     : 12px;
+
+    > * {
+        display    : flex;
+        flex-grow  : 1;
+        flex-shrink: 1;
+        margin     : 0;
+        height     : 100%;
+        font-size  : 13px;
+    }
+
+    select {
+        border       : 1px solid transparent;
+        border-radius: 4px;
+        height       : 100%;
+        background   : transparent;
+    }
+
+    &.custom > select {
+        flex-grow : 0;
+        min-width : 0;
+        flex-basis: 180px;
+    }
+
+    input {
+        height: 100%;
+        border: 1px solid transparent;
+    }
+
+    // &.custom {
+    //     padding-right: 13px * 5 - 1;
+    // }
+
+    // button {
+    //     position     : absolute;
+    //     z-index      : 2;
+    //     top          : -1px;
+    //     right        : -1px;
+    //     bottom       : -1px;
+    //     height       : auto;
+    //     line-height  : 1;
+    //     border-radius: 0 4px 4px 0;
+    //     width        : 5em;
+    //     min-width    : 5em;
+    //     text-align   : center;
+    //     display      : block;
+    // }
+}
+
+.age-widget {
+    display    : flex;
+    flex-basis : 30%;
+    min-width  : 0;
+    overflow   : hidden;
+    align-items: center;;
+    box-shadow : 2px 1px 2px -2px #BBB inset;
+
+    &:last-of-type {
+        border-radius: 0 3px 3px 0;
+    }
+
+    span {
+        display       : flex;
+        white-space   : nowrap;
+        flex-basis    : 7ex;
+        flex-shrink   : 0;
+        flex-grow     : 0;
+        margin        : 0 1ex 0 0;
+        flex-direction: column;
+        align-content : flex-end;
+        background    : rgba(0, 0, 0, 0.06);
+        box-shadow    : 1px 0 0 0 rgba(0, 0, 0, 0.1), 1px 0 2px 0px rgba(0, 0, 0, 0.1);
+        line-height   : 2.1em;
+        padding       : 0 1ex;
+        text-align    : right;
+        height        : 100%;
+        font-weight   : 500;
+    }
+
+    input {
+        flex-shrink : 1;
+        flex-grow   : 2;
+        flex-basis  : 30px;
+        display     : flex;
+        margin      : 0;
+        background  : transparent;
+        min-width   : 32px;
+        border-right: 1px dotted rgba(0, 0, 0, 0.2);
+    }
+
+    select {
+        display    : flex;
+        flex-shrink: 1;
+        flex-grow  : 1;
+        flex-basis : 6em;
+        min-width  : 6em;
+    }
+
+    &:hover {
+        box-shadow: 0 0 0 1px @color-bg-selection;
+        background: mix(@color-bg-selection, #FFF, 10%);
+    }
+
+    &.invalid {
+        background: rgba(255, 0, 0, 0.1);
+        background: rgba(255, 0, 0, 0.03) repeating-linear-gradient(
+            -45deg,
+            rgba(255, 50, 0, 0),
+            rgba(255, 50, 0, 0) 2.5px,
+            rgba(255, 0, 0, 0.2) 3px,
+            rgba(255, 50, 0, 0) 3.5px
+        );
+        background-size: 40px 40px;
+    }
+}

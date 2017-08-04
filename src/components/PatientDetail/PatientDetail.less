@@ -1,0 +1,117 @@
+.patient-detail-page {
+    overflow  : auto;
+    padding   : 65px 0 50px;
+    background: linear-gradient(#FFF 60%, #EEE) scroll;
+
+    > .container {
+        width: 100%;
+    }
+
+    .navigator {
+        color: #FFF;
+
+        a {
+            white-space: nowrap;
+            padding    : 8px 15px;
+            margin     : 5px 0;
+            color      : #FFF;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.05);
+            }
+        }
+        .fa {
+            margin: 0 5px;
+        }
+        
+    }
+
+    .embed-responsive {
+        padding-bottom: 100%;
+    }
+
+    .page-header {
+        margin-bottom : 0;
+        padding-bottom: 1.5ex;
+        border-bottom : 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .patient {
+        background: transparent;
+        padding   : 0;
+        border    : 0;
+        box-shadow: none;
+        position  : relative;
+
+        .text-left {
+            text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    .patient-row {
+        background   : rgba(0, 0, 0, 0.05);
+        border-radius: 3px;
+        margin-bottom: 5px;
+        padding      : 5px;
+
+        &:after {
+            content: "";
+            display: table;
+            clear  : both;
+        }
+
+        ~ .row > div {
+            padding: 5px;
+        }
+
+        h3 {
+            margin     : 0;
+            line-height: 1.45em;
+        }
+
+        .label {
+            margin   : 8px 0 0 12px;
+            font-size: 13px;
+        }
+
+        .btn {
+            margin-right: -15px;
+        }
+    }
+
+    .patient-image-wrap {
+        margin-right: 1ex;
+    }
+
+    .patient-name {
+        font-size: 24px;
+    }
+
+    td, th {
+        > span, > small {
+            white-space: nowrap;
+        }
+    }
+
+    .patient-details {
+        white-space: normal;
+        word-wrap  : break-word;
+
+        .badge {
+            opacity: 0.75;
+            margin : 0 0 0 2px;
+        }
+        table {
+            a {
+                white-space: normal;
+                word-break : break-all;
+                word-wrap  : break-word;
+            }
+        }
+    }
+
+    .list-group-item {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+}

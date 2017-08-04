@@ -1,0 +1,79 @@
+@import "../../less/variables";
+
+.app-header {
+    color          : mix(@color-bg-selection, #000, 60%);
+    padding        : 5px 0 0;
+    background     : linear-gradient(#DFDFDF, #EEE 5px, #e2e2e2);
+    position       : relative;
+    z-index        : 3;
+    box-shadow     : 0 0.5px 0 rgba(0, 0, 0, 0.3), 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    text-shadow    : 0 1px 0 #FFF;
+    display        : flex;
+    flex-shrink    : 0;
+    flex-direction : column;
+
+    .nav.nav-tabs {
+        padding-left: 5px;
+
+        a {
+            padding: 5px 15px;
+        }
+    }
+
+    .tab-content {
+        background   : linear-gradient(#FFF, #F6F6F6);
+        border       : 0;
+        border-bottom: 1px solid #BBB;
+        padding      : 5px 5px 0;
+        border-radius: 0;
+        font-size    : small;
+        box-shadow   : 0 2px 1px -1px rgba(0, 0, 0, 0.1)
+    }
+
+    .badge {
+        text-shadow: 0 0 1px #FFF;
+        background: rgba(0, 0, 0, 0.08);
+        color: #444;
+        font-weight: 400;
+        box-shadow: 0 0 0.5px 0 rgba(0, 0, 0, 0.2) inset;
+    }
+
+    .advanced-label {
+        margin: 5px 10px;
+
+        input[type="checkbox"] {
+            margin: 0;
+            vertical-align: middle;
+        }
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    label, .alert {
+        margin-bottom: 3px;
+    }
+
+    .alert {
+        padding: 5px 10px;
+    }
+
+    .btn-submit {
+        margin: 4px 5px 0 auto;
+        padding: 3px 24px;
+        box-shadow: -20px 2.5px 0px -6px #e3e3e3,
+                     20px 2.5px 0px -6px #e3e3e3,
+                      0px 1px 0px 2px #e3e3e3,
+                      0 1.5px 0 2px rgba(0, 0, 0, 0.4),
+                      0 4px 5px 0 rgba(0, 0, 0, 0.4),
+                      0px 1px 1px -1px #FFF inset,
+                      0px -17px 0px -5px rgba(0, 0, 0, 0.05) inset;
+        border-radius: 30px;
+        text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.5);
+        border-color: rgba(0, 0, 0, 0.5);
+        position     : relative;
+        z-index      : 100000000;
+    }
+}
+

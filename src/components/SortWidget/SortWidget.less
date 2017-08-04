@@ -1,0 +1,30 @@
+.sort-widget {
+    padding      : 3px 15px;
+    float        : left;
+    width        : 100%;
+
+    > span {
+        padding    : 3px 1em 0 0;
+        font-weight: bold;
+    }
+
+    .nav.nav-pills li {
+        margin-right: 1em;
+        
+        a {
+            padding: 4px 8px;
+
+            span {
+                opacity: 0.6;
+            }
+        }
+
+        &.active a, &:hover a, &:active a, a:focus {
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2) inset;
+        }
+
+        &.active a {
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+        }
+    }
+}

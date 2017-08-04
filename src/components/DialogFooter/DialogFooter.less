@@ -1,0 +1,71 @@
+.dialog-buttons {
+
+    button {
+        min-width: 10em;
+        margin: 0 0 0 1em
+    }
+
+    label {
+        margin: 2px 0;
+        display: flex;
+        align-items: center;
+        min-height: 30px;
+    }
+
+    .btn-group {
+        display: inline-flex;
+        flex: 0 1 18em;
+        line-height: 1;
+        flex-direction: row;
+        box-shadow: 0 1px 1px #FFF;
+        margin: 0 6px;
+        // overflow: hidden;
+
+        > .btn {
+            display: flex;
+            flex: 1 1 120px;
+            align-items: center;
+            align-content: center;
+            align-self: center;
+            flex-direction: column;
+            min-width: 4em;
+            margin: 0;
+            border: 1px solid #BBB;
+            padding: 4px 2ex;
+            background: linear-gradient(#F9F9F9, #E9E9E9);
+            font-weight: normal;
+            color: #666;
+            text-shadow: 0 1px 0 #FFF;
+            box-shadow: 0 1px 1px #FFF inset;
+            overflow: hidden;
+
+            &:hover {
+                background: linear-gradient(#FFF, #EEE);
+            }
+
+            &:active, &.active {
+                background: linear-gradient(#CCC, #DDD);
+                box-shadow: 0 1px 1px #BBB inset;
+                border-color: #999 #AAA #BBB;
+            }
+
+            + .btn {
+                margin-left: -1px;
+            }
+
+            &:first-child {
+                border-radius: 4px 0 0 4px;
+            }
+            &:last-child {
+                border-radius: 0 4px 4px 0;
+            }
+        }
+    }
+
+    :disabled, [disabled], .disabled {
+        .btn-group {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    }
+}
