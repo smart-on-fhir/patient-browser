@@ -11,7 +11,7 @@ const SINGLE = boolVal(PARAMS["single-selection"])
  * contain actual patient objects instead of true!
  */
 let initialSelection = {};
-(PARAMS._selection || "").split(",").forEach(k => {
+(PARAMS._selection || "").split(/\s*,\s*/).forEach(k => {
     if (k) {
 
         k = k.toLowerCase();
