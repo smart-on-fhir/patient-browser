@@ -50,11 +50,9 @@ export default class Header extends React.Component
         return (
             <div className="form-group">
                 <p className="text-warning" style={{ padding: "0 5px 5px", margin: 0 }}>
-                    <i className="fa fa-info-circle" /> In advanced mode
-                    you provide a query string that is supposed to return
-                    a list of patients. Enter that query below and we will
-                    provide you with an UI to browse those patients and
-                    select some of them.
+                    <i className="fa fa-info-circle" /> In advanced mode, provide a
+                    query string to browse and select from a list of matching
+                    patients. <a target="_blank" href="http://hl7.org/fhir/patient.html#search">More Info...</a>
                 </p>
                 <form onSubmit={ e => {
                     e.preventDefault()
