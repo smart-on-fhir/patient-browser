@@ -141,7 +141,7 @@ export class PatientDetail extends React.Component
 
             state.patient = getPath(state, `bundle.entry.${index}.resource`);
             state.nextURL = getBundleURL(state.bundle, "next");
-            state.hasNext = state.patient ? index < state.bundle.entry.length - 1 : false;
+            state.hasNext = !!state.nextURL || (state.patient ? index < state.bundle.entry.length - 1 : false);
             return state;
         })
 
