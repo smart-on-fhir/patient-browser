@@ -435,7 +435,7 @@
     },
 
     // Records per page
-    patientsPerPage: 10,
+    patientsPerPage: 25,
 
     // AJAX requests timeout (ms)
     timeout: 20000,

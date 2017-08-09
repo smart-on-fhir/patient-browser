@@ -25,7 +25,7 @@ export default {
 
     hideTagSelector: false,
 
-    patientsPerPage: 10,
+    patientsPerPage: 25,
 
     // AJAX requests timeout
     timeout: 20000,
