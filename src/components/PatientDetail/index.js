@@ -329,8 +329,8 @@ export class PatientDetail extends React.Component
             return <ImmunizationList resources={items}/>;
         case "Condition":
             return <ConditionList resources={items}/>
-        case "MedicationRequest":
-            return <MedicationRequest resources={items}/>;
+        // case "MedicationRequest":
+        //     return <MedicationRequest resources={items}/>;
         case "Encounter":
             return <Encounter resources={items}/>;
         case "CarePlan":

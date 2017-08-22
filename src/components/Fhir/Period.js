@@ -1,10 +1,9 @@
-import React       from "react"
-import { getPath } from "../../lib"
-import moment      from "moment"
+import React  from "react"
+import moment from "moment"
 
-export default function Period(rec) {
-    let from = getPath(rec, "period.start") || "";
-    let to   = getPath(rec, "period.end"  ) || "";
+export default function Period(period) {
+    let from = period.start || "";
+    let to   = period.end   || "";
 
     if (from && to) {
         from = moment(from);
@@ -12,7 +11,7 @@ export default function Period(rec) {
 
         if (from.isSame(to, "day")) {
             return (
-                <div>
+                <span>
                     {
                         from.format("MM/DD/YYYY")
                     }
@@ -25,17 +24,17 @@ export default function Period(rec) {
                             { to.format("HH:mm") }
                         </span>
                     }
-                </div>
+                </span>
             )
         }
         else {
             return (
-                <div>
+                <span>
                     <small className="text-muted"> from </small>
                     { from.format("MM/DD/YYYY") }
                     <small className="text-muted"> to </small>
                     { to.format("MM/DD/YYYY") }
-                </div>
+                </span>
             )
         }
     }
@@ -43,19 +42,19 @@ export default function Period(rec) {
         if (from) {
             from = moment(from);
             return (
-                <div>
+                <span>
                     <small className="text-muted"> from </small>
                     { from.format("MM/DD/YYYY") }
-                </div>
+                </span>
             )
         }
         else if (to) {
             to = moment(to);
             return (
-                <div>
+                <span>
                     <small className="text-muted"> to </small>
                     { to.format("MM/DD/YYYY") }
-                </div>
+                </span>
             )
         }
     }

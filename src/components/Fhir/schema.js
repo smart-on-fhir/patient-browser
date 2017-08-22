@@ -44,30 +44,33 @@ const DefaultSchema = [
 const Person = [
     {
         label: "Name",
-        render: getPatientName
+        render: getPatientName,
+        defaultValue: "N/A"
     },
     {
         label: "Gender",
-        path: "gender"
+        path: "gender",
+        defaultValue: "N/A"
     },
     {
         label: "Birth Date",
-        path: "birthDate"
+        path: "birthDate",
+        defaultValue: "N/A"
     }
 ];
 
 export default {
     default              : DefaultSchema,
     Practitioner         : Person,
-    Patient              : Person,
-    MedicationDispense   : [
+    Patient              : Person//,
+    // MedicationDispense   : [
 
-    ],
-    AllergyIntolerance   : DefaultSchema,
-    DocumentReference    : DefaultSchema,
-    Organization         : DefaultSchema,
-    Goal                 : DefaultSchema,
-    DiagnosticReport     : DefaultSchema,
-    Questionnaire        : DefaultSchema,
-    QuestionnaireResponse: DefaultSchema
+    // ],
+    // AllergyIntolerance   : DefaultSchema,
+    // DocumentReference    : DefaultSchema,
+    // Organization         : DefaultSchema,
+    // Goal                 : DefaultSchema,
+    // DiagnosticReport     : DefaultSchema,
+    // Questionnaire        : DefaultSchema,
+    // QuestionnaireResponse: DefaultSchema
 };

@@ -70,7 +70,7 @@ export class Grid extends React.Component
                     </div> :
                     null
                 }
-                <table className="table table-condensed table-hover table-striped">
+                <table className="table table-condensed table-hover table-striped table-bordered">
                     <thead>
                         <tr>
                             {

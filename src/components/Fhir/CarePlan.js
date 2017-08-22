@@ -1,5 +1,4 @@
 import React       from "react"
-import moment      from "moment"
 import Grid        from "./Grid"
 import { getPath } from "../../lib"
 import Period      from "./Period"
@@ -42,7 +41,7 @@ export default class CarePlan extends React.Component
                     },
                     {
                         label: "Period",
-                        render: Period
+                        render: o => Period(o.period)
                     },
                     {
                         label: "Status",

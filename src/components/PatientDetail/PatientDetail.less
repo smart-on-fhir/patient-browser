@@ -88,9 +88,59 @@
     }
 
     td, th {
-        > span, > small {
-            white-space: nowrap;
+        font-size: 13px;
+        line-height: 16px;
+
+        .text-muted {
+            font-weight: 400;
         }
+
+        b {
+            font-weight: 500;
+        }
+
+        .pair {
+            display: table;
+            // flex-basis: 20%;
+            // align-items: baseline;
+            // flex-wrap: nowrap;
+            margin-right: 1em;
+
+            // * {
+            //     display: inline-block;
+            //     max-width: 30em;
+            //     white-space: normal;
+            // }
+
+            label {
+                display: table-cell;
+                text-align: right;
+                color: #888;
+                white-space: nowrap;
+                font-weight: 400;
+            }
+
+            > span {
+                display: table-cell;
+                // white-space: nowrap;
+
+                &.ellipsis {
+                    max-width: 16em;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    vertical-align: bottom;
+                }
+            }
+        }
+    }
+
+    td{
+        font-weight: 500;
+    }
+
+    th {
+        font-weight: 700;
     }
 
     .patient-details {

@@ -242,9 +242,13 @@ export function getPatientName(patient) {
         return ""
     }
 
-    let name = (patient.name || [])[0]
+    let name = patient.name;
+    if (!Array.isArray(name)) {
+        name = [name];
+    }
+    name = name[0];
     if (!name) {
-        return ""
+        return "";
     }
 
     let family = Array.isArray(name.family) ? name.family : [ name.family ];
