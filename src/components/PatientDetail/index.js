@@ -12,7 +12,7 @@ import Observations         from "../Fhir/Observation"
 import ImmunizationList     from "../Fhir/ImmunizationList"
 import ConditionList        from "../Fhir/ConditionList"
 import MedicationRequest    from "../Fhir/MedicationRequest"
-// import Encounter            from "../Fhir/Encounter"
+import Encounter            from "../Fhir/Encounter"
 import CarePlan             from "../Fhir/CarePlan"
 import ResourceList         from "../Fhir/ResourceList"
 import {
@@ -320,17 +320,19 @@ export class PatientDetail extends React.Component
             )
         }
 
-        switch (type) {
-        case "Observation":
+        if (type.indexOf("Observation") === 0) {
             return <Observations resources={items}/>;
+        }
+
+        switch (type) {
         case "Immunization":
             return <ImmunizationList resources={items}/>;
         case "Condition":
             return <ConditionList resources={items}/>
         case "MedicationRequest":
             return <MedicationRequest resources={items}/>;
-        // case "Encounter":
-        //     return <Encounter resources={items}/>;
+        case "Encounter":
+            return <Encounter resources={items}/>;
         case "CarePlan":
             return <CarePlan resources={items}/>;
         default:

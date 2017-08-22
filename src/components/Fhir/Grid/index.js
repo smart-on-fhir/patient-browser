@@ -34,7 +34,7 @@ export class Grid extends React.Component
             >
                 {
                     this.props.cols.map((col, i) => {
-                        let { render, path, cellProps } = col
+                        let { render, path, cellProps, defaultValue } = col
                         cellProps = { ...cellProps, key: i }
                         if (typeof render == "function") {
                             return (
@@ -45,7 +45,10 @@ export class Grid extends React.Component
                         }
                         return (
                             <td {...cellProps}>
-                                { getPath(res, path) || "-" }
+                                {
+                                    getPath(res, path) ||
+                                    <small className="text-muted">{ defaultValue || "-" }</small>
+                                }
                             </td>
                         )
                     })
@@ -67,7 +70,7 @@ export class Grid extends React.Component
                     </div> :
                     null
                 }
-                <table className="table table-condensed table-hover">
+                <table className="table table-condensed table-hover table-striped">
                     <thead>
                         <tr>
                             {

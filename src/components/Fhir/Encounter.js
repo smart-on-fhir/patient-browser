@@ -1,5 +1,7 @@
-import React from "react"
-import Grid  from "./Grid"
+import React       from "react"
+import Grid        from "./Grid"
+import { getPath } from "../../lib"
+import Period      from "./Period"
 
 export default class Encounter extends React.Component
 {
@@ -15,16 +17,27 @@ export default class Encounter extends React.Component
                 title={ `Encounter${this.props.resources.length === 1 ? "" : "s"}` }
                 cols={[
                     {
-                        label: "Type",
-                        path : "type.0.text"
+                        label : "Type",
+                        render: rec => <b>{ getPath(rec, "type.0.text") }</b>
                     },
                     {
                         label: "Reason",
-                        path : "reason.0.coding.0.display"
+                        path : "reason.0.coding.0.display",
+                        defaultValue: "N/A"
                     },
                     {
                         label: "Class",
-                        path : "class.code"
+                        path : "class.code",
+                        defaultValue: "N/A"
+                    },
+                    {
+                        label: "Status",
+                        path : "status",
+                        defaultValue: "N/A"
+                    },
+                    {
+                        label: "Time",
+                        render: Period
                     }
                 ]}
             />

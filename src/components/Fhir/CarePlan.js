@@ -2,6 +2,7 @@ import React       from "react"
 import moment      from "moment"
 import Grid        from "./Grid"
 import { getPath } from "../../lib"
+import Period      from "./Period"
 
 export default class CarePlan extends React.Component
 {
@@ -41,33 +42,7 @@ export default class CarePlan extends React.Component
                     },
                     {
                         label: "Period",
-                        render: rec => {
-                            let from = getPath(rec, "period.start") || ""
-                            let to   = getPath(rec, "period.end"  ) || ""
-
-                            if (from) from = moment(from).format("MM/DD/YYYY")
-                            if (to) to = moment(to).format("MM/DD/YYYY")
-                            return (
-                                <span>
-                                    {
-                                        from ?
-                                        <span>
-                                            <small className="text-muted">from </small>
-                                            { from }
-                                        </span> :
-                                        null
-                                    }
-                                    {
-                                        to ?
-                                        <span>
-                                            <small className="text-muted"> to </small>
-                                            { to }
-                                        </span> :
-                                        null
-                                    }
-                                </span>
-                            )
-                        }
+                        render: Period
                     },
                     {
                         label: "Status",
