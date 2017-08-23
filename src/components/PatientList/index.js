@@ -77,7 +77,7 @@ export class PatientList extends React.Component
         let offset = this.props.query.offset || 0
         let items = this.props.query.bundle.entry || [];
         if (this.props.settings.renderSelectedOnly) {
-            items = items.filter(o => !!this.props.selection[o.resource.id])
+            items = items.filter(o => !!this.props.selection[o.resource.id.toLowerCase()])
         }
         return items.map((o, i) => (
             <PatientListItem
