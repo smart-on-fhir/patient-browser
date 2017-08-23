@@ -85,7 +85,7 @@ export class PatientList extends React.Component
                 patient={ o.resource }
                 key={ o.resource.id }
                 index={offset + i}
-                selected={ !!this.props.selection[o.resource.id] }
+                selected={ !!this.props.selection[o.resource.id.toLowerCase()] }
                 onSelectionChange={ patient => {
                     if (this.props.settings.renderSelectedOnly &&
                         Object.keys(this.props.selection).filter(k => !!this.props.selection[k]).length === 1)
