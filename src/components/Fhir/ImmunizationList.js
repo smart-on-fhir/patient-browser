@@ -1,6 +1,6 @@
 import React  from "react"
-import moment from "moment"
 import Grid   from "./Grid"
+import Date   from "./Date"
 
 export default class ImmunizationList extends React.Component
 {
@@ -24,11 +24,11 @@ export default class ImmunizationList extends React.Component
                         render: o => o.status || "-"
                     },
                     {
-                        label: <div className="text-right">Date</div>,
+                        label: "Date",
                         render: o => (
-                            <div className="text-right">
-                                { o.date ? moment(o.date).format("MM/DD/YYYY") : "-" }
-                            </div>
+                            o.date ?
+                                <Date moment={o.date}/> :
+                                "-"
                         )
                     }
                 ]}

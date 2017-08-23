@@ -59,7 +59,8 @@ export default class Encounter extends React.Component
                     },
                     {
                         label: "Time",
-                        render: o => Period(o.period)
+                        path : "period",
+                        render: o => Period(o.period || {})
                     }
                 ]}
             />

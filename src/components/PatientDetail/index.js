@@ -409,7 +409,7 @@ export class PatientDetail extends React.Component
                                             }}
                                         >
                                             <b className="badge pull-right">{this.state.groups[k].length}</b>
-                                            {k}
+                                            <b>{k}</b>
                                         </a>
                                     ))
                                 }

@@ -1,7 +1,7 @@
 import React            from "react"
-import moment           from "moment"
 import { CODE_SYSTEMS } from "../../lib/constants"
 import Grid             from "./Grid"
+import Date             from "./Date"
 
 export default class ConditionList extends React.Component
 {
@@ -70,10 +70,15 @@ export default class ConditionList extends React.Component
                         label: <div className="text-center">Onset Date</div>,
                         render : o => {
                             let onset = o.onsetDateTime || "";
-                            if (onset) {
-                                onset = moment(onset).format("MM/DD/YYYY");
-                            }
-                            return <div className="text-center">{ onset || "-" }</div>
+                            return (
+                                <div className="text-center">
+                                    {
+                                        onset ?
+                                        <Date moment={o.onsetDateTime}/> :
+                                        "-"
+                                    }
+                                </div>
+                            );
                         }
                     }
                 ]}

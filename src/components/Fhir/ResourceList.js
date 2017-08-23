@@ -1,9 +1,9 @@
 import React       from "react"
-import moment      from "moment"
 import Grid        from "./Grid"
 import schema      from "./schema"
 import { getPath } from "../../lib"
 import Period      from "./Period"
+import Date        from "./Date"
 
 
 function Cell(options, record) {
@@ -83,6 +83,10 @@ export default class ResourceList extends React.Component
                     label: "Display"
                 },
                 {
+                    path: "medicationCodeableConcept.coding.0.display",
+                    label: "Medication"
+                },
+                {
                     path: "result.0.display",
                     label: "Result",
                     render: rec => rec.result.map(r => r.display || 0).filter(Boolean).join(", ")
@@ -109,6 +113,14 @@ export default class ResourceList extends React.Component
                     path: "valueString"
                 },
                 {
+                    label: "Comment",
+                    path: "comment"
+                },
+                {
+                    label: "Extra Details",
+                    path: "extraDetails"
+                },
+                {
                     label: "Type",
                     path: "type",
                     render: rec => {
@@ -127,9 +139,29 @@ export default class ResourceList extends React.Component
                 {
                     label: "Category",
                     path: "category",
-                    render: rec => Array.isArray(rec.category) ?
-                        rec.category.join(", ") :
-                        String(rec.category)
+                    render: rec => {
+                        function renderCategory(c) {
+                            if (!c) {
+                                return "N/A";
+                            }
+
+                            if (typeof c == "string") {
+                                return c;
+                            }
+
+                            if (Array.isArray(c)) {
+                                return c.map(renderCategory).join(", ");
+                            }
+
+                            if (typeof c != "object") {
+                                return "N/A";
+                            }
+
+                            return c.text || c.display || c.code || renderCategory(c.coding);
+                        }
+
+                        return renderCategory(rec.category);
+                    }
                 },
                 {
                     label: "Quantity",
@@ -169,12 +201,17 @@ export default class ResourceList extends React.Component
                 {
                     path: "authoredOn",
                     label: "Authored On",
-                    render: (rec => moment(rec.authoredOn).format("MM/DD/YYYY"))
+                    render: rec => <Date moment={rec.authoredOn}/>
                 },
                 {
                     path: "performedDateTime",
                     label: "Performed At",
-                    render: (rec => moment(rec.performedDateTime).format("MM/DD/YYYY"))
+                    render: rec => <Date moment={rec.performedDateTime}/>
+                },
+                {
+                    path: "recorded",
+                    label: "Recorded",
+                    render: rec => <Date moment={rec.recorded}/>
                 },
                 {
                     path: "performedPeriod",
@@ -182,29 +219,50 @@ export default class ResourceList extends React.Component
                     render: rec => Period(rec.performedPeriod)
                 },
                 {
+                    path: "availableTime",
+                    label: "Available Time",
+                    render: rec => {
+                        if (Array.isArray(rec.availableTime)) {
+                            return rec.availableTime.map((t, i) => (
+                                <div key={i}>
+                                    { t.availableStartTime && (<span>
+                                        <label>from:&nbsp;</label>
+                                        <span>{ t.availableStartTime }&nbsp;</span>
+                                    </span>) }
+                                    { t.availableEndTime && (<span>
+                                        <label>to:&nbsp;</label>
+                                        <span>{ t.availableEndTime }</span>
+                                    </span>) }
+                                </div>
+                            ));
+                        }
+                        return "N/A"
+                    }
+                },
+                {
                     path: "whenHandedOver",
                     label: "Handed Over",
-                    render: (rec => moment(rec.whenHandedOver).format("MM/DD/YYYY"))
+                    render: rec => <Date moment={rec.whenHandedOver}/>
                 },
                 {
                     path: "issued",
                     label: "Issued",
-                    render: (rec => moment(rec.issued).format("MM/DD/YYYY"))
+                    render: rec =><Date moment={rec.issued}/>
                 },
                 {
                     path: "effectiveDateTime",
                     label: "Effective",
-                    render: (rec => moment(rec.effectiveDateTime).format("MM/DD/YYYY"))
+                    render: rec => <Date moment={rec.effectiveDateTime}/>
                 },
                 {
                     path: "assertedDate",
                     label: "Asserted",
-                    render: (rec => moment(rec.assertedDate).format("MM/DD/YYYY"))
+                    render: rec => <Date moment={rec.assertedDate}/>
                 },
                 {
                     path: "meta.lastUpdated",
                     label: "Last Updated",
-                    render: (rec => moment(rec.meta.lastUpdated).format("MM/DD/YYYY"))
+                    render: rec => <Date moment={rec.meta.lastUpdated}/>
                     // render: (rec => <span title={rec.meta.lastUpdated}>{ moment(rec.meta.lastUpdated).toNow(true) } ago</span>)
                 }
             ].map(meta => Cell(meta, o)).filter(Boolean) || "-"
