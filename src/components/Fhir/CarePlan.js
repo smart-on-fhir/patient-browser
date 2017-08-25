@@ -26,8 +26,7 @@ export default class CarePlan extends React.Component
                 }}
                 cols={[
                     {
-                        name: "Category",
-                        label: <b><i className="fa fa-tag"/> Category</b>,
+                        label: "Category",
                         path: "category.0.coding.0.display",
                         render: rec => (
                             <b>
@@ -36,7 +35,7 @@ export default class CarePlan extends React.Component
                         )
                     },
                     {
-                        label: <b><i className="fa fa-question-circle-o"/> Reason</b>,
+                        label: "Reason",
                         render: rec => (rec.activity || []).map((a, i) => {
                             let reason = getPath(a, "detail.code.coding.0.display") || ""
                             return reason ? (
@@ -51,11 +50,11 @@ export default class CarePlan extends React.Component
                         })
                     },
                     {
-                        label: <b><i className="glyphicon glyphicon-time"/> Period</b>,
+                        label: "Period",
                         render: o => Period(o.period)
                     },
                     {
-                        label: <b><i className="fa fa-check"/> Status</b>,
+                        label: "Status",
                         path : "status"
                     }
                 ]}

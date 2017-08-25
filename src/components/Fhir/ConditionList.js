@@ -29,7 +29,7 @@ export default class ConditionList extends React.Component
                 }}
                 cols={[
                     {
-                        label: <b><i className="fa fa-exclamation-triangle"/> Condition</b>,
+                        label: "Condition",
                         render: o => {
                             let name   = "-";
                             let code   = "-";
@@ -69,15 +69,15 @@ export default class ConditionList extends React.Component
                         }
                     },
                     {
-                        label: <div className="text-center"><i className="fa fa-h-square"/> Clinical Status</div>,
+                        label: <div className="text-center">Clinical Status</div>,
                         render: o => <div className="text-center">{ o.clinicalStatus }</div>
                     },
                     {
-                        label : <div className="text-center"><i className="fa fa-check"/> Verification Status</div>,
+                        label : <div className="text-center">Verification Status</div>,
                         render: o => <div className="text-center">{ o.verificationStatus || "-" }</div>
                     },
                     {
-                        label: <div className="text-center"><i className="glyphicon glyphicon-time"/> Onset Date</div>,
+                        label: <div className="text-center">Onset Date</div>,
                         render : o => {
                             let onset = o.onsetDateTime || "";
                             return (

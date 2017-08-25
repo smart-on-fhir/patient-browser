@@ -27,16 +27,15 @@ export default class ImmunizationList extends React.Component
                 }}
                 cols={[
                     {
-                        name : "Type",
-                        label: <b><i className="fa fa-flask"/> Type</b>,
+                        label: "Type",
                         path : "vaccineCode.coding.0.display"
                     },
                     {
-                        label: <b><i className="fa fa-check"/> Status</b>,
+                        label: "Status",
                         render: o => o.status || "-"
                     },
                     {
-                        label: <b><i className="glyphicon glyphicon-time"/> Date</b>,
+                        label: "Date",
                         render: o => (
                             o.date ?
                                 <Date moment={o.date}/> :

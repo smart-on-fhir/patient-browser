@@ -45,8 +45,7 @@ export default class Encounter extends React.Component
                 }}
                 cols={[
                     {
-                        name : "Type",
-                        label: <b><i className="fa fa-h-square"/> Type</b>,
+                        label: "Type",
                         path: rec => getEncounterLabel(rec),
                         render: rec => {
                             let result = getPath(rec, "type.0.text");
@@ -63,12 +62,12 @@ export default class Encounter extends React.Component
                         }
                     },
                     {
-                        label: <b><i className="fa fa-question-circle-o"/> Reason</b>,
+                        label: "Reason",
                         path : "reason.0.coding.0.display",
                         defaultValue: "N/A"
                     },
                     {
-                        label: <b><i className="fa fa-tag"/> Class</b>,
+                        label: "Class",
                         render: rec => {
                             let result = getEncounterClass(rec);
                             return result ?
@@ -77,12 +76,12 @@ export default class Encounter extends React.Component
                         }
                     },
                     {
-                        label: <b><i className="fa fa-check"/> Status</b>,
+                        label: "Status",
                         path : "status",
                         defaultValue: "N/A"
                     },
                     {
-                        label: <b><i className="glyphicon glyphicon-time"/> Time</b>,
+                        label: "Time",
                         path : "period",
                         render: o => Period(o.period || {})
                     }

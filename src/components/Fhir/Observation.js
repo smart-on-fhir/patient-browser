@@ -136,27 +136,26 @@ export default class Observations extends React.Component
                 title="Observations"
                 groupBy="Name"
                 comparator={(a,b) => {
-                    let dA = getPath(a, "effectiveDateTime");
-                    let dB = getPath(b, "effectiveDateTime");
+                    let dA = getPath(a, "effectiveDateTime") || getPath(a, "meta.lastUpdated");
+                    let dB = getPath(b, "effectiveDateTime") || getPath(b, "meta.lastUpdated");
                     dA = dA ? +moment(dA) : 0;
                     dB = dB ? +moment(dB) : 0;
                     return dB - dA;
                 }}
                 cols={[
                     {
-                        name  : "Name",
-                        label : <b><i className="fa fa-flask"/> Name</b>,
+                        label : "Name",
                         path  : o => this.getObservationLabel(o),
                         render: o => <b>{this.getObservationLabel(o)}</b>
                     },
                     {
-                        label : <b><i className="fa fa-flask"/> Value</b>,
+                        label : "Value",
                         render: o => this.renderObservation(o)
                     },
                     {
-                        label: <b><i className="glyphicon glyphicon-time"/> Date</b>,
+                        label: "Date",
                         render: o => {
-                            let date  = getPath(o, "effectiveDateTime");
+                            let date = getPath(o, "effectiveDateTime") || getPath(o, "meta.lastUpdated");
                             if (date) date = moment(date).format("MM/DD/YYYY");
                             return <div className="text-muted">{ date || "-" }</div>
                         }

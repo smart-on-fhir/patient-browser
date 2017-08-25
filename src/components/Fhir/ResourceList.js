@@ -123,7 +123,7 @@ export default class ResourceList extends React.Component
 
         // 1. Identifier -------------------------------------------------------
         out.push({
-            label: <b><i className="glyphicon glyphicon-bookmark"/> Identifier</b>,
+            label: "Identifier",
             render: o => renderCell(o, [
                 {
                     path: "id",
@@ -135,7 +135,7 @@ export default class ResourceList extends React.Component
                     label: "Name"
                 },
                 {
-                    path: "identifier",
+                    path: "identifier.0.type.coding.0.code",
                     label: "Identifiers",
                     render: rec => {
                         if (Array.isArray(rec.identifier)) {
@@ -153,7 +153,7 @@ export default class ResourceList extends React.Component
 
         // 2. Details ----------------------------------------------------------
         out.push({
-            label: <b><i className="glyphicon glyphicon-list"/> Details</b>,
+            label: "Details",
             render: o => renderCell(o, [
                 {
                     path: "description.text",
@@ -297,7 +297,7 @@ export default class ResourceList extends React.Component
 
         // 2. Timings ----------------------------------------------------------
         out.push({
-            label: <b><i className="glyphicon glyphicon-time"/> Date</b>,
+            label: "Date",
             render: o => renderCell(o, [
                 {
                     path: "authoredOn",
@@ -342,7 +342,6 @@ export default class ResourceList extends React.Component
                                 </div>
                             ));
                         }
-                        return "N/A"
                     }
                 },
                 {
@@ -374,7 +373,6 @@ export default class ResourceList extends React.Component
                     label: "Last Updated",
                     raw   : rec => rec.meta.lastUpdated,
                     render: rec => <Date moment={rec.meta.lastUpdated}/>
-                    // render: (rec => <span title={rec.meta.lastUpdated}>{ moment(rec.meta.lastUpdated).toNow(true) } ago</span>)
                 }
             ])
         });
@@ -390,9 +388,7 @@ export default class ResourceList extends React.Component
             <Grid
                 rows={recs.map(o => o.resource)}
                 title={`${length} resource${length === 1 ? "" : "s"} of type ${this.props.type}`}
-                cols={
-                    schema[this.props.type] || this.determineSchema(recs[0].resource)
-                }
+                cols={this.determineSchema(recs[0].resource)}
                 comparator={(a,b) => {
                     let dA = getSortValue(a);
                     let dB = getSortValue(b);

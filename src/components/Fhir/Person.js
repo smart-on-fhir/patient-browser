@@ -34,7 +34,7 @@ export default class Person extends React.Component
                 }}
                 cols={[
                     {
-                        label: <b><i className="glyphicon glyphicon-bookmark"/> Identifier</b>,
+                        label: "Identifier",
                         render: rec => {
                             let rows = [
                                 <tr key="id">
@@ -67,17 +67,17 @@ export default class Person extends React.Component
                         }
                     },
                     {
-                        label: <b><i className="glyphicon glyphicon-user"/> Name</b>,
+                        label: "Name",
                         render: getPatientName,
                         defaultValue: "N/A"
                     },
                     {
-                        label: <b><i className="fa fa-venus-mars"/> Gender</b>,
+                        label: "Gender",
                         path: "gender",
                         defaultValue: "N/A"
                     },
                     {
-                        label: <b><i className="glyphicon glyphicon-time"/> Birth Date</b>,
+                        label: "Birth Date",
                         path: "birthDate",
                         defaultValue: "N/A",
                         render: o => <Date moment={o.birthDate}/>
