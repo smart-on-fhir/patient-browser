@@ -167,6 +167,10 @@ export class PatientDetail extends React.Component
             return state;
         })
 
+        .then(state => new Promise(resolve => {
+            this.setState(state, () => resolve(state))
+        }))
+
         // Find $everything
         .then(state => {
             return getAllPages({ url: `${server.url}/Patient/${state.patient.id}/$everything` })
@@ -233,7 +237,7 @@ export class PatientDetail extends React.Component
                         <div className="patient-row">
                             <div className="col-xs-9 patient-name">
                                 <h3 className="pull-left text-primary">
-                                    { getPatientName(this.state.patient) }
+                                    { getPatientName(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                                 </h3>
                                 {
                                     selected ?
@@ -256,41 +260,41 @@ export class PatientDetail extends React.Component
                         <div className="row">
                             <div className="col-xs-4 col-sm-2 text-right text-muted">Gender:</div>
                             <div className="col-xs-8 col-sm-3 text-left">
-                                { this.state.patient.gender || "Unknown" }
+                                { this.state.patient.gender || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                             <div className="col-xs-4 col-sm-2 text-right text-muted">DOB:</div>
                             <div className="col-xs-8 col-sm-5 text-left">
-                                { this.state.patient.birthDate || "Unknown" }
+                                { this.state.patient.birthDate || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-xs-4 col-sm-2 text-right text-muted">Age:</div>
                             <div className="col-xs-8 col-sm-3 text-left">
-                                { getPatientAge(this.state.patient) || "Unknown" }
+                                { getPatientAge(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                             <div className="col-xs-4 col-sm-2 text-right text-muted">Email</div>
                             <div className="col-xs-8 col-sm-5 text-left">
-                                { getPatientEmail(this.state.patient) || "Unknown" }
+                                { getPatientEmail(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-xs-4 col-sm-2 text-right text-muted">Phone:</div>
                             <div className="col-xs-8 col-sm-3 text-left">
-                                { getPatientPhone(this.state.patient) || "Unknown" }
+                                { getPatientPhone(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                             <div className="col-xs-4 col-sm-2 text-right text-muted">Address:</div>
                             <div className="col-xs-8 col-sm-5 text-left">
-                                { getPatientHomeAddress(this.state.patient || "Unknown") }
+                                { getPatientHomeAddress(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-xs-4 col-sm-2 text-right text-muted">ID:</div>
                             <div className="col-xs-8 col-sm-3 text-left">
-                                { this.state.patient.id }
+                                { this.state.patient.id || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                             <div className="col-xs-4 col-sm-2 text-right text-muted">MRN:</div>
                             <div className="col-xs-8 col-sm-5 text-left">
-                                { getPatientMRN(this.state.patient) || "Unknown" }
+                                { getPatientMRN(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                         </div>
                         {
