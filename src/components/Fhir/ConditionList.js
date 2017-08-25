@@ -2,6 +2,8 @@ import React            from "react"
 import { CODE_SYSTEMS } from "../../lib/constants"
 import Grid             from "./Grid"
 import Date             from "./Date"
+import { getPath }      from "../../lib"
+import moment           from "moment"
 
 export default class ConditionList extends React.Component
 {
@@ -17,9 +19,16 @@ export default class ConditionList extends React.Component
             <Grid
                 rows={(recs || []).map(o => o.resource)}
                 title={`${length} Condition${length === 1 ? "" : "s"}`}
+                comparator={(a,b) => {
+                    let dA = getPath(a, "onsetDateTime");
+                    let dB = getPath(b, "onsetDateTime");
+                    dA = dA ? +moment(dA) : 0;
+                    dB = dB ? +moment(dB) : 0;
+                    return dB - dA;
+                }}
                 cols={[
                     {
-                        label : "Name",
+                        label: <b><i className="fa fa-exclamation-triangle"/> Condition</b>,
                         render: o => {
                             let name   = "-";
                             let code   = "-";
@@ -59,15 +68,15 @@ export default class ConditionList extends React.Component
                         }
                     },
                     {
-                        label: <div className="text-center">Clinical Status</div>,
+                        label: <div className="text-center"><i className="fa fa-h-square"/> Clinical Status</div>,
                         render: o => <div className="text-center">{ o.clinicalStatus }</div>
                     },
                     {
-                        label : <div className="text-center">Verification Status</div>,
+                        label : <div className="text-center"><i className="fa fa-check"/> Verification Status</div>,
                         render: o => <div className="text-center">{ o.verificationStatus || "-" }</div>
                     },
                     {
-                        label: <div className="text-center">Onset Date</div>,
+                        label: <div className="text-center"><i className="glyphicon glyphicon-time"/> Onset Date</div>,
                         render : o => {
                             let onset = o.onsetDateTime || "";
                             return (

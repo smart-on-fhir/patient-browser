@@ -133,17 +133,27 @@ export default class Observations extends React.Component
             <Grid
                 rows={ (this.props.resources || []).map(o => o.resource) }
                 title="Observations"
+                groupBy="Name"
+                comparator={(a,b) => {
+                    let dA = getPath(a, "effectiveDateTime");
+                    let dB = getPath(b, "effectiveDateTime");
+                    dA = dA ? +moment(dA) : 0;
+                    dB = dB ? +moment(dB) : 0;
+                    return dB - dA;
+                }}
                 cols={[
                     {
-                        label : "Name",
+                        name  : "Name",
+                        label : <b><i className="fa fa-flask"/> Name</b>,
+                        path  : o => this.getObservationLabel(o),
                         render: o => <b>{this.getObservationLabel(o)}</b>
                     },
                     {
-                        label : "Value",
+                        label : <b><i className="fa fa-flask"/> Value</b>,
                         render: o => this.renderObservation(o)
                     },
                     {
-                        label: "Date",
+                        label: <b><i className="glyphicon glyphicon-time"/> Date</b>,
                         render: o => {
                             let date  = getPath(o, "effectiveDateTime");
                             if (date) date = moment(date).format("MM/DD/YYYY");

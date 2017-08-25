@@ -43,6 +43,39 @@ const DefaultSchema = [
 
 const Person = [
     {
+        label: "Identifier",
+        render: rec => {
+            let rows = [
+                <tr key="id">
+                    <td className="label-cell">ID</td>
+                    <td>{rec.id}</td>
+                </tr>
+            ]
+
+            if (Array.isArray(rec.identifier)) {
+                rows = rows.concat(rec.identifier.map(o => {
+                    let code = getPath(o, "type.coding.0.display") ||
+                               getPath(o, "type.text") ||
+                               getPath(o, "type.coding.0.code") ||
+                               String(getPath(o, "system") || "").split(/\b/).pop();
+                    if (!code) return null;
+                    return (
+                        <tr key={code}>
+                            <td className="label-cell">{code}</td>
+                            <td>{o.value}</td>
+                        </tr>
+                    )
+                }).filter(Boolean))
+            }
+
+            return (
+                <table>
+                    <tbody>{ rows }</tbody>
+                </table>
+            );
+        }
+    },
+    {
         label: "Name",
         render: getPatientName,
         defaultValue: "N/A"

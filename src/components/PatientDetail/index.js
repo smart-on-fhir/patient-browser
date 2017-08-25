@@ -11,9 +11,9 @@ import { queryBuilder }     from "../../redux/query"
 import Observations         from "../Fhir/Observation"
 import ImmunizationList     from "../Fhir/ImmunizationList"
 import ConditionList        from "../Fhir/ConditionList"
-import MedicationRequest    from "../Fhir/MedicationRequest"
 import Encounter            from "../Fhir/Encounter"
 import CarePlan             from "../Fhir/CarePlan"
+import Person               from "../Fhir/Person"
 import ResourceList         from "../Fhir/ResourceList"
 import {
     getErrorMessage,
@@ -176,11 +176,17 @@ export class PatientDetail extends React.Component
                     let type = resourceType;
 
                     if (type == "Observation") {
-                        type += " - " + (
+                        let subCat = String(
                             getPath(entry, "resource.category.0.text") ||
+                            getPath(entry, "resource.category.coding.0.code") ||
                             getPath(entry, "resource.category.0.coding.0.code") ||
                             "Other"
                         ).toLowerCase();
+
+                        subCat = subCat.split(/\-+/).map(token => {
+                            return token.charAt(0).toUpperCase() + token.substr(1)
+                        }).join(" ");
+                        type += " - " + subCat;
                     }
 
                     if (!Array.isArray(groups[type])) {
@@ -329,14 +335,16 @@ export class PatientDetail extends React.Component
             return <ImmunizationList resources={items}/>;
         case "Condition":
             return <ConditionList resources={items}/>
-        // case "MedicationRequest":
-        //     return <MedicationRequest resources={items}/>;
         case "Encounter":
             return <Encounter resources={items}/>;
         case "CarePlan":
             return <CarePlan resources={items}/>;
+        case "Patient":
+        case "Practitioner":
+        case "RelatedPerson":
+            return <Person resources={items} title={type} />;
         default:
-            return <ResourceList resources={items} type={type} />;
+            return <ResourceList resources={items} type={type} settings={this.props.settings}/>;
         }
     }
 

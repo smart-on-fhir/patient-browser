@@ -4,31 +4,107 @@ import schema      from "./schema"
 import { getPath } from "../../lib"
 import Period      from "./Period"
 import Date        from "./Date"
+import moment      from "moment"
 
+function renderCell(record, allOf, oneOf) {
 
-function Cell(options, record) {
-    let propValue = getPath(record, options.path);
-    if (propValue !== undefined) {
-        let value = options.render ? options.render(record) : propValue
+    const entries = [];
+
+    const visit = meta => {
+        let propValue = getPath(record, meta.path);
+        if (propValue !== undefined) {
+            let value = meta.render ? meta.render(record) : propValue;
+            let raw   = meta.raw ? meta.raw(record) : value;
+            let label = typeof meta.label == "function" ? meta.label(record) : meta.label;
+            let existing = entries.find(o => o.value === raw);
+            if (existing) {
+                existing.label += ", " + label
+            }
+            else {
+                entries.push({ label, value });
+            }
+            return true;
+        }
+        return false;
+    };
+
+    allOf.forEach(visit);
+
+    if (!entries.length) {
+        oneOf.some(visit);
+    }
+
+    if (entries.length) {
         return (
-            <div key={options.path} className="pair">
-                <label>{options.label}:&nbsp;</label>
-                <span
-                    title={ options.ellipsis ? value : null}
-                    className={ options.ellipsis ? "ellipsis" : null}
-                    style={ options.ellipsis ? { maxWidth: options.ellipsis + "em" } : null}
-                >{ value }</span>
-            </div>
+            <table>
+                <tbody>
+                    {
+                        entries.map((o, i) => (
+                            <tr key={i}>
+                                <td className="label-cell">{ o.label }</td>
+                                <td>{ o.value }</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
         );
     }
-    return null;
+
+    return "-"
+}
+
+function getSortValue(rec) {
+    const paths = [
+        "authoredOn",
+        "dateWritten",
+        "performedDateTime",
+        "recorded",
+        "performedPeriod.start",
+        "availableTime.0.availableStartTime",
+        "whenHandedOver",
+        "issued",
+        "effectiveDateTime",
+        "assertedDate",
+        "meta.lastUpdated"
+    ];
+
+    for (let i = 0, l = paths.length; i < l; i++) {
+        let v = getPath(rec, paths[i]);
+        if (v !== undefined) {
+            return v
+        }
+    }
+
+    return 0;
+}
+
+function DataLink({settings, path, children}) {
+    let url = `${settings.server.url}/${path}`;
+    if (settings.fhirViewer.enabled) {
+        url = settings.fhirViewer.url +
+            (settings.fhirViewer.url.indexOf("?") > -1 ? "&" : "?") +
+            settings.fhirViewer.param + "=" +
+            encodeURIComponent(url);
+    }
+    return <a onClick={ () => {
+        window.open(url, "_blank");
+        return false;
+    }}>{ children }</a>
+}
+
+DataLink.propTypes = {
+    settings: React.PropTypes.object.isRequired,
+    path    : React.PropTypes.string.isRequired,
+    children: React.PropTypes.any
 }
 
 export default class ResourceList extends React.Component
 {
     static propTypes = {
         type     : React.PropTypes.string,
-        resources: React.PropTypes.arrayOf(React.PropTypes.object)
+        resources: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+        settings : React.PropTypes.object.isRequired
     };
 
     /**
@@ -47,29 +123,38 @@ export default class ResourceList extends React.Component
 
         // 1. Identifier -------------------------------------------------------
         out.push({
-            label: "Identifiers",
-            render: o => [
-                {
-                    path: "name",
-                    label: "Name"
-                },
+            label: <b><i className="glyphicon glyphicon-bookmark"/> Identifier</b>,
+            render: o => renderCell(o, [
                 {
                     path: "id",
                     label: "ID",
                     ellipsis: 15
                 },
                 {
-                    path: "meta.tag",
-                    label: "Tags",
-                    render: rec => rec.meta.tag.map(t => t.code)
+                    path: "name",
+                    label: "Name"
+                },
+                {
+                    path: "identifier",
+                    label: "Identifiers",
+                    render: rec => {
+                        if (Array.isArray(rec.identifier)) {
+                            return rec.identifier.map(id => {
+                                let code = getPath(id, "type.coding.0.code");
+                                if (!code) return null;
+                                return code + ": " + id.value;
+                            }).filter(Boolean).join(", ")
+                        }
+                        return "-"
+                    }
                 }
-            ].map(meta => Cell(meta, o)).filter(Boolean) || "-"
+            ])
         });
 
         // 2. Details ----------------------------------------------------------
         out.push({
-            label: "Details",
-            render: o => [
+            label: <b><i className="glyphicon glyphicon-list"/> Details</b>,
+            render: o => renderCell(o, [
                 {
                     path: "description.text",
                     label: "Description"
@@ -87,14 +172,18 @@ export default class ResourceList extends React.Component
                     label: "Medication"
                 },
                 {
+                    path: "medicationCodeableConcept.coding.0.code",
+                    label: rec => (getPath(rec, "medicationCodeableConcept.coding.0.system") || "").split(/\b/).pop()
+                },
+                {
+                    path: "code.coding.0.code",
+                    label: rec => ((getPath(rec, "code.coding.0.system") || "")
+                        .replace(/\/$/, "").split(/\//).pop() + " code")
+                },
+                {
                     path: "result.0.display",
                     label: "Result",
                     render: rec => rec.result.map(r => r.display || 0).filter(Boolean).join(", ")
-                },
-                {
-                    path: "text.div",
-                    label: "Text",
-                    render: rec => <span dangerouslySetInnerHTML={{ __html: rec.text.div }}/>
                 },
                 {
                     label: "Status",
@@ -189,19 +278,36 @@ export default class ResourceList extends React.Component
                 },
                 {
                     label: "Medication",
-                    path: "medicationReference.reference"
+                    path: "medicationReference.reference",
+                    render: rec => (
+                        <DataLink
+                            settings={this.props.settings}
+                            path={rec.medicationReference.reference}
+                        >{ rec.medicationReference.reference }</DataLink>
+                    )
                 }
-            ].map(meta => Cell(meta, o)).filter(Boolean) || "-"
+            ], [
+                {
+                    path: "text.div",
+                    label: "Text",
+                    render: rec => <span dangerouslySetInnerHTML={{ __html: rec.text.div }}/>
+                }
+            ])
         });
 
         // 2. Timings ----------------------------------------------------------
         out.push({
-            label: "Timings",
-            render: o => [
+            label: <b><i className="glyphicon glyphicon-time"/> Date</b>,
+            render: o => renderCell(o, [
                 {
                     path: "authoredOn",
                     label: "Authored On",
                     render: rec => <Date moment={rec.authoredOn}/>
+                },
+                {
+                    path: "dateWritten",
+                    label: "Date Written",
+                    render: rec => <Date moment={rec.dateWritten}/>
                 },
                 {
                     path: "performedDateTime",
@@ -247,25 +353,30 @@ export default class ResourceList extends React.Component
                 {
                     path: "issued",
                     label: "Issued",
+                    raw   : rec => moment(rec.issued).format("MM/DD/YYYY"),
                     render: rec =><Date moment={rec.issued}/>
                 },
                 {
                     path: "effectiveDateTime",
                     label: "Effective",
+                    raw   : rec => moment(rec.effectiveDateTime).format("MM/DD/YYYY"),
                     render: rec => <Date moment={rec.effectiveDateTime}/>
                 },
                 {
                     path: "assertedDate",
                     label: "Asserted",
+                    raw   : rec => rec.assertedDate,
                     render: rec => <Date moment={rec.assertedDate}/>
-                },
+                }
+            ], [
                 {
                     path: "meta.lastUpdated",
                     label: "Last Updated",
+                    raw   : rec => rec.meta.lastUpdated,
                     render: rec => <Date moment={rec.meta.lastUpdated}/>
                     // render: (rec => <span title={rec.meta.lastUpdated}>{ moment(rec.meta.lastUpdated).toNow(true) } ago</span>)
                 }
-            ].map(meta => Cell(meta, o)).filter(Boolean) || "-"
+            ])
         });
 
         return out;
@@ -282,6 +393,13 @@ export default class ResourceList extends React.Component
                 cols={
                     schema[this.props.type] || this.determineSchema(recs[0].resource)
                 }
+                comparator={(a,b) => {
+                    let dA = getSortValue(a);
+                    let dB = getSortValue(b);
+                    dA = dA ? +moment(dA) : 0;
+                    dB = dB ? +moment(dB) : 0;
+                    return dB - dA;
+                }}
             />
         )
     }

@@ -99,38 +99,24 @@
             font-weight: 500;
         }
 
-        .pair {
-            display: table;
-            // flex-basis: 20%;
-            // align-items: baseline;
-            // flex-wrap: nowrap;
-            margin-right: 1em;
+        label {
+            margin-bottom: 0;
+        }
 
-            // * {
-            //     display: inline-block;
-            //     max-width: 30em;
-            //     white-space: normal;
-            // }
+        td {
+            vertical-align: top;
+            font-size: 12px;
+            line-height: 16px;
+        }
 
-            label {
-                display: table-cell;
-                text-align: right;
-                color: #888;
-                white-space: nowrap;
-                font-weight: 400;
-            }
-
-            > span {
-                display: table-cell;
-                // white-space: nowrap;
-
-                &.ellipsis {
-                    max-width: 16em;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    vertical-align: bottom;
-                }
+        .label-cell {
+            color: #888;
+            white-space: nowrap;
+            text-align: right;
+            font-weight: 400;
+            padding-right: 1ex;
+            &:after {
+                content: ": ";
             }
         }
     }
@@ -141,6 +127,13 @@
 
     th {
         font-weight: 700;
+    }
+
+    thead th {
+        .glyphicon, .fa {
+            text-shadow: 0 1px 2px #FFF, 0 0 0px rgb(33, 75, 111);
+            color: rgba(51, 122, 183, 0.3);
+        }
     }
 
     .patient-details {
@@ -158,10 +151,47 @@
                 word-wrap  : break-word;
             }
         }
+
+        .panel-heading {
+            text-shadow: 0 1px 0 #FFF;
+        }
     }
 
     .list-group-item {
         padding-top: 7px;
         padding-bottom: 7px;
+    }
+
+    .group-header {
+        cursor: pointer;
+        background: linear-gradient(90deg, mix(#337ab7, #FFF, 10%), mix(#337ab7, #FFF, 5%));
+        text-indent: 0;
+
+        .glyphicon-triangle-bottom {
+            position: relative;
+            top: 2px;
+        }
+
+        & ~ tr > td:first-child {
+            text-indent: 17px;
+        }
+    }
+
+    .group-clear + tr > td:first-child {
+        text-indent: 0;
+        &:before {
+            content: "\e250";
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin-right: 3px;
+            opacity: 0.3;
+        }
     }
 }
