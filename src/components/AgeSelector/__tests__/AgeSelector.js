@@ -1,6 +1,6 @@
 /* global describe, it, chai */
 import AgeSelector   from ".."
-import ReactTestUtils from "react-addons-test-utils"
+import ReactTestUtils from "react-dom/test-utils"
 import React from "react"
 
 const expect = chai.expect

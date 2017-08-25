@@ -1,7 +1,7 @@
 /* global describe, it, chai, $ */
 import TagSelector from ".."
 import ReactDOM from "react-dom"
-import TestUtils from "react-addons-test-utils"
+import TestUtils from "react-dom/test-utils"
 import React from "react"
 
 const expect = chai.expect;
@@ -236,7 +236,7 @@ describe ("TagSelector", () => {
         it ("prepends the custom search option", () => {
             let tagA = { key: "a", label: "option-a", data: { codes: { "SNOMED-CT": ["code-a"] }}};
             let widget = TestUtils.renderIntoDocument(<TagSelector tags={[tagA]} search="test"/>);
-            expect(widget.filterTags()).to.deep.equal([ 
+            expect(widget.filterTags()).to.deep.equal([
                 {
                     key   : "test",
                     label : "test",

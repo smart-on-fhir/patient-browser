@@ -15,7 +15,9 @@ const SERVERS = {
 
 
 describe ("lib", () => {
-    describe ("PatientSearch", () => {
+    describe ("PatientSearch", function() {
+
+        this.timeout(5000);
 
         it ("works with no params", () => {
             let builder = new PatientSearch()
