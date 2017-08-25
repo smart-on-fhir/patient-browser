@@ -286,7 +286,8 @@ export default class Header extends React.Component
                             </a>
                         </li>
                         {
-                            this.props.settings.hideTagSelector ?
+                            (this.props.settings.hideTagSelector ||
+                            this.props.query.params._id) ?
                             null :
                             <li className={ !_advanced && _tab == "tags" ? "active" : null }>
                                 <a href="" onClick={ e => {e.preventDefault(); setHashParam("_tab", "tags")}}>
@@ -313,7 +314,8 @@ export default class Header extends React.Component
                         { this.renderConditionsTabContents() }
                     </div>
                     {
-                        this.props.settings.hideTagSelector ?
+                        (this.props.settings.hideTagSelector ||
+                            this.props.query.params._id) ?
                         null :
                         <div className={ "tab-pane " + (!_advanced && _tab == "tags" ? "active" : "") }>
                             { this.renderTagsTabContents() }

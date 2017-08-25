@@ -65,7 +65,7 @@ export default handleActions({
     [TOGGLE]: (state, action) => {
         let id = String(action.payload.id).toLowerCase()
         let newState = {
-            [id]: state[action.payload.id] ? false : action.payload
+            [id]: state[id] ? false : action.payload
         };
 
         if (!SINGLE) {

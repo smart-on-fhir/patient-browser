@@ -467,7 +467,7 @@ export default class PatientSearch
         })
 
         // Tags ----------------------------------------------------------------
-        if (this.tags.length) {
+        if (this.tags.length && !this.params._id) {
             params.push({ name: "_tag", value: this.tags.join(",") });
         }
 
