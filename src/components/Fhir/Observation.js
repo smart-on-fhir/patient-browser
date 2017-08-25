@@ -38,7 +38,10 @@ export default class Observations extends React.Component
         const returnResult = result => {
             return (
                 <span>
-                    {includeLabel && <label className="text-muted">{this.getObservationLabel(o)}:&nbsp;</label>}
+                    {includeLabel && <label className="text-muted">{
+                        this.getObservationLabel(o)
+                        .replace(/^\s*(Systolic|Diastolic)\s+blood\s+pressure\s*$/gi, "$1")
+                    }:&nbsp;</label>}
                     {result}
                 </span>
             );
@@ -88,11 +91,6 @@ export default class Observations extends React.Component
             let value = getPath(o, "valueQuantity.value");
             let units = getPath(o, "valueQuantity.unit");
 
-            if (getPath(o, "code.coding.0.code") == "55284-4" &&
-                getPath(o, "code.coding.0.system") == "http://loinc.org") {
-                return this.renderBloodPressure(o)
-            }
-
             if (!isNaN(parseFloat(value))) {
                 value = Math.round(value * 100) / 100;
             }
@@ -109,23 +107,6 @@ export default class Observations extends React.Component
         */
 
         return returnResult(<span className="text-muted">N/A</span>)
-    }
-
-    renderBloodPressure(resource) {
-        let component = resource.component || [resource]
-        let out = []
-        component.forEach(o => {
-            let value = getPath(o, "valueQuantity.value")
-            let units = getPath(o, "valueQuantity.unit")
-            if (units && (value || value === 0)) {
-                out.push(
-                    getPath(o, "code.coding.0.display") + ": " +
-                    value + " " + units
-                )
-            }
-        });
-
-        return out.join(", ")
     }
 
     render()
