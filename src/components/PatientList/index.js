@@ -1,29 +1,27 @@
 import React                from "react"
+import PropTypes            from "prop-types"
 import PatientListItem      from "../PatientListItem"
 import { toggle, setAll }   from "../../redux/selection"
 import { showSelectedOnly } from "../../redux/settings"
 import { setParam, fetch }  from "../../redux/query"
-import store              from "../../redux"
-import { connect }        from "react-redux"
-import Footer             from "../Footer"
-import Header             from "../Header"
-import ErrorMessage       from "../ErrorMessage"
-import Alert              from "../Alert"
-import                         "./PatientList.less"
+import store                from "../../redux"
+import { connect }          from "react-redux"
+import Footer               from "../Footer"
+import Header               from "../Header"
+import ErrorMessage         from "../ErrorMessage"
+import Alert                from "../Alert"
+import                           "./PatientList.less"
 
-
-
-const TYPES = React.PropTypes
 
 export class PatientList extends React.Component
 {
     static propTypes = {
-        query    : TYPES.object,
-        selection: TYPES.object,
-        location : TYPES.object,
-        settings : TYPES.object,
-        urlParams: TYPES.object,
-        dispatch : TYPES.func
+        query    : PropTypes.object,
+        selection: PropTypes.object,
+        location : PropTypes.object,
+        settings : PropTypes.object,
+        urlParams: PropTypes.object,
+        dispatch : PropTypes.func
     };
 
     render() {

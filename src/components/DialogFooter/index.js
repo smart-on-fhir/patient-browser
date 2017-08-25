@@ -1,4 +1,5 @@
 import React                from "react"
+import PropTypes            from "prop-types"
 import { connect }          from "react-redux"
 import { showSelectedOnly } from "../../redux/settings"
 import { setParam, fetch }  from "../../redux/query"
@@ -11,11 +12,11 @@ const IS_FRAME  = parent !== self;
 class SelectionUI extends React.Component {
 
     static propTypes = {
-        settings        : React.PropTypes.object.isRequired,
-        selection       : React.PropTypes.object.isRequired,
-        onToggleSelectionVisibility: React.PropTypes.func.isRequired,
-        onResetSelection: React.PropTypes.func.isRequired,
-        canShowSelected : React.PropTypes.bool
+        settings        : PropTypes.object.isRequired,
+        selection       : PropTypes.object.isRequired,
+        onToggleSelectionVisibility: PropTypes.func.isRequired,
+        onResetSelection: PropTypes.func.isRequired,
+        canShowSelected : PropTypes.bool
     };
 
     render() {
@@ -60,13 +61,13 @@ class SelectionUI extends React.Component {
 export class DialogFooter extends React.Component
 {
     static propTypes = {
-        selection       : React.PropTypes.object.isRequired,
-        settings        : React.PropTypes.object.isRequired,
-        showSelectedOnly: React.PropTypes.func.isRequired,
-        resetSelection  : React.PropTypes.func.isRequired,
-        setParam        : React.PropTypes.func.isRequired,
-        fetch           : React.PropTypes.func.isRequired,
-        canShowSelected : React.PropTypes.bool
+        selection       : PropTypes.object.isRequired,
+        settings        : PropTypes.object.isRequired,
+        showSelectedOnly: PropTypes.func.isRequired,
+        resetSelection  : PropTypes.func.isRequired,
+        setParam        : PropTypes.func.isRequired,
+        fetch           : PropTypes.func.isRequired,
+        canShowSelected : PropTypes.bool
     };
 
     /**

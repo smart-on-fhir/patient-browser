@@ -1,4 +1,5 @@
 import React       from "react"
+import PropTypes   from "prop-types"
 import { getPath } from "../../../lib"
 import { connect } from "react-redux"
 
@@ -9,12 +10,12 @@ import { connect } from "react-redux"
 export class Grid extends React.Component
 {
     static propTypes = {
-        rows      : React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-        cols      : React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-        settings  : React.PropTypes.object.isRequired,
-        title     : React.PropTypes.string,
-        groupBy   : React.PropTypes.string,
-        comparator: React.PropTypes.func
+        rows      : PropTypes.arrayOf(PropTypes.object).isRequired,
+        cols      : PropTypes.arrayOf(PropTypes.object).isRequired,
+        settings  : PropTypes.object.isRequired,
+        title     : PropTypes.string,
+        groupBy   : PropTypes.string,
+        comparator: PropTypes.func
     };
 
     constructor(props) {

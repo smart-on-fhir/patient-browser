@@ -1,23 +1,24 @@
 import React  from "react"
 import moment from "moment"
+import PropTypes from "prop-types"
 import "./AgeSelector.less"
 
 export default class AgeSelector extends React.Component
 {
     static propTypes = {
-        min: React.PropTypes.shape({
-            value: React.PropTypes.number,
-            units: React.PropTypes.oneOf(["years", "months", "days"])
+        min: PropTypes.shape({
+            value: PropTypes.number,
+            units: PropTypes.oneOf(["years", "months", "days"])
         }),
-        max: React.PropTypes.shape({
-            value: React.PropTypes.number,
-            units: React.PropTypes.oneOf(["years", "months", "days"])
+        max: PropTypes.shape({
+            value: PropTypes.number,
+            units: PropTypes.oneOf(["years", "months", "days"])
         }),
-        group: React.PropTypes.string,
-        onMinChange  : React.PropTypes.func,
-        onMaxChange  : React.PropTypes.func,
-        onGroupChange: React.PropTypes.func,
-        update       : React.PropTypes.func
+        group: PropTypes.string,
+        onMinChange  : PropTypes.func,
+        onMaxChange  : PropTypes.func,
+        onGroupChange: PropTypes.func,
+        update       : PropTypes.func
     };
 
     static defaultProps = {

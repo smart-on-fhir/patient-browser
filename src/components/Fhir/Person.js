@@ -1,7 +1,8 @@
-import React  from "react"
-import moment from "moment"
-import Grid   from "./Grid"
-import Date   from "./Date"
+import React     from "react"
+import PropTypes from "prop-types"
+import moment    from "moment"
+import Grid      from "./Grid"
+import Date      from "./Date"
 import {
     getPath,
     getPatientName
@@ -10,8 +11,8 @@ import {
 export default class Person extends React.Component
 {
     static propTypes = {
-        resources: React.PropTypes.arrayOf(React.PropTypes.object),
-        title    : React.PropTypes.string
+        resources: PropTypes.arrayOf(PropTypes.object),
+        title    : PropTypes.string
     };
 
     static defaultProps = {

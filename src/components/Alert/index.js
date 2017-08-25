@@ -1,6 +1,5 @@
-import React from "react";
-
-const TYPES = React.PropTypes;
+import React     from "react";
+import PropTypes from "prop-types";
 
 const ICONS = {
     info   : "fa fa-info-circle",
@@ -12,10 +11,10 @@ const ICONS = {
 export default class Alert extends React.Component
 {
     static propTypes = {
-        type    : TYPES.oneOf(["info", "warning", "danger", "success"]),
-        close   : TYPES.bool,
-        icon    : TYPES.bool,
-        children: TYPES.any
+        type    : PropTypes.oneOf(["info", "warning", "danger", "success"]),
+        close   : PropTypes.bool,
+        icon    : PropTypes.bool,
+        children: PropTypes.any
     };
 
     static defaultProps = {

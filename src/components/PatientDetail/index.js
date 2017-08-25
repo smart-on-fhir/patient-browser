@@ -1,4 +1,5 @@
 import React                from "react"
+import PropTypes            from "prop-types"
 import PatientImage         from "../PatientImage"
 import Loader               from "../Loader"
 import { connect }          from "react-redux"
@@ -37,10 +38,10 @@ import "./PatientDetail.less"
 export class PatientDetail extends React.Component
 {
     static propTypes = {
-        match    : React.PropTypes.object,
-        settings : React.PropTypes.object,
-        selection: React.PropTypes.object,
-        query    : React.PropTypes.object
+        match    : PropTypes.object,
+        settings : PropTypes.object,
+        selection: PropTypes.object,
+        query    : PropTypes.object
     };
 
     constructor(...args)

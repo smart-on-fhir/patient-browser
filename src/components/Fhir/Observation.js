@@ -1,4 +1,5 @@
 import React       from "react"
+import PropTypes   from "prop-types"
 import moment      from "moment"
 import { getPath } from "../../lib"
 import Grid        from "./Grid"
@@ -10,7 +11,7 @@ import Date        from "./Date"
 export default class Observations extends React.Component
 {
     static propTypes = {
-        resources: React.PropTypes.arrayOf(React.PropTypes.object)
+        resources: PropTypes.arrayOf(PropTypes.object)
     };
 
     getObservationLabel(o) {

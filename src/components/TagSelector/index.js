@@ -1,4 +1,5 @@
-import React from "react"
+import React     from "react"
+import PropTypes from "prop-types"
 import $ from "jquery"
 import { renderSearchHighlight } from "../../lib"
 import "./TagSelector.less"
@@ -6,11 +7,11 @@ import "./TagSelector.less"
 export default class TagSelector extends React.Component
 {
     static propTypes = {
-        tags    : React.PropTypes.arrayOf(React.PropTypes.object),
-        selected: React.PropTypes.arrayOf(React.PropTypes.string),
-        onChange: React.PropTypes.func,
-        search  : React.PropTypes.string,
-        label   : React.PropTypes.string
+        tags    : PropTypes.arrayOf(PropTypes.object),
+        selected: PropTypes.arrayOf(PropTypes.string),
+        onChange: PropTypes.func,
+        search  : PropTypes.string,
+        label   : PropTypes.string
     };
 
     static defaultProps = {

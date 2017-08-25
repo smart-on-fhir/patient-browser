@@ -1,4 +1,5 @@
 import React        from "react"
+import PropTypes    from "prop-types"
 import { Link }     from "react-router-dom"
 import PatientImage from "../PatientImage"
 import {
@@ -8,7 +9,6 @@ import {
     getPatientMRN
 } from "../../lib"
 
-const TYPES = React.PropTypes
 
 export default class PatientListItem extends React.Component
 {
@@ -16,12 +16,12 @@ export default class PatientListItem extends React.Component
      * This component expects a Fhir Bundle
      */
     static propTypes = {
-        patient          : TYPES.object,
-        query            : TYPES.object,
-        settings         : TYPES.object,
-        selected         : TYPES.bool,
-        onSelectionChange: TYPES.func,
-        index            : TYPES.number
+        patient          : PropTypes.object,
+        query            : PropTypes.object,
+        settings         : PropTypes.object,
+        selected         : PropTypes.bool,
+        onSelectionChange: PropTypes.func,
+        index            : PropTypes.number
     };
 
     static defaultProps = {

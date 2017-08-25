@@ -1,4 +1,5 @@
 import React               from "react"
+import PropTypes           from "prop-types"
 import { goNext, goPrev }  from "../../redux/query"
 import { getBundleURL }    from "../../lib"
 import DialogFooter        from "../DialogFooter"
@@ -8,11 +9,11 @@ import                          "./Footer.less"
 export default class Footer extends React.Component
 {
     static propTypes = {
-        bundle   : React.PropTypes.object,
-        query    : React.PropTypes.object.isRequired,
-        dispatch : React.PropTypes.func.isRequired,
-        selection: React.PropTypes.object.isRequired,
-        canShowSelected : React.PropTypes.bool
+        bundle   : PropTypes.object,
+        query    : PropTypes.object.isRequired,
+        dispatch : PropTypes.func.isRequired,
+        selection: PropTypes.object.isRequired,
+        canShowSelected : PropTypes.bool
     };
 
     render() {

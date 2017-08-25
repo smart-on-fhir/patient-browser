@@ -1,4 +1,5 @@
 import React       from "react"
+import PropTypes   from "prop-types"
 import moment      from "moment"
 import Grid        from "./Grid"
 import { getPath } from "../../lib"
@@ -25,7 +26,7 @@ function getEncounterLabel(encounter) {
 export default class Encounter extends React.Component
 {
     static propTypes = {
-        resources: React.PropTypes.arrayOf(React.PropTypes.object)
+        resources: PropTypes.arrayOf(PropTypes.object)
     };
 
     render()

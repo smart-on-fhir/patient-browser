@@ -1,5 +1,6 @@
 
-import React from "react"
+import React     from "react"
+import PropTypes from "prop-types"
 import            "./Header.less"
 import {
     fetch,
@@ -26,10 +27,10 @@ import {
 export default class Header extends React.Component
 {
     static propTypes = {
-        settings : React.PropTypes.object.isRequired,
-        query    : React.PropTypes.object.isRequired,
-        location : React.PropTypes.object.isRequired,
-        urlParams: React.PropTypes.object.isRequired
+        settings : PropTypes.object.isRequired,
+        query    : PropTypes.object.isRequired,
+        location : PropTypes.object.isRequired,
+        urlParams: PropTypes.object.isRequired
     };
 
     fetch(delay=500) {

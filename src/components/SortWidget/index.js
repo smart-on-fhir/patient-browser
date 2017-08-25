@@ -1,4 +1,5 @@
-import React from "react"
+import React     from "react"
+import PropTypes from "prop-types"
 import "./SortWidget.less"
 
 
@@ -8,14 +9,14 @@ export default class SortWidget extends React.Component
         /**
          * Fhir sort string like "status,-date,category"
          */
-        sort: React.PropTypes.string,
+        sort: PropTypes.string,
 
-        options: React.PropTypes.arrayOf(React.PropTypes.shape({
-            name : React.PropTypes.string,
-            value: React.PropTypes.string
+        options: PropTypes.arrayOf(PropTypes.shape({
+            name : PropTypes.string,
+            value: PropTypes.string
         })),
 
-        onChange: React.PropTypes.func
+        onChange: PropTypes.func
     };
 
     static defaultProps = {

@@ -1,5 +1,6 @@
 /* global jdenticon */
-import React from "react"
+import React     from "react"
+import PropTypes from "prop-types"
 import {
     getPatientImageUri,
     getPatientName
@@ -19,10 +20,10 @@ function hash(input) {
 export default class PatientImage extends React.Component
 {
     static propTypes = {
-        patient  : React.PropTypes.object.isRequired,
-        className: React.PropTypes.string,
-        style    : React.PropTypes.object,
-        base     : React.PropTypes.string
+        patient  : PropTypes.object.isRequired,
+        className: PropTypes.string,
+        style    : PropTypes.object,
+        base     : PropTypes.string
     };
 
     static defaultProps = {

@@ -1,14 +1,12 @@
-import React from "react"
+import React               from "react"
+import PropTypes           from "prop-types"
 import { getErrorMessage } from "../../lib"
-import Alert from "../Alert"
+import Alert               from "../Alert"
 
 export default class ErrorMessage extends React.Component
 {
     static propTypes = {
-        error: React.PropTypes.oneOfType([
-            React.PropTypes.string,
-            React.PropTypes.object
-        ])
+        error: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
     };
 
     static defaultProps = {

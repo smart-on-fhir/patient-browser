@@ -1,4 +1,5 @@
-import React from "react"
+import React     from "react"
+import PropTypes from "prop-types"
 
 export default function ValueRange({ range }) {
     let low = range.low;
@@ -29,5 +30,5 @@ export default function ValueRange({ range }) {
 }
 
 ValueRange.propTypes = {
-    range: React.PropTypes.object.isRequired
+    range: PropTypes.object.isRequired
 };

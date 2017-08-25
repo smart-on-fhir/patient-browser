@@ -1,4 +1,5 @@
 import React         from "react"
+import PropTypes     from "prop-types";
 import $             from "jquery"
 import JSON5         from "json5"
 import { connect }   from "react-redux"
@@ -17,9 +18,9 @@ const DEFAULT_CONFIG = "stu3-open-sandbox";
 export class App extends React.Component
 {
     static propTypes = {
-        children : React.PropTypes.any,
-        settings : React.PropTypes.object.isRequired,
-        dispatch : React.PropTypes.func.isRequired
+        children : PropTypes.any,
+        settings : PropTypes.object.isRequired,
+        dispatch : PropTypes.func.isRequired
     };
 
     constructor(...args) {

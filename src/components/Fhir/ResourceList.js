@@ -1,6 +1,6 @@
 import React       from "react"
+import PropTypes   from "prop-types"
 import Grid        from "./Grid"
-import schema      from "./schema"
 import { getPath } from "../../lib"
 import Period      from "./Period"
 import Date        from "./Date"
@@ -94,17 +94,17 @@ function DataLink({settings, path, children}) {
 }
 
 DataLink.propTypes = {
-    settings: React.PropTypes.object.isRequired,
-    path    : React.PropTypes.string.isRequired,
-    children: React.PropTypes.any
+    settings: PropTypes.object.isRequired,
+    path    : PropTypes.string.isRequired,
+    children: PropTypes.any
 }
 
 export default class ResourceList extends React.Component
 {
     static propTypes = {
-        type     : React.PropTypes.string,
-        resources: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-        settings : React.PropTypes.object.isRequired
+        type     : PropTypes.string,
+        resources: PropTypes.arrayOf(PropTypes.object).isRequired,
+        settings : PropTypes.object.isRequired
     };
 
     /**

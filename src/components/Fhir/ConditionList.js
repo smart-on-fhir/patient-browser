@@ -1,4 +1,5 @@
 import React            from "react"
+import PropTypes        from "prop-types"
 import { CODE_SYSTEMS } from "../../lib/constants"
 import Grid             from "./Grid"
 import Date             from "./Date"
@@ -8,7 +9,7 @@ import moment           from "moment"
 export default class ConditionList extends React.Component
 {
     static propTypes = {
-        resources: React.PropTypes.arrayOf(React.PropTypes.object)
+        resources: PropTypes.arrayOf(PropTypes.object)
     };
 
     render()
