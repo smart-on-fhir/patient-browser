@@ -415,7 +415,6 @@ export class PatientDetail extends React.Component
                                                 })
                                             }}
                                         >
-                                            {/*<b className="glyphicon pull-right visible-xs">&nbsp;▼</b>*/}
                                             <b className="badge pull-right">{this.state.groups[k].length}</b>
                                             <b>{k}</b>
                                         </a>
