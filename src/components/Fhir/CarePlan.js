@@ -1,4 +1,5 @@
 import React       from "react"
+import PropTypes   from "prop-types"
 import Grid        from "./Grid"
 import { getPath } from "../../lib"
 import Period      from "./Period"
@@ -7,7 +8,7 @@ import moment      from "moment"
 export default class CarePlan extends React.Component
 {
     static propTypes = {
-        resources: React.PropTypes.arrayOf(React.PropTypes.object)
+        resources: PropTypes.arrayOf(PropTypes.object)
     };
 
     render()
