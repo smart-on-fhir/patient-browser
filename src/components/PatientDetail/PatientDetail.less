@@ -31,7 +31,7 @@
     }
 
     .page-header {
-        margin : 20px 0 0;
+        margin : 0;
         padding-bottom: 1.5ex;
         border-bottom : 1px solid rgba(0, 0, 0, 0.1);
     }
@@ -61,7 +61,7 @@
         }
 
         ~ .row > div {
-            padding: 5px;
+            padding: 3px 5px;
         }
 
         h3 {
@@ -160,6 +160,11 @@
     .list-group-item {
         padding-top: 7px;
         padding-bottom: 7px;
+        // display: none;
+
+        // &.active {
+        //     display: block;
+        // }
     }
 
     .group-header {
@@ -193,5 +198,9 @@
             margin-right: 3px;
             opacity: 0.3;
         }
+    }
+
+    .table-responsive {
+        border: none !important;
     }
 }

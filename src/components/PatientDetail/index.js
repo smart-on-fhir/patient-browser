@@ -219,12 +219,13 @@ export class PatientDetail extends React.Component
             return this.state.error + ""
         }
 
-        let selected = this.props.selection[this.state.patient.id];
+        let selected = this.state.patient.id && 
+            this.props.selection[this.state.patient.id.toLowerCase()];
         return (
             <div className="panel panel-default patient col-xs-12">
                 <div className="row">
                     { this.state.loading ? <Loader/> : null }
-                    <div className="col-xs-3 col-sm-2">
+                    <div className="col-xs-2 col-sm-2 col-md-1">
                         <div className="embed-responsive">
                             <PatientImage
                                 patient={ this.state.patient }
@@ -233,7 +234,7 @@ export class PatientDetail extends React.Component
                             />
                         </div>
                     </div>
-                    <div className="col-xs-9 col-sm-10">
+                    <div className="col-xs-10 col-md-11">
                         <div className="patient-row">
                             <div className="col-xs-9 patient-name">
                                 <h3 className="pull-left text-primary">
@@ -258,63 +259,56 @@ export class PatientDetail extends React.Component
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-xs-4 col-sm-2 text-right text-muted">Gender:</div>
-                            <div className="col-xs-8 col-sm-3 text-left">
+                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Gender:</div>
+                            <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
                                 { this.state.patient.gender || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 text-right text-muted">DOB:</div>
-                            <div className="col-xs-8 col-sm-5 text-left">
+                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">DOB:</div>
+                            <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
                                 { this.state.patient.birthDate || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xs-4 col-sm-2 text-right text-muted">Age:</div>
-                            <div className="col-xs-8 col-sm-3 text-left">
+                        
+                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Age:</div>
+                            <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
                                 { getPatientAge(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 text-right text-muted">Email</div>
-                            <div className="col-xs-8 col-sm-5 text-left">
+                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Email</div>
+                            <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
                                 { getPatientEmail(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xs-4 col-sm-2 text-right text-muted">Phone:</div>
-                            <div className="col-xs-8 col-sm-3 text-left">
+                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Phone:</div>
+                            <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
                                 { getPatientPhone(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 text-right text-muted">Address:</div>
-                            <div className="col-xs-8 col-sm-5 text-left">
+                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Address:</div>
+                            <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
                                 { getPatientHomeAddress(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-xs-4 col-sm-2 text-right text-muted">ID:</div>
-                            <div className="col-xs-8 col-sm-3 text-left">
+                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">ID:</div>
+                            <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
                                 { this.state.patient.id || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 text-right text-muted">MRN:</div>
-                            <div className="col-xs-8 col-sm-5 text-left">
+                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">MRN:</div>
+                            <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
                                 { getPatientMRN(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                        </div>
-                        {
-                            this.state.patient.deceasedBoolean || this.state.patient.deceasedDateTime ?
-                            (
-                                <div className="row">
-                                    <div className="col-xs-4 col-sm-2 text-right text-muted">
+                            {
+                                this.state.patient.deceasedBoolean || this.state.patient.deceasedDateTime ?
+                                (
+                                    <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">
                                         <span className="deceased-label">Deceased:</span>
-                                    </div>
-                                    <div className="col-xs-8 col-sm-10 text-left">
+                                    </div>,
+                                    <div className="col-xs-8 col-sm-10 col-lg-3 text-left">
                                         {
                                             this.state.patient.deceasedDateTime ?
                                             <span>{ this.state.patient.deceasedDateTime }</span> :
-                                            <span>Yes</span>
+                                            <span>{ this.state.patient.deceasedBoolean ? "Yes" : "No" }</span>
                                         }
                                     </div>
-                                </div>
-                             ) :
-                            null
-                        }
+                                ) :
+                                null
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -406,7 +400,7 @@ export class PatientDetail extends React.Component
                                 <h4 className="page-header text-muted">Patient Details</h4>
                                 <br/>
                             </div>
-                            <div className="col-xs-3">
+                            <div className="col-xs-12 col-sm-3">
                                 <ul className="list-group">
                                 {
                                     groups.map((k, i) => (
@@ -421,6 +415,7 @@ export class PatientDetail extends React.Component
                                                 })
                                             }}
                                         >
+                                            {/*<b className="glyphicon pull-right visible-xs">&nbsp;▼</b>*/}
                                             <b className="badge pull-right">{this.state.groups[k].length}</b>
                                             <b>{k}</b>
                                         </a>
@@ -428,7 +423,7 @@ export class PatientDetail extends React.Component
                                 }
                                 </ul>
                             </div>
-                            <div className="col-xs-9">
+                            <div className="col-xs-12 col-sm-9">
                                 { this.renderResources(selectedSubCat) }
                             </div>
                         </div> :

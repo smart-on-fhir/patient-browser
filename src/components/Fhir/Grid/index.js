@@ -155,26 +155,30 @@ export class Grid extends React.Component
                     </div> :
                     null
                 }
-                <table className="table table-condensed table-hover table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            {
-                                this.props.cols.map((col, i) => {
-                                    let { headerProps, label } = col
-                                    headerProps = { ...headerProps, key: i }
-                                    return (
-                                        <th {...headerProps}>
-                                            { label || "" }
-                                        </th>
-                                    )
-                                })
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { this.renderRows() }
-                    </tbody>
-                </table>
+                <div className="table-responsive">
+                    <table className="table table-condensed table-hover table-striped table-bordered" style={{
+                        minWidth: this.props.cols.length * 200
+                    }}>
+                        <thead>
+                            <tr>
+                                {
+                                    this.props.cols.map((col, i) => {
+                                        let { headerProps, label } = col
+                                        headerProps = { ...headerProps, key: i }
+                                        return (
+                                            <th {...headerProps}>
+                                                { label || "" }
+                                            </th>
+                                        )
+                                    })
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            { this.renderRows() }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }
