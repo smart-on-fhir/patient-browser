@@ -22,7 +22,6 @@
         border       : 1px solid transparent;
         border-radius: 4px;
         height       : 100%;
-        background   : transparent;
     }
 
     &.custom > select {
@@ -120,5 +119,42 @@
             rgba(255, 50, 0, 0) 3.5px
         );
         background-size: 40px 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .age-widget-wrap.custom {
+        flex-wrap: wrap;
+        white-space   : normal;
+        height: auto;
+
+        > select {
+            flex-basis : 600px;
+            flex-grow  : 1;
+            flex-shrink: 1;
+            width      : 100%;
+            line-height: 2.1em;
+            height     : 2.1em;
+        }
+
+        .age-widget {
+            flex-basis: 50%;
+            flex-grow: 1;
+            min-width  : none;
+            box-shadow: 0px 3px 0px -2px #DDD inset;
+
+            &:hover {
+                box-shadow: 0 0 0 1px @color-bg-selection;
+                background: mix(@color-bg-selection, #FFF, 10%);
+            }
+
+            &:last-of-type {
+                border-radius: 0 0 3px 0;
+            }
+
+            ~ .age-widget span {
+                box-shadow: 1px 0 0 0 rgba(0, 0, 0, 0.1), 1px 0 0 0 rgba(0, 0, 0, 0.1) inset, 1px 0 2px 0px rgba(0, 0, 0, 0.1);
+            }
+        }
     }
 }

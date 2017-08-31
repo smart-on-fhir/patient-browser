@@ -254,7 +254,7 @@ export default class Header extends React.Component
             <div className="app-header">
                 <div style={{ flexDirection: "row" }}>
                     <label className="pull-right advanced-label text-warning">
-                        Advanced Mode <input
+                        Advanced <span className="hidden-xs">Mode </span> <input
                             type="checkbox"
                             checked={ _advanced }
                             onChange={ e => {
@@ -271,7 +271,7 @@ export default class Header extends React.Component
                                 <b>Demographics</b>
                                 {
                                     demographicsCount ?
-                                    <span> <small className="badge">{ demographicsCount }</small></span> :
+                                    <span className="hidden-xs"> <small className="badge">{ demographicsCount }</small></span> :
                                     null
                                 }
                             </a>
@@ -281,7 +281,7 @@ export default class Header extends React.Component
                                 <b>Conditions</b>
                                 {
                                     conditionsCount ?
-                                    <span> <small className="badge">{ conditionsCount }</small></span> :
+                                    <span className="hidden-xs"> <small className="badge">{ conditionsCount }</small></span> :
                                     null
                                 }
                             </a>
@@ -295,7 +295,7 @@ export default class Header extends React.Component
                                     <b>Tags</b>
                                     {
                                         tagsCount ?
-                                        <span> <small className="badge">{ tagsCount }</small></span> :
+                                        <span className="hidden-xs"> <small className="badge">{ tagsCount }</small></span> :
                                         null
                                     }
                                 </a>

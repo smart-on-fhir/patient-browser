@@ -23,7 +23,7 @@ export default class SortWidget extends React.Component
         sort: "name,-birthdate",
         options: [
             {
-                name : "Patient ID",
+                name : <span><span className="hidden-xs">Patient </span>ID</span>,
                 value: "_id"
             },
             {
@@ -76,7 +76,7 @@ export default class SortWidget extends React.Component
 
         return (
             <div className="sort-widget small">
-                <span className="pull-left">Sort by: </span>
+                <span className="pull-left">Sort<span className="hidden-xs"> by</span>:</span>
                 <ul className="nav nav-pills">
                 {
                     this.props.options.map((o, i) => (
@@ -100,9 +100,9 @@ export default class SortWidget extends React.Component
                                 { o.name }
                                 {
                                     sort[o.value] == "asc" ?
-                                    <span> Asc <i className="fa fa-sort-amount-asc"/></span> :
+                                    <span className="sort"><span className="hidden-xs"> Asc</span> <i className="fa fa-sort-amount-asc"/></span> :
                                         sort[o.value] == "desc" ?
-                                        <span> Desc <i className="fa fa-sort-amount-desc"/></span> :
+                                        <span className="sort"><span className="hidden-xs"> Desc</span> <i className="fa fa-sort-amount-desc"/></span> :
                                         null
                                 }
                             </a>

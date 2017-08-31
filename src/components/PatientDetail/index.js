@@ -236,7 +236,7 @@ export class PatientDetail extends React.Component
                     </div>
                     <div className="col-xs-10 col-md-11">
                         <div className="patient-row">
-                            <div className="col-xs-9 patient-name">
+                            <div className="col-xs-7 patient-name">
                                 <h3 className="pull-left text-primary">
                                     { getPatientName(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                                 </h3>
@@ -297,8 +297,14 @@ export class PatientDetail extends React.Component
                                 (
                                     <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">
                                         <span className="deceased-label">Deceased:</span>
-                                    </div>,
-                                    <div className="col-xs-8 col-sm-10 col-lg-3 text-left">
+                                    </div>
+                                ) :
+                                null
+                            }
+                            {
+                                this.state.patient.deceasedBoolean || this.state.patient.deceasedDateTime ?
+                                (
+                                    <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
                                         {
                                             this.state.patient.deceasedDateTime ?
                                             <span>{ this.state.patient.deceasedDateTime }</span> :
@@ -396,10 +402,7 @@ export class PatientDetail extends React.Component
                     {
                         groups.length ?
                         <div className="row patient-details">
-                            <div className="col-xs-12 text-center">
-                                <h4 className="page-header text-muted">Patient Details</h4>
-                                <br/>
-                            </div>
+                            <br/>
                             <div className="col-xs-12 col-sm-3">
                                 <ul className="list-group">
                                 {

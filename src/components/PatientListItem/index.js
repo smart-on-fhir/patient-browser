@@ -2,6 +2,7 @@ import React        from "react"
 import PropTypes    from "prop-types"
 import { Link }     from "react-router-dom"
 import PatientImage from "../PatientImage"
+import moment       from "moment"
 import {
     getPatientName,
     getPatientAge,
@@ -67,7 +68,7 @@ export default class PatientListItem extends React.Component
                             DOB: { this.props.patient.birthDate || "Unknown" }
                             {
                                 this.props.patient.deceasedDateTime ?
-                                ' / DOD: ' + this.props.patient.deceasedDateTime :
+                                ' / DOD: ' + moment(this.props.patient.deceasedDateTime).format("YYYY-MM-DD") :
                                 null
                             }
                         </span>
