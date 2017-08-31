@@ -23,7 +23,8 @@ export default class SortWidget extends React.Component
         sort: "name,-birthdate",
         options: [
             {
-                name : <span><span className="hidden-xs">Patient </span>ID</span>,
+                label: <span><span className="hidden-xs">Patient </span>ID</span>,
+                name : "Patient ID",
                 value: "_id"
             },
             {
@@ -97,7 +98,7 @@ export default class SortWidget extends React.Component
                                     return this.change(o.value, "asc")
                                 }
                             }}>
-                                { o.name }
+                                { o.label || o.name }
                                 {
                                     sort[o.value] == "asc" ?
                                     <span className="sort"><span className="hidden-xs"> Asc</span> <i className="fa fa-sort-amount-asc"/></span> :
