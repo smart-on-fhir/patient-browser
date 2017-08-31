@@ -246,15 +246,22 @@ export class PatientDetail extends React.Component
                                     null
                                 }
                             </div>
-                            <div className="col-xs-3 text-right">
+                            <div className="col-xs-5 text-right" style={{ paddingRight: 0 }}>
                                 <button
                                     type="button"
-                                    className={`btn btn-${selected ? "danger" : "primary"} pull-right`}
+                                    className={`btn btn-sm btn-${selected ? "danger" : "primary"}`}
                                     onClick={() => store.dispatch(toggle({ id: this.state.patient.id })) }
                                 >
                                     {
                                         selected ? "Unselect" : "Select"
                                     }
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-default btn-sm"
+                                    onClick={() => this.fetch(this.props.match.params.index)}
+                                >
+                                    <i className="fa fa-refresh"/> Reload
                                 </button>
                             </div>
                         </div>
