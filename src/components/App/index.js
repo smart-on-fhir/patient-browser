@@ -66,7 +66,7 @@ export class App extends React.Component
 
         let settings = {};
         $.ajax({
-            url     : `/config/${config || DEFAULT_CONFIG}.json5`,
+            url     : `./config/${config || DEFAULT_CONFIG}.json5`,
             dataType: "text",
             cache   : false
         }).then(
