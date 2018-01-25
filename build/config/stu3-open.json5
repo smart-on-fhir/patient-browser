@@ -4,7 +4,7 @@
         type: "STU-3",
 
         // Api URL
-        url: "https://fhir-r3.herokuapp.com/fhir",
+        url: "http://fhir-r3.herokuapp.com/fhir",
 
         // The pre-populated tags in the tag selector
         tags: [
