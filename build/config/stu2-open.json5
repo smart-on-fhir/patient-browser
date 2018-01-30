@@ -4,18 +4,18 @@
         type: "STU-3",
 
         // Api URL
-        url: "https://fhir-r3.herokuapp.com/fhir",
+        url: "https://fhir-r2.herokuapp.com/fhir",
 
         // The pre-populated tags in the tag selector
         tags: [
-            {
-                key  : "pro-7-2017",
-                label: "PROm sample patients 7/2017"
-            },
-            {
-                key  : "smart-7-2017",
-                label: "SMART sample patients 7/2017"
-            },
+            // {
+            //     key  : "pro-7-2017",
+            //     label: "PROm sample patients 7/2017"
+            // },
+            // {
+            //     key  : "smart-7-2017",
+            //     label: "SMART sample patients 7/2017"
+            // },
             {
                 key  : "synthea-7-2017",
                 label: "Synthea sample patients 7/2017"
