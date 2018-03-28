@@ -8,16 +8,18 @@
     "words": [
         "browserslist",
         "devtool",
-        "hir",
         "Fhir",
-        "SNOMED",
-        "LOINC",
-        "NUBC",
-        "UMLS",
-        "parens",
         "getpages",
         "getpagesoffset",
-        "jdenticon"
+        "hir",
+        "jdenticon",
+        "LOINC",
+        "NUBC",
+        "parens",
+        "SNOMED",
+        "tabindex",
+        "UMLS",
+        "uploaders"
     ],
     // flagWords - list of words to be always considered incorrect
     // This is useful for offensive words and common spelling errors.
