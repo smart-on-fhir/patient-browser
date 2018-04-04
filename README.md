@@ -172,7 +172,7 @@ Any config file might contain the following options:
             }
         }
         ```
-        This is an empty object by default since we can't know what conditions are available on each server. We have that list pre-built for the smart sandbox servers but for the others you are expected to that yourself.
+        This is an empty object by default since we can't know what conditions are available on each server. We have that list pre-built for the smart sandbox servers but for the others you are expected to that yourself (see the Config Generator section below).
 
 - `patientsPerPage` - Patients per page. Defaults to `10`.
 - `timeout` - AJAX requests timeout in milliseconds. Defaults to `20000`.
@@ -193,6 +193,24 @@ Any config file might contain the following options:
     - `automatic` - Submit on change and defer that in some cases
     - `manual`    - Render a submit button
 - hideTagSelector - If there are no tags in the server  the tag selector will not be useful. You can hide the Tags tab by passing `true` here.
+
+### Config Generator
+Creating a config file might be a difficult task if you also want to have reliable  condition list. We have created a special command-line tool to help you with that.
+It will expect you to provide a FHIR server base URL and a config name and will handle everything else.
+Example, ran within the project directory:
+```sh
+node generate_config.js -s http://127.0.0.1:18300 -f my-test-config
+```
+This will do the following:
+1. Connect to the specified open server provided with the `-s` or `--server` option.
+2. Load the conformance statement and detect the FHIR version (`"DSTU-2"` or `"STU-3"`).
+3. Load all the conditions that are found ot that server.
+4. Load config from `./build/config/my-test-config.json5` if it exists, where `my-test-config` comes from the `-f` or `--file` option. Otherwise use default config template.
+5. Mix-in the FHIR version and the conditions.
+6. Save the result to `./build/config/my-test-config.json5`.
+
+The you can use it by adding a `config=my-test-config` to your query string.
+Keep in mind that when using this tool tu update existing config file, the data will be updated properly bu any comments will be lost!
 
 ## URL Options
 Some of the options above plus some additional ones can be passed via the URL. The app recognizes two types of parameters - search parameters and hash parameters. The search parameters are those listed after the first `?` and hash parameters are listed after a `?` character that is preceded by a `#` character. In other words, the hash portion of the URL can have it's own query string portion.
