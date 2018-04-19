@@ -14,8 +14,6 @@ let initialSelection = {};
 (PARAMS._selection || "").split(/\s*,\s*/).forEach(k => {
     if (k) {
 
-        k = k.toLowerCase();
-
         // In single mode the last id will become the selected one!
         if (SINGLE) {
             initialSelection = {
@@ -63,7 +61,7 @@ export default handleActions({
      * Toggle the selected state of action.payload.id
      */
     [TOGGLE]: (state, action) => {
-        let id = String(action.payload.id).toLowerCase()
+        let id = String(action.payload.id);
         let newState = {
             [id]: state[id] ? false : action.payload
         };

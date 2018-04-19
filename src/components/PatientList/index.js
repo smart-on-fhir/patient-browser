@@ -72,18 +72,25 @@ export class PatientList extends React.Component
     }
 
     renderPatientItems() {
+
+        const isSelected = (item) => {
+            let idLower = (item.resource.id || "").toLowerCase();
+            let key = Object.keys(this.props.selection).find(k => k.toLowerCase() == idLower);
+            return key && this.props.selection[key] !== false;
+        }
+
         let offset = this.props.query.offset || 0
         let items = this.props.query.bundle.entry || [];
         if (this.props.settings.renderSelectedOnly) {
-            items = items.filter(o => !!this.props.selection[o.resource.id.toLowerCase()])
+            items = items.filter(isSelected);
         }
         return items.map((o, i) => (
             <PatientListItem
                 { ...o.resource }
                 patient={ o.resource }
                 key={ o.resource.id }
-                index={offset + i}
-                selected={ !!this.props.selection[o.resource.id.toLowerCase()] }
+                index={ offset + i }
+                selected={ isSelected(o) }
                 onSelectionChange={ patient => {
                     if (this.props.settings.renderSelectedOnly &&
                         Object.keys(this.props.selection).filter(k => !!this.props.selection[k]).length === 1)

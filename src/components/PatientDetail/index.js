@@ -219,8 +219,9 @@ export class PatientDetail extends React.Component
             return this.state.error + ""
         }
 
-        let selected = this.state.patient.id && 
-            this.props.selection[this.state.patient.id.toLowerCase()];
+        let idLower = (this.state.patient.id || "").toLowerCase();
+        let key = idLower && Object.keys(this.props.selection).find(k => k.toLowerCase() == idLower);
+        let selected = key && this.props.selection[key] !== false;
         return (
             <div className="panel panel-default patient col-xs-12">
                 <div className="row">
@@ -274,7 +275,7 @@ export class PatientDetail extends React.Component
                             <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
                                 { this.state.patient.birthDate || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                        
+
                             <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Age:</div>
                             <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
                                 { getPatientAge(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
