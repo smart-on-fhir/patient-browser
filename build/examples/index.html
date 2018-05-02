@@ -5,8 +5,8 @@
         <title>SMART Patient Browser Examples</title>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <link rel="shortcut icon" href="../img/icon.png" type="image/png?_=f8574ece297c673ce634" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../vendor/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     </head>
     <body>
         <div class="modal fade" tabindex="-1" role="dialog">
@@ -48,12 +48,12 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="../vendor/babel-polyfill.min.js"></script>
+        <script src="../vendor/jquery/3.2.1/jquery.min.js"></script>
+        <script src="../vendor/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
         <script>
             function selectPatients(selection) {
                 return new Promise(function(resolve, reject) {
-                    let origin = "http://localhost:9001";
                     let query  = selection ? "/#/?_selection=" + encodeURIComponent(selection) : ""
                     let height = 600;
                     let width  = 800;
@@ -81,7 +81,6 @@
 
             function selectPatientsModal(selection) {
                 return new Promise(function(resolve, reject) {
-                    let origin = "http://localhost:9001";
                     let query  = selection ? "/#/?_selection=" + encodeURIComponent(selection) : ""
                     let modal = $(".modal")
                     let frame = modal.find("iframe")
