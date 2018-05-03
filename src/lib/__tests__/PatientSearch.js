@@ -162,6 +162,7 @@ describe ("lib", () => {
             )
 
             let job = Promise.resolve();
+            let before25years = moment().subtract(25, "years");
 
             job = job.then(() => {
                 builder.setMaxAge({ value: 25, units: "years" })
@@ -169,7 +170,10 @@ describe ("lib", () => {
                     if (bundle.total > 0) {
                         bundle.entry.forEach(patient => {
                             expect(
-                                moment() - moment(patient.resource.birthDate) <= 1000*60*60*24*365*25
+                                moment(patient.resource.birthDate).isSameOrAfter(
+                                    before25years,
+                                    "year"
+                                )
                             ).to.equal(true)
                         })
                     }
@@ -182,7 +186,10 @@ describe ("lib", () => {
                     if (bundle.total > 0) {
                         bundle.entry.forEach(patient => {
                             expect(
-                                moment() - moment(patient.resource.birthDate) <= 1000*60*60*24*365*25
+                                moment(patient.resource.birthDate).isSameOrAfter(
+                                    before25years,
+                                    "year"
+                                )
                             ).to.equal(true)
                         })
                     }
