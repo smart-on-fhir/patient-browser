@@ -11,7 +11,7 @@ import { parseQueryString } from "../../lib"
 import                    "./App.less"
 
 const OWNER = window.opener || (window.parent === self ? null : window.parent);
-const DEFAULT_CONFIG = "stu3-open-sandbox";
+const DEFAULT_CONFIG = "default";
 
 
 
