@@ -199,6 +199,7 @@ Creating a config file might be a difficult task if you also want to have reliab
 It will expect you to provide a FHIR server base URL and a config name and will handle everything else.
 Example, ran within the project directory:
 ```sh
+cd config-genrator
 node generate_config.js -s http://127.0.0.1:18300 -f my-test-config
 ```
 This will do the following:
@@ -211,6 +212,8 @@ This will do the following:
 
 The you can use it by adding a `config=my-test-config` to your query string.
 Keep in mind that when using this tool tu update existing config file, the data will be updated properly bu any comments will be lost!
+
+NOTE: If you don't provide the `-f` the result configuration will be printed to stdout.
 
 ## URL Options
 Some of the options above plus some additional ones can be passed via the URL. The app recognizes two types of parameters - search parameters and hash parameters. The search parameters are those listed after the first `?` and hash parameters are listed after a `?` character that is preceded by a `#` character. In other words, the hash portion of the URL can have it's own query string portion.
