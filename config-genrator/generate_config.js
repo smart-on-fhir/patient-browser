@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 require("colors");
+const Path      = require("path");
 const request   = require("request");
 const FS        = require("fs");
 const app       = require("commander");
@@ -14,10 +15,7 @@ app
     .option('-f, --file <string>' , 'The name of the config file')
     .parse(process.argv);
 
-// console.log(app.file);
-// return;
-
-if (!app.server || !app.file) {
+if (!app.server) {
     return app.help();
 }
 
@@ -103,27 +101,31 @@ function getAllPages(options, cb, result = []) {
             throw new Error("The query did not return a bundle");
         }
 
-        // var last = "";
+        let entries = (bundle.entry || []);
+        if (entries.length) {
 
-        (bundle.entry || []).forEach(item => {
-            if (item.fullUrl && result.findIndex(o => (o.fullUrl === item.fullUrl)) == -1) {
-                result.push(item);
-                // last = item.fullUrl.trim();
+
+            entries.forEach(item => {
+                if (item.fullUrl && result.findIndex(o => (o.fullUrl === item.fullUrl)) == -1) {
+                    result.push(item);
+                }
+            });
+
+            let pct = Math.floor(result.length / bundle.total * 100);
+            if (!isNaN(pct)) {
+                process.stdout.write(`\rCollecting conditions... ${pct}%`);
             }
-        });
 
-        // console.log(last);
-        let pct = Math.floor(result.length / bundle.total * 100);
-        if (!isNaN(pct)) {
-            process.stdout.write(`\rCollecting conditions... ${pct}%`);
+            let nextUrl = getBundleURL(bundle, "next");
+            if (nextUrl) {
+                return getAllPages(Object.assign({}, options, { uri: nextUrl }), cb, result);
+            }
+
+            process.stdout.write("\n");
         }
-
-        let nextUrl = getBundleURL(bundle, "next");
-        if (nextUrl) {
-            return getAllPages(Object.assign({}, options, { uri: nextUrl }), cb, result);
+        else {
+            console.log("No conditions were found on this server!");
         }
-
-        process.stdout.write("\n");
 
         if (cb) {
             cb(result);
@@ -177,17 +179,24 @@ getFhirVersion().then(version => {
             };
         });
 
-        let filePath = `./build/config/${app.file}.json5`;
         let json = generateConfig("");
+        if (app.file) {
 
-        if (FS.existsSync(filePath)) {
-            mixinDeep(json, JSON5.parse(FS.readFileSync(filePath, "utf8")));
+            let filePath = Path.resolve(__dirname, "../config/", `${app.file}.json5`);
+
+            if (FS.existsSync(filePath)) {
+                mixinDeep(json, JSON5.parse(FS.readFileSync(filePath, "utf8")));
+            }
+
+            mixinDeep(json.server, { type: version, conditions });
+
+            // Save file
+            FS.writeFileSync(filePath, JSON5.stringify(json, null, 4), "utf8");
         }
-
-        mixinDeep(json.server, { type: version, conditions });
-
-        // Save file
-        FS.writeFileSync(filePath, JSON5.stringify(json, null, 4), "utf8");
+        else {
+            mixinDeep(json.server, { type: version, conditions });
+            console.log(JSON5.stringify(json, null, 4));
+        }
     });
 });
 
