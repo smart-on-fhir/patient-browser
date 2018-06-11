@@ -91,7 +91,7 @@ export function getErrorMessage(input) {
         ])
     }
 
-    return out
+    return String(out).replace(/(Error\:\s)+/, "Error: ");
 }
 
 /**
