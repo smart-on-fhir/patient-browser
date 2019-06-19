@@ -39,7 +39,9 @@ export default class ImmunizationList extends React.Component
                         render: o => (
                             o.date ?
                                 <Date moment={o.date}/> :
-                                "-"
+                                o.occurrenceDateTime ?
+                                    <Date moment={o.occurrenceDateTime}/> :
+                                    o.occurrenceString || "-"
                         )
                     }
                 ]}

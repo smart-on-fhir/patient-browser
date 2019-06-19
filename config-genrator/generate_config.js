@@ -50,20 +50,35 @@ function requestPromise(options) {
 
 /**
  * Fetches the conformance statement and determines the Fhir version
- * @returns {Promise<String>} "DSTU-1", "DSTU-2" or "STU-3"
+ * @returns {Promise<String>} "DSTU-0", "DSTU-1", "DSTU-2", "STU-3" or "R4"
  * @see http://hl7.org/fhir/directory.html
  * TODO: Fixme when version 4 is out
  */
 function getFhirVersion() {
     return requestPromise(app.server.replace(/\/?$/, "/metadata")).then(res => {
-        let ver = res.body.fhirVersion.split(".").map(parseFloat);
-        if (ver[0] === 0) {
-            return ver[1] > 4 ? "DSTU-2" : "DSTU-1"
-        }
-        else if (ver[0] === 1) {
-            return ver[1] > 1 ? "STU-3" : "DSTU-2"
-        }
-        return "STU-3";
+        return ({
+            "0"      : "DSTU-0",
+            "0.01"   : "DSTU-0",
+            "0.05"   : "DSTU-1",
+            "0.06"   : "DSTU-1",
+            "0.11"   : "DSTU-1",
+            "0.0.82" : "DSTU-1",
+            "0.4.0"  : "DSTU-2",
+            "0.5.0"  : "DSTU-2",
+            "1.0.0"  : "DSTU-2",
+            "1.0.2"  : "DSTU-2",
+            "1.1.0"  : "STU-3",
+            "1.2.0"  : "STU-3",
+            "1.4.0"  : "STU-3",
+            "1.6.0"  : "STU-3",
+            "1.8.0"  : "STU-3",
+            "3.0.1"  : "STU-3",
+            "3.2.0"  : "R4",
+            "3.3.0"  : "R4",
+            "3.5.0"  : "R4",
+            "3.5a.0" : "R4",
+            "4.0.0"  : "R4"
+        }[res.body.fhirVersion]) || "Unknown";
     });
 }
 
@@ -182,7 +197,7 @@ getFhirVersion().then(version => {
         let json = generateConfig("");
         if (app.file) {
 
-            let filePath = Path.resolve(__dirname, "../config/", `${app.file}.json5`);
+            let filePath = Path.resolve(__dirname, "../config/", `${app.file.replace(/(\.json5)?$/, ".json5")}`);
 
             if (FS.existsSync(filePath)) {
                 mixinDeep(json, JSON5.parse(FS.readFileSync(filePath, "utf8")));

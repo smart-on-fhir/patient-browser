@@ -3,7 +3,7 @@ import PropTypes        from "prop-types"
 import { CODE_SYSTEMS } from "../../lib/constants"
 import Grid             from "./Grid"
 import Date             from "./Date"
-import { getPath }      from "../../lib"
+import { getPath, getCodeOrConcept } from "../../lib"
 import moment           from "moment"
 
 export default class ConditionList extends React.Component
@@ -70,11 +70,11 @@ export default class ConditionList extends React.Component
                     },
                     {
                         label: <div className="text-center">Clinical Status</div>,
-                        render: o => <div className="text-center">{ o.clinicalStatus }</div>
+                        render: o => <div className="text-center">{ getCodeOrConcept(o.clinicalStatus) }</div>
                     },
                     {
                         label : <div className="text-center">Verification Status</div>,
-                        render: o => <div className="text-center">{ o.verificationStatus || "-" }</div>
+                        render: o => <div className="text-center">{ getCodeOrConcept(o.verificationStatus) }</div>
                     },
                     {
                         label: <div className="text-center">Onset Date</div>,

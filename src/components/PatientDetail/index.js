@@ -109,7 +109,9 @@ export class PatientDetail extends React.Component
      * search returns only one page. The reason for this is that we also have
      * these "Prev Patient" and "Next Patient" buttons that allow the user to
      * walk through the result one patient at a time.
-     * @param {Object} server.url & server.type ...
+     * @param {Object} server
+     * @param {Object} server.url
+     * @param {Object} server.type
      * @param {Number} index
      */
     fetchPatient(server, index)
@@ -143,7 +145,7 @@ export class PatientDetail extends React.Component
             state.patient = getPath(state, `bundle.entry.${index}.resource`);
             state.nextURL = getBundleURL(state.bundle, "next");
             state.hasNext = !!state.nextURL || (state.patient ? index < state.bundle.entry.length - 1 : false);
-            return state;
+            return Promise.resolve(state);
         })
 
         // if no patient - jump to it's index
@@ -173,7 +175,7 @@ export class PatientDetail extends React.Component
 
         // Find $everything
         .then(state => {
-            return getAllPages({ url: `${server.url}/Patient/${state.patient.id}/$everything` })
+            return getAllPages({ url: `${server.url}/Patient/${state.patient.id}/$everything?_count=500` })
             .then(data => {
                 let groups = {};
                 data.forEach(entry => {

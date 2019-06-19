@@ -1,7 +1,7 @@
 import React       from "react"
 import PropTypes   from "prop-types"
 import Grid        from "./Grid"
-import { getPath } from "../../lib"
+import { getPath, getCodeOrConcept } from "../../lib"
 import Period      from "./Period"
 import Date        from "./Date"
 import moment      from "moment"
@@ -187,15 +187,15 @@ export default class ResourceList extends React.Component
                 },
                 {
                     label: "Status",
-                    path: "status"
+                    render: rec => getCodeOrConcept(rec.status)
                 },
                 {
                     label: "Clinical Status",
-                    path: "clinicalStatus"
+                    render: rec => getCodeOrConcept(rec.clinicalStatus)
                 },
                 {
                     label: "Verification Status",
-                    path: "verificationStatus"
+                    render: rec => getCodeOrConcept(rec.verificationStatus)
                 },
                 {
                     label: "Value as String",

@@ -1,22 +1,8 @@
 export default {
     server: {
-        type: "STU-3", // "DSTU-2" or "STU-3"
+        type: "STU-3", // "DSTU-2" or "STU-3" or "R4"
 
-        // HSPC
-        // url: "https://sb-fhir-dstu2.smarthealthit.org/api/smartdstu2/open",
-        url: "https://sb-fhir-stu3.smarthealthit.org/smartstu3/open",
-
-        // HAPI
-        // url: "http://fhirtest.uhn.ca/baseDstu3",
-        // url: "http://fhirtest.uhn.ca/baseDstu2",
-
-        // MiHIN
-        // url: "http://34.195.196.20:9074/smartstu3",
-        // url: "http://52.90.126.238:8080/fhir/baseDstu3",
-
-        // Other
-        // url: "http://sqlonfhir-dstu2.azurewebsites.net/fhir",
-        // url: "https://stub-dstu2.smarthealthit.org/api/fhir",
+        url: "https://r3.smarthealthit.org",
 
         conditions: {},
 

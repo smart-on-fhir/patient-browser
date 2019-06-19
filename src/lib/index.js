@@ -365,6 +365,31 @@ export function getPatientImageUri(patient, base="") {
 }
 
 /**
+ * Return the display text for the given CodeableConcept
+ * @param {Object} concept CodeableConcept
+ * @returns {String}
+ */
+export function getCodeableConcept(concept, defaultValue = "-") {
+    return String(
+        getPath(concept, "coding.0.display") ||
+        getPath(concept, "coding.0.code") ||
+        concept.text ||
+        defaultValue
+    );
+}
+
+/**
+ * Some elements are of type `code` in older FHIR versions, but have been
+ * converted to CodeableConcept in later versions
+ * @param {String|Object} data Code or CodeableConcept
+ * @returns {String}
+ */
+export function getCodeOrConcept(data, defaultValue = "-") {
+    if (typeof data == "string") return data || defaultValue;
+    return getCodeableConcept(data, defaultValue);
+}
+
+/**
  * Given some input string (@input) and a string to search for (@query), this
  * function will highlight all the occurrences by wrapping them in
  * "<span class="search-match"></span>" tag.
