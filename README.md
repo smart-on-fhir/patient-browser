@@ -140,7 +140,7 @@ Any config file might contain the following options:
 
 - `server` - an object describing the FHIR API server
     - `server.url` - The base URL of the FHIR API server to use. Note that the picker will only work with open servers that do not require authorization.
-    - `server.type` - The FHIR version. Currently this can be `DSTU-2` or `STU-3`.
+    - `server.type` - The FHIR version. Currently this can be `DSTU-2` or `STU-3` or `R4`.
     - `server.tags` - An array of tag objects to be rendered in the tags auto-complete menu. This defaults to an empty array and in that case the tag selection widget will not have a drop-down menu options but it will still allow you to search by typing some tag manually. In other words, using an empty array is like saying that we just don't know what tags (if any) are available on that server. The list of tags might look like this:
         ```js
         [
@@ -204,7 +204,7 @@ node generate_config.js -s http://127.0.0.1:18300 -f my-test-config
 ```
 This will do the following:
 1. Connect to the specified open server provided with the `-s` or `--server` option.
-2. Load the conformance statement and detect the FHIR version (`"DSTU-2"` or `"STU-3"`).
+2. Load the conformance statement and detect the FHIR version (`"DSTU-2"` or `"STU-3"` or `"R4"`).
 3. Load all the conditions that are found ot that server.
 4. Load config from `./build/config/my-test-config.json5` if it exists, where `my-test-config` comes from the `-f` or `--file` option. Otherwise use default config template.
 5. Mix-in the FHIR version and the conditions.
