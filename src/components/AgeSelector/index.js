@@ -82,7 +82,7 @@ export default class AgeSelector extends React.Component
     onChangeMinValue(e) {
         if (this.props.onMinChange) {
             let min = {
-                value: e.target.valueAsNumber,
+                value: e.target.valueAsNumber || parseFloat(e.target.value || "0"),
                 units: this.props.min.units
             }
 
@@ -121,7 +121,7 @@ export default class AgeSelector extends React.Component
     onChangeMaxValue(e) {
         if (this.props.onMaxChange) {
             let max = {
-                value: e.target.valueAsNumber,
+                value: e.target.valueAsNumber || parseFloat(e.target.value || "0"),
                 units: this.props.max.units
             };
             if (this.canSet(this.props.min, max)) {
