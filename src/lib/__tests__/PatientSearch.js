@@ -5,8 +5,8 @@ import moment from "moment"
 
 const expect = chai.expect
 // import { CODE_SYSTEMS } from "../constants"
-import * as STU3 from "../../../build/config/stu3-open-sandbox.json5"
-import * as STU2 from "../../../build/config/dstu2-open-sandbox.json5"
+import * as STU3 from "../../../build/config/r3.json5"
+import * as STU2 from "../../../build/config/r2.json5"
 
 const SERVERS = {
     "STU2" : STU2.server,

@@ -125,6 +125,8 @@ export class DialogFooter extends React.Component
         }
 
         const OWNER = window.opener || window.parent
+        let selectionCount = Object.keys(this.props.selection).filter(key => !!this.props.selection[key]).length;
+
 
         return (
             <div className="col-xs-6 text-right">
@@ -134,13 +136,19 @@ export class DialogFooter extends React.Component
                     Cancel
                 </button>
                 <button className="btn btn-primary" onClick={ () => {
-                    OWNER.postMessage(
-                        {
-                            type: "result",
-                            data: this.export()
-                        },
-                        "*"
-                    );
+                    let confirmClose = true;
+                    if (selectionCount <= 0) {
+                        confirmClose = window.confirm("No patients have been selected. Are you sure you want to close the patient selector?");
+                    }
+                    if (confirmClose) {
+                        OWNER.postMessage(
+                            {
+                                type: "result",
+                                data: this.export()
+                            },
+                            "*"
+                        );
+                    }
                 }}>
                     OK
                 </button>
