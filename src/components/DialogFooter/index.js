@@ -20,7 +20,7 @@ class SelectionUI extends React.Component {
     };
 
     render() {
-        let len = Object.keys(this.props.selection).filter(key => !!this.props.selection[key]).length;
+        let len = Object.keys(this.props.selection).filter(key => !!this.props.selection[key] && key !== "selectionCleared").length;
         let viewClass = ["btn"];
         let resetClass = ["btn"];
 

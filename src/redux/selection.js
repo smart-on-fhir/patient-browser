@@ -79,6 +79,10 @@ export default handleActions({
         return newState
     },
 
+    /**
+     * If user's most recent action was to clear selection,
+     * track that so we can skip showing warning dialog on close
+     */
     [SELECTION_CLEARED]: (state, action) => {
         return { ...state, selectionCleared: true }
     },
