@@ -3,7 +3,7 @@ import PropTypes            from "prop-types"
 import { connect }          from "react-redux"
 import { showSelectedOnly } from "../../redux/settings"
 import { setParam, fetch }  from "../../redux/query"
-import { setAll }           from "../../redux/selection"
+import { setAll, setSelectionCleared } from "../../redux/selection"
 import "./DialogFooter.less"
 
 const IS_POPUP  = window.opener && window.name;
@@ -81,20 +81,20 @@ export class DialogFooter extends React.Component
         switch (this.props.settings.outputMode) {
 
         case "id-array": // array of patient IDs
-            return Object.keys(selection).filter(k => !!selection[k]);
+            return Object.keys(selection).filter(k => !!selection[k] && k !== "selectionCleared");
 
         case "transactions": // array of JSON transactions objects for each patient
-            return Object.keys(selection).filter(k => !!selection[k]).map(
+            return Object.keys(selection).filter(k => !!selection[k] && k !== "selectionCleared").map(
                 k => this.createPatientTransaction(selection[k])
             );
 
         case "patients": // array of patient JSON objects
-            return Object.keys(selection).filter(k => !!selection[k]).map(
+            return Object.keys(selection).filter(k => !!selection[k] && k !== "selectionCleared").map(
                 k => selection[k]
             );
 
         case "id-list": // comma-separated list of patient IDs (default)
-            return Object.keys(selection).filter(k => !!selection[k]).join(",")
+            return Object.keys(selection).filter(k => !!selection[k] && k !== "selectionCleared").join(",")
         }
     }
 
@@ -137,8 +137,8 @@ export class DialogFooter extends React.Component
                 </button>
                 <button className="btn btn-primary" onClick={ () => {
                     let confirmClose = true;
-                    if (selectionCount <= 0) {
-                        confirmClose = window.confirm("No patients have been selected. Are you sure you want to close the patient selector?");
+                    if (selectionCount <= 0 && !this.props.selection.selectionCleared) {
+                        confirmClose = window.confirm("No patients have been selected. Choose 'Cancel' to return to making a selection or 'OK' to close without selecting")
                     }
                     if (confirmClose) {
                         OWNER.postMessage(
@@ -192,6 +192,7 @@ export default connect(
             dispatch(showSelectedOnly(false))
             dispatch(setParam({ name: "_id", value: undefined }))
             dispatch(fetch())
+            dispatch(setSelectionCleared())
         },
         setParam: (name, value) => dispatch(setParam(name, value)),
         fetch: () => dispatch(fetch())
