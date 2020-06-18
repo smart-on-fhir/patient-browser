@@ -111,13 +111,14 @@ module.exports = function(config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        // plugins: [
+        plugins: [
         //     require("./node_modules/karma-webpack"),
         //     require("./node_modules/karma-mocha"),
         //     require("./node_modules/karma-mocha-reporter"),
         //     require("./node_modules/karma-chai"),
         //     require("./node_modules/karma-phantomjs-launcher")
-        // ],
+            // require("./node_modules/karma-chrome-launcher")
+        ],
 
         customLaunchers: {
             'FirefoxHeadless': {
@@ -154,20 +155,20 @@ module.exports = function(config) {
 
     if (process.env.CIRCLECI) {
         // @ts-ignore
-        options.customLaunchers = {
-            Chrome_CircleCI: {
-                base: 'ChromeHeadless',
-                flags: [
-                    '--no-sandbox',
-                    '--headless',
-                    '--disable-gpu',
-                    '--disable-translate',
-                    '--disable-extensions'
-                ]
-            }
-        };
+        // options.customLaunchers = {
+        //     Chrome_CircleCI: {
+        //         base: 'ChromeHeadless',
+        //         flags: [
+        //             '--no-sandbox',
+        //             '--headless',
+        //             '--disable-gpu',
+        //             '--disable-translate',
+        //             '--disable-extensions'
+        //         ]
+        //     }
+        // };
         options.browsers = [
-            "Chrome_CircleCI",
+            "PhantomJS",
             // "Firefox",
             //"IE",
             //"Opera",
