@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:7.9.0-browsers
+      - image: node:7.9-browsers
     steps:
       - checkout
       - run:
@@ -19,7 +19,7 @@ jobs:
             - node_modules
   test:
     docker:
-      - image: node:7.9.0-browsers
+      - image: node:7.9-browsers
     steps:
       - checkout
       - run:
