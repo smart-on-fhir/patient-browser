@@ -805,12 +805,13 @@ export default class PatientSearch
 
         // prepare the base options for the patient ajax request
         let options = {
-            url: `${server.url}/Patient/_search`,
-            method: "POST",
+            url: this.offset && this.cacheId ? server.url : `${server.url}/Patient/_search`,
+            method: this.offset && this.cacheId ? "GET" : "POST",
             processData: false,
             data,
             headers: {
-                accept: "application/json+fhir"
+                accept: "application/json+fhir",
+                "content-type": "application/x-www-form-urlencoded"
             }
         };
 
