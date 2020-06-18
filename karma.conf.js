@@ -156,8 +156,14 @@ module.exports = function(config) {
         // @ts-ignore
         options.customLaunchers = {
             Chrome_CircleCI: {
-                base: 'Chrome',
-                flags: ['--no-sandbox', '--headless']
+                base: 'ChromeHeadless',
+                flags: [
+                    '--no-sandbox',
+                    '--headless',
+                    '--disable-gpu',
+                    '--disable-translate',
+                    '--disable-extensions'
+                ]
             }
         };
         options.browsers = [
