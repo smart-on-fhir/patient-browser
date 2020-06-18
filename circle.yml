@@ -7,18 +7,18 @@ dependencies:
     - NPM_CONFIG_PRODUCTION=false NODE_ENV=production npm install
     #- NODE_ENV=production npm run build:prod
     #- npm test
-#jobs:
-#  build:
-#    environment:
-#      - NODE_ENV: "development"
-#    steps:
-#      - run:
-#          name: Building project
-#          command: npm run build
-#  test:
-#    environment:
-#      - NODE_ENV: "development"
-#    steps:
-#      - run:
-#          name: Running tests
-#          command: npm test
+jobs:
+ build:
+   environment:
+     - NODE_ENV: "development"
+   steps:
+     - run:
+         name: Building project
+         command: npm run build
+ test:
+   environment:
+     - NODE_ENV: "development"
+   steps:
+     - run:
+         name: Running tests
+         command: npm test
