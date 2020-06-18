@@ -10,8 +10,8 @@ jobs:
       - node/with-cache:
           steps:
             - run: NPM_CONFIG_PRODUCTION=false NODE_ENV=production npm install
-            # - run: npm test
-            - run: CHROME_BIN=/usr/bin/google-chrome ./node_modules/karma/bin/karma start ./karma.conf.js --no-auto-watch --single-run --browsers Chrome
+            - run: CHROME_BIN=/usr/bin/google-chrome npm test
+            # - run: CHROME_BIN=/usr/bin/google-chrome ./node_modules/karma/bin/karma start ./karma.conf.js --no-auto-watch --single-run --browsers Chrome
 workflows:
     build-and-test:
       jobs:

@@ -152,16 +152,16 @@ module.exports = function(config) {
         }
     };
 
-    if (process.env.TRAVIS) {
+    if (process.env.CIRCLECI) {
         // @ts-ignore
         options.customLaunchers = {
-            Chrome_travis_ci: {
+            Chrome_CircleCI: {
                 base: 'Chrome',
-                flags: ['--no-sandbox']
+                flags: ['--no-sandbox', '--headless']
             }
         };
         options.browsers = [
-            "Chrome_travis_ci",
+            "Chrome_CircleCI",
             // "Firefox",
             //"IE",
             //"Opera",
