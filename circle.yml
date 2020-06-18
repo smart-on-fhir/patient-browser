@@ -1,24 +1,53 @@
-machine:
-  node:
-    version: 7.9.0
+version: 2
 
-dependencies:
-  override:
-    - NPM_CONFIG_PRODUCTION=false NODE_ENV=production npm install
-    #- NODE_ENV=production npm run build:prod
-    #- npm test
+# machine:
+#   node:
+#     version: 7.9.0
+
+# dependencies:
+#   override:
+#     - NPM_CONFIG_PRODUCTION=false NODE_ENV=production npm install
+#     #- NODE_ENV=production npm run build:prod
+#     #- npm test
 jobs:
- build:
-   environment:
-     - NODE_ENV: "development"
-   steps:
-     - run:
-         name: Building project
-         command: npm run build
- test:
-   environment:
-     - NODE_ENV: "development"
-   steps:
-     - run:
-         name: Running tests
-         command: npm test
+  build:
+    docker:
+      image: node:7.9.0-browsers
+    environment:
+      - NODE_ENV: "development"
+    steps:
+      - checkout
+      - run:
+          name: Update npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install npm wee
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - build:
+          name: Building project
+          command: npm run build
+  test:
+    environment:
+      - NODE_ENV: "development"
+    steps:
+      - run:
+        name: Running tests
+        command: npm test
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
