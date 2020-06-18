@@ -29,13 +29,24 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
+
   test:
-    environment:
-      - NODE_ENV: "development"
+    docker:
+      - image: node:7.9.0-browsers
     steps:
+      - checkout
       - run:
-        name: Running tests
-        command: npm test
+          name: Test
+          command: npm test
+      # - run:
+      #     name: Generate code coverage
+      #     command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      # - store_artifacts:
+      #     path: test-results.xml
+      #     prefix: tests
+      # - store_artifacts:
+      #     path: coverage
+      #     prefix: coverage
 
 workflows:
   version: 2
