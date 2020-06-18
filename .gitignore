@@ -1,7 +1,7 @@
 node_modules
-build/js/*.*
-build/index.html
-build/config.json5
+# build/js/*.*
+# build/index.html
+# build/config.json5
 tests/e2e/bin
 tests/e2e/reports
 tests/e2e/screenshots
