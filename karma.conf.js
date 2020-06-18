@@ -111,14 +111,13 @@ module.exports = function(config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        plugins: [
+        // plugins: [
         //     require("./node_modules/karma-webpack"),
         //     require("./node_modules/karma-mocha"),
         //     require("./node_modules/karma-mocha-reporter"),
         //     require("./node_modules/karma-chai"),
         //     require("./node_modules/karma-phantomjs-launcher")
-            // require("./node_modules/karma-chrome-launcher")
-        ],
+        // ],
 
         customLaunchers: {
             'FirefoxHeadless': {
