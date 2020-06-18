@@ -366,7 +366,9 @@ export default class PatientSearch
      * @returns {PatientSearch} Returns the instance
      */
     setSort(sort) {
-        this.sort = sort
+        this.sort = sort;
+        this.offset = null;
+        this.cacheId = null;
         return this
     }
 
