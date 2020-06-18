@@ -9,7 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm install
+            - run: NPM_CONFIG_PRODUCTION=false NODE_ENV=production npm install
             - run: npm test
 workflows:
     build-and-test:
