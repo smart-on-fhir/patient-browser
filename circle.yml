@@ -1,20 +1,8 @@
 version: 2
-
-# machine:
-#   node:
-#     version: 7.9.0
-
-# dependencies:
-#   override:
-#     - NPM_CONFIG_PRODUCTION=false NODE_ENV=production npm install
-#     #- NODE_ENV=production npm run build:prod
-#     #- npm test
 jobs:
   build:
     docker:
       image: node:7.9.0-browsers
-    environment:
-      - NODE_ENV: "development"
     steps:
       - checkout
       - run:
@@ -29,7 +17,6 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
-
   test:
     docker:
       - image: node:7.9.0-browsers
@@ -38,16 +25,6 @@ jobs:
       - run:
           name: Test
           command: npm test
-      # - run:
-      #     name: Generate code coverage
-      #     command: './node_modules/.bin/nyc report --reporter=text-lcov'
-      # - store_artifacts:
-      #     path: test-results.xml
-      #     prefix: tests
-      # - store_artifacts:
-      #     path: coverage
-      #     prefix: coverage
-
 workflows:
   version: 2
   build_and_test:
