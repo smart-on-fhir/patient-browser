@@ -2,6 +2,7 @@
 import AgeSelector   from ".."
 import ReactTestUtils from "react-dom/test-utils"
 import React from "react"
+import chai from "chai"
 
 const expect = chai.expect
 

@@ -3,6 +3,7 @@ import TagSelector from ".."
 import ReactDOM from "react-dom"
 import TestUtils from "react-dom/test-utils"
 import React from "react"
+import chai from "chai"
 
 const expect = chai.expect;
 

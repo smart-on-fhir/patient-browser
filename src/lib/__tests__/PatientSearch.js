@@ -1,12 +1,17 @@
 /* global describe, it, chai */
-
+import chai from "chai"
 import PatientSearch from "../PatientSearch"
 import moment from "moment"
 
 const expect = chai.expect
-// import { CODE_SYSTEMS } from "../constants"
-import * as STU3 from "../../../build/config/stu3-open-sandbox.json5"
-import * as STU2 from "../../../build/config/dstu2-open-sandbox.json5"
+import { CODE_SYSTEMS } from "../constants"
+// import * as STU3 from "../../../build/config/stu3-open-sandbox.json5"
+// import * as STU2 from "../../../build/config/dstu2-open-sandbox.json5"
+
+// @ts-ignore
+import * as STU3 from "../../../build/config/r3.json5"
+// @ts-ignore
+import * as STU2 from "../../../build/config/r2.json5"
 
 const SERVERS = {
     "STU2" : STU2.server,
@@ -17,7 +22,7 @@ const SERVERS = {
 describe ("lib", () => {
     describe ("PatientSearch", function() {
 
-        this.timeout(5000);
+        this.timeout(15000);
 
         it ("works with no params", () => {
             let builder = new PatientSearch()
@@ -77,39 +82,39 @@ describe ("lib", () => {
             job.catch(next);
         });
 
-        // it ("Medical conditions", () => {
-        //     let builder = new PatientSearch()
-        //     builder.addCondition("hypertension", {
-        //         description: 'Hypertension',
-        //         codes: {
-        //             'SNOMED-CT' : ['38341003']
-        //         }
-        //     })
-        //     expect(decodeURIComponent(builder.compile())).to.equal(
-        //         `_has:Condition:patient:code=${CODE_SYSTEMS["SNOMED-CT"].url}|38341003`
-        //     )
+        it ("Medical conditions", () => {
+            let builder = new PatientSearch()
+            builder.addCondition("hypertension", {
+                description: 'Hypertension',
+                codes: {
+                    'SNOMED-CT' : ['38341003']
+                }
+            })
+            expect(decodeURIComponent(builder.compileConditions())).to.equal(
+                `code=${CODE_SYSTEMS["SNOMED-CT"].url}|38341003`
+            )
 
-        //     builder.addCondition("diabetes", {
-        //         description: 'Diabetes',
-        //         codes: {
-        //             'SNOMED-CT' : ['44054006']
-        //         }
-        //     })
-        //     expect(decodeURIComponent(builder.compile())).to.equal(
-        //         `_has:Condition:patient:code=${
-        //             CODE_SYSTEMS["SNOMED-CT"].url
-        //         }|38341003&_has:Condition:patient:code=${
-        //             CODE_SYSTEMS["SNOMED-CT"].url
-        //         }|44054006`
-        //     )
+            builder.addCondition("diabetes", {
+                description: 'Diabetes',
+                codes: {
+                    'SNOMED-CT' : ['44054006']
+                }
+            })
+            expect(decodeURIComponent(builder.compileConditions())).to.equal(
+                `code=${
+                    CODE_SYSTEMS["SNOMED-CT"].url
+                }|38341003,${
+                    CODE_SYSTEMS["SNOMED-CT"].url
+                }|44054006`
+            )
 
-        //     builder.removeCondition("hypertension")
-        //     expect(decodeURIComponent(builder.compile())).to.equal(
-        //         `_has:Condition:patient:code=${
-        //             CODE_SYSTEMS["SNOMED-CT"].url
-        //         }|44054006`
-        //     )
-        // })
+            builder.removeCondition("hypertension")
+            expect(decodeURIComponent(builder.compileConditions())).to.equal(
+                `code=${
+                    CODE_SYSTEMS["SNOMED-CT"].url
+                }|44054006`
+            )
+        })
 
         it ("setMinAge", next => {
             let builder = new PatientSearch()
@@ -128,7 +133,7 @@ describe ("lib", () => {
                     if (bundle.total > 0) {
                         bundle.entry.forEach(patient => {
                             expect(
-                                moment() - moment(patient.resource.birthDate) >= 1000*60*60*24*365*25
+                                +moment() - +moment(patient.resource.birthDate) >= 1000*60*60*24*365*25
                             ).to.equal(true)
                         })
                     }
@@ -141,7 +146,7 @@ describe ("lib", () => {
                     if (bundle.total > 0) {
                         bundle.entry.forEach(patient => {
                             expect(
-                                moment() - moment(patient.resource.birthDate) >= 1000*60*60*24*365*25
+                                +moment() - +moment(patient.resource.birthDate) >= 1000*60*60*24*365*25
                             ).to.equal(true)
                         })
                     }
@@ -271,9 +276,11 @@ describe ("lib", () => {
             builder.setQueryType("advanced")
             builder.setLimit(5)
             builder.setParam("a", "b")
+            // @ts-ignore
             expect(builder.queryType).to.equal("advanced")
             expect(builder.compile()).to.equal("_count=5")
             builder.setQueryType("whatever")
+            // @ts-ignore
             expect(builder.queryType).to.equal("default")
             expect(builder.compile()).to.equal("a=b&_count=5")
         });
@@ -294,24 +301,31 @@ describe ("lib", () => {
 
         it ("setParam", () => {
             let builder = new PatientSearch()
+            // @ts-ignore
             expect(builder.params).to.deep.equal({})
             builder.setParam("a", 1)
+            // @ts-ignore
             expect(builder.params).to.deep.equal({ a: 1 })
             builder.setParam("a", 2)
+            // @ts-ignore
             expect(builder.params).to.deep.equal({ a: 2 })
             builder.setParam("b", 3)
+            // @ts-ignore
             expect(builder.params).to.deep.equal({ a: 2, b: 3 })
             expect(builder.compile()).to.equal("a=2&b=3")
             builder.setParam("a", undefined)
+            // @ts-ignore
             expect(builder.params).to.deep.equal({ b: 3 })
             expect(builder.compile()).to.equal("b=3")
         });
 
         it ("hasParam", () => {
             let builder = new PatientSearch()
+            // @ts-ignore
             expect(builder.params).to.deep.equal({})
             expect(builder.hasParam("a")).to.equal(false)
             builder.setParam("a", 1)
+            // @ts-ignore
             expect(builder.params).to.deep.equal({ a: 1 })
             expect(builder.hasParam("a")).to.equal(true)
             builder.setParam("b", 3)
@@ -350,37 +364,55 @@ describe ("lib", () => {
 
             let builder2 = builder1.clone()
 
+            // @ts-ignore
             expect(builder1.conditions).to.deep.equal(tpl.conditions)
+            // @ts-ignore
             expect(builder2.conditions).to.deep.equal(tpl.conditions)
 
+            // @ts-ignore
             expect(builder1.params).to.deep.equal(tpl.params)
+            // @ts-ignore
             expect(builder2.params).to.deep.equal(tpl.params)
 
             expect(builder1.ageGroup).to.equal(tpl.ageGroup)
             expect(builder2.ageGroup).to.equal(tpl.ageGroup)
 
+            // @ts-ignore
             expect(builder1.minAge).to.deep.equal(tpl.minAge)
+            // @ts-ignore
             expect(builder2.minAge).to.deep.equal(tpl.minAge)
 
+            // @ts-ignore
             expect(builder1.maxAge).to.deep.equal(tpl.maxAge)
+            // @ts-ignore
             expect(builder2.maxAge).to.deep.equal(tpl.maxAge)
 
+            // @ts-ignore
             expect(builder1.gender).to.equal(tpl.gender)
+            // @ts-ignore
             expect(builder2.gender).to.equal(tpl.gender)
 
+            // @ts-ignore
             expect(builder1.limit).to.equal(tpl.limit)
+            // @ts-ignore
             expect(builder2.limit).to.equal(tpl.limit)
 
             expect(builder1.cacheId).to.equal(tpl.cacheId)
             expect(builder2.cacheId).to.equal(tpl.cacheId)
 
+            // @ts-ignore
             expect(builder1.offset).to.equal(tpl.offset)
+            // @ts-ignore
             expect(builder2.offset).to.equal(tpl.offset)
 
+            // @ts-ignore
             expect(builder1.queryType).to.equal(tpl.queryType)
+            // @ts-ignore
             expect(builder2.queryType).to.equal(tpl.queryType)
 
+            // @ts-ignore
             expect(builder1.queryString).to.equal(tpl.queryString)
+            // @ts-ignore
             expect(builder2.queryString).to.equal(tpl.queryString)
 
             expect(builder1).to.not.equal(builder2)
@@ -407,6 +439,7 @@ describe ("lib", () => {
 
         it ("getState", () => {
             let builder = (new PatientSearch())
+                .setSort("-name")
                 .setConditions({ a: 1, b: 2 })
                 .setParam("c", 5)
                 .setAgeGroup("infant")
@@ -416,8 +449,7 @@ describe ("lib", () => {
                 .setLimit(3)
                 .setOffset("ddd", 33)
                 .setQueryType("default")
-                .setQueryString("whatever=something")
-                .setSort("-name");
+                .setQueryString("whatever=something");
 
             expect(builder.getState()).to.deep.equal({
                 conditions : { a: 1, b: 2 },
@@ -458,6 +490,7 @@ describe ("lib", () => {
                 let builder = new PatientSearch();
                 builder.setOffset("x", 3);
                 expect(builder.compile()).to.equal("_getpages=x&_getpagesoffset=3")
+                // @ts-ignore
                 builder.setMinAge({})
                 expect(builder.compile().indexOf("_getpages=x&_getpagesoffset=3")).to.equal(-1)
             });
@@ -466,6 +499,7 @@ describe ("lib", () => {
                 let builder = new PatientSearch();
                 builder.setOffset("x", 3);
                 expect(builder.compile()).to.equal("_getpages=x&_getpagesoffset=3")
+                // @ts-ignore
                 builder.setMaxAge({})
                 expect(builder.compile().indexOf("_getpages=x&_getpagesoffset=3")).to.equal(-1)
             });

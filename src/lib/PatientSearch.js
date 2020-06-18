@@ -234,9 +234,9 @@ export default class PatientSearch
     /**
      * Sets the desired min age af the patients. This can also be set to null
      * (or other falsy value) to exclude the minAge restrictions from the query.
-     * @param {Object} age The age
-     * @param {Number} age.value The age as number of @units
-     * @param {String} age.units The units for the value (years|months|days)
+     * @param {object} age The age
+     * @param {number} age.value The age as number of units
+     * @param {string} age.units The units for the value (years|months|days)
      * @returns {PatientSearch} Returns the instance
      */
     setMinAge(age) {
@@ -251,9 +251,9 @@ export default class PatientSearch
     /**
      * Sets the desired max age af the patients. This can also be set to null
      * (or other falsy value) to exclude the maxAge restrictions from the query.
-     * @param {Object} age The age
-     * @param {Number} age.value The age as number of @units
-     * @param {String} age.units The units for the value (years|months|days)
+     * @param {object} age The age
+     * @param {number} age.value The age as number of units
+     * @param {string} age.units The units for the value (years|months|days)
      * @returns {PatientSearch} Returns the instance
      */
     setMaxAge(age) {
@@ -383,15 +383,15 @@ export default class PatientSearch
         inst.params = { ...this.params };
         inst.tags = [ ...this.tags ];
 
-        inst.setAgeGroup(this.ageGroup)
+        inst.setSort(this.sort)
+            .setAgeGroup(this.ageGroup)
             .setMinAge(this.minAge)
             .setMaxAge(this.maxAge)
             .setGender(this.gender)
             .setLimit(this.limit)
             .setOffset(this.cacheId, this.offset)
             .setQueryType(this.queryType)
-            .setQueryString(this.queryString)
-            .setSort(this.sort);
+            .setQueryString(this.queryString);
 
         return inst;
     }

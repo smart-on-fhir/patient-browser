@@ -1,14 +1,12 @@
 module.exports = function(config) {
-    config.set({
+    const options = {
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: "",
 
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: [
-            // require("../node_modules/karma-mocha"),
-            "mocha"//,
-            // "chai"
+            "mocha"
         ],
 
         // list of files / patterns to load in the browser
@@ -17,7 +15,7 @@ module.exports = function(config) {
             "http://chaijs.com/chai.js",
             "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js",
             "**/__tests__/*.js",
-            "**/__tests__/*.jsx"
+            // "**/__tests__/*.jsx"
         ],
 
         // list of files to exclude
@@ -94,12 +92,16 @@ module.exports = function(config) {
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: [
             // "Chrome",       // uses karma-chrome-launcher
+            // "ChromeHeadless",
             // "Firefox",      // uses karma-firefox-launcher
+            "FirefoxHeadless",
             // "ChromeCanary", // uses karma-chrome-launcher
             // "Safari",       // uses karma-safari-launcher
             // "IE",           // uses karma-ie-launcher
-            "PhantomJS"        // uses karma-phantomjs-launcher
+            // "PhantomJS"        // uses karma-phantomjs-launcher
         ],
+
+        // browsers: ["MyHeadlessChrome"],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -117,16 +119,55 @@ module.exports = function(config) {
         //     require("./node_modules/karma-phantomjs-launcher")
         // ],
 
-        // PhantomJS custom settings
-        phantomjsLauncher: {
-
-            // Have phantomjs exit if a ResourceError is encountered (useful if
-            // karma exits without killing phantom)
-            exitOnResourceError: true
+        customLaunchers: {
+            'FirefoxHeadless': {
+                base: 'Firefox',
+                flags: [
+                    '-headless',
+                ],
+            }
         },
+
+        // customLaunchers: {
+        //     MyHeadlessChrome: {
+        //       base: "Chrome",
+        //       flags: [
+        //         "--headless", 
+        //         "--disable-gpu", 
+        //         "--remote-debugging-port-9222"
+        //       ]
+        //     }
+        //   },
+
+        // // PhantomJS custom settings
+        // phantomjsLauncher: {
+
+        //     // Have phantomjs exit if a ResourceError is encountered (useful if
+        //     // karma exits without killing phantom)
+        //     exitOnResourceError: true
+        // },
 
         mochaReporter: {
             showDiff: true
         }
-    })
+    };
+
+    if (process.env.TRAVIS) {
+        // @ts-ignore
+        options.customLaunchers = {
+            Chrome_travis_ci: {
+                base: 'Chrome',
+                flags: ['--no-sandbox']
+            }
+        };
+        options.browsers = [
+            "Chrome_travis_ci",
+            // "Firefox",
+            //"IE",
+            //"Opera",
+            // "PhantomJS"
+        ];
+    };
+
+    config.set(options);
 }

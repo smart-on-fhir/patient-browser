@@ -1,5 +1,6 @@
 /* global describe, beforeEach, it, chai */
 import store from ".."
+import chai from "chai"
 import {
     merge,
     showSelectedOnly,

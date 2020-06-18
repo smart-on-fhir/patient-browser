@@ -1,5 +1,6 @@
 /* global describe, it, chai */
 import moment from "moment"
+import chai from "chai"
 import {
     getPath,
     getPatientAge,
