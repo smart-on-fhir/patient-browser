@@ -488,10 +488,14 @@ export default class PatientSearch
         else {
 
             // Custom params ---------------------------------------------------
-            Object.keys(this.params).forEach(k => params.push({
-                name : k,
-                value: this.params[k]
-            }))
+            Object.keys(this.params).forEach(k => {
+                if(this.params[k].trim()) {
+                    params.push({
+                        name : k,
+                        value: this.params[k]
+                    });
+                }
+            });
 
             // sort ------------------------------------------------------------
             if (this.sort) {
