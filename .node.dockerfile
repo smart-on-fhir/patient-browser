@@ -7,4 +7,5 @@ RUN apt-get update
 RUN apt-get install -y -q curl gnupg2
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get -y -q install nodejs
-RUN cd /usr/share/nginx/html/config-genrator && npm i
+WORKDIR /usr/share/nginx/html/config-genrator
+CMD npm i
