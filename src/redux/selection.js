@@ -31,15 +31,20 @@ let initialSelection = {};
  * with patient IDs as keys and booleans as values to indicate if
  * that patient is selected.
  */
-const INITIAL_STATE = { ...initialSelection }
+const INITIAL_STATE = {
+    ...initialSelection,
+    selectionCleared: false
+}
 
 // Private action constants
 const TOGGLE  = "app/selection/TOGGLE"
 const SET_ALL = "app/selection/SET_ALL"
+const SELECTION_CLEARED = "app/selection/SELECTION_CLEARED"
 
 // Create (and export) the redux actions
 export const toggle = createAction(TOGGLE)
 export const setAll = createAction(SET_ALL)
+export const setSelectionCleared = createAction(SELECTION_CLEARED)
 
 /**
  * Update the "_selection" hash parameter whenever the selection changes
@@ -63,7 +68,8 @@ export default handleActions({
     [TOGGLE]: (state, action) => {
         let id = String(action.payload.id);
         let newState = {
-            [id]: state[id] ? false : action.payload
+            [id]: state[id] ? false : action.payload,
+            selectionCleared: false
         };
 
         if (!SINGLE) {
@@ -74,11 +80,19 @@ export default handleActions({
     },
 
     /**
+     * If user's most recent action was to clear selection,
+     * track that so we can skip showing warning dialog on close
+     */
+    [SELECTION_CLEARED]: (state, action) => {
+        return { ...state, selectionCleared: true }
+    },
+
+    /**
      * Set the entire selection. Useful if an initial selection
      * needs to be provided from the host application.
      */
     [SET_ALL]: (_, action) => {
-        let newState = { ...action.payload }
+        let newState = { ...action.payload, selectionCleared: false }
         setHashSelection(newState)
         return newState
     }
