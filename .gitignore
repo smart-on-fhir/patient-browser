@@ -8,3 +8,4 @@ tests/e2e/screenshots
 selenium-debug.log
 
 !.gitkeep
+/build/config/*-custom.json5
