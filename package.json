@@ -75,7 +75,7 @@
     "request": "^2.85.0",
     "style-loader": "^0.16.1",
     "webpack": "^2.3.3",
-    "webpack-bundle-analyzer": "^2.3.1"
+    "webpack-bundle-analyzer": "^3.3.2"
   },
   "browserslist": [
     "> 5%",
