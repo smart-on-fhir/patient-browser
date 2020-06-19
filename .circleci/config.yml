@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
 jobs:
-  build-and-test:
+  build:
     executor:
       name: node/default
     steps:
@@ -10,9 +10,28 @@ jobs:
       - node/with-cache:
           steps:
             - run: NPM_CONFIG_PRODUCTION=false NODE_ENV=production npm install
-            - run: CHROME_BIN=/usr/bin/google-chrome npm test
-            # - run: CHROME_BIN=/usr/bin/google-chrome ./node_modules/karma/bin/karma start ./karma.conf.js --no-auto-watch --single-run --browsers Chrome
+            - run: npm test
+  test:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm test
+
+# workflows:
+#     build-and-test:
+#       jobs:
+#         - build-and-test
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+#   version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          # filters:
+          #   branches:
+          #     only: master
