@@ -489,7 +489,7 @@ export default class PatientSearch
 
             // Custom params ---------------------------------------------------
             Object.keys(this.params).forEach(k => {
-                if(this.params[k].trim()) {
+                if (String(this.params[k]).trim()) {
                     params.push({
                         name : k,
                         value: this.params[k]
@@ -725,7 +725,7 @@ export default class PatientSearch
          * the IDs to only contain those that have all the conditions specified
          * by the user.
          * @param {Object} response The JSON Conditions bundle response
-         * @returns {Promise<String[]>} Array of patient ID strings (can be empty)
+         * @returns {Promise<any>} Array of patient ID strings (can be empty)
          */
         const handleConditionsResponse = response => {
 
