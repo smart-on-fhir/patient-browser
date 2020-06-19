@@ -20,13 +20,8 @@ jobs:
           steps:
             - run: npm test
 
-# workflows:
-#     build-and-test:
-#       jobs:
-#         - build-and-test
 workflows:
-#   version: 2
-  build_and_test:
+  build-and-test:
     jobs:
       - build
       - test:
