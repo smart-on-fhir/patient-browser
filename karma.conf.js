@@ -91,17 +91,8 @@ module.exports = function(config) {
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: [
-            // "Chrome",       // uses karma-chrome-launcher
-            // "ChromeHeadless",
-            // "Firefox",      // uses karma-firefox-launcher
-            "FirefoxHeadless",
-            // "ChromeCanary", // uses karma-chrome-launcher
-            // "Safari",       // uses karma-safari-launcher
-            // "IE",           // uses karma-ie-launcher
-            // "PhantomJS"        // uses karma-phantomjs-launcher
+            "FirefoxHeadless"
         ],
-
-        // browsers: ["MyHeadlessChrome"],
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
@@ -111,16 +102,8 @@ module.exports = function(config) {
         // how many browser should be started simultaneous
         concurrency: Infinity,
 
-        // plugins: [
-        //     require("./node_modules/karma-webpack"),
-        //     require("./node_modules/karma-mocha"),
-        //     require("./node_modules/karma-mocha-reporter"),
-        //     require("./node_modules/karma-chai"),
-        //     require("./node_modules/karma-phantomjs-launcher")
-        // ],
-
         customLaunchers: {
-            'FirefoxHeadless': {
+            FirefoxHeadless: {
                 base: 'Firefox',
                 flags: [
                     '-headless',
@@ -128,24 +111,13 @@ module.exports = function(config) {
             }
         },
 
-        // customLaunchers: {
-        //     MyHeadlessChrome: {
-        //       base: "Chrome",
-        //       flags: [
-        //         "--headless", 
-        //         "--disable-gpu", 
-        //         "--remote-debugging-port-9222"
-        //       ]
-        //     }
-        //   },
+        // PhantomJS custom settings
+        phantomjsLauncher: {
 
-        // // PhantomJS custom settings
-        // phantomjsLauncher: {
-
-        //     // Have phantomjs exit if a ResourceError is encountered (useful if
-        //     // karma exits without killing phantom)
-        //     exitOnResourceError: true
-        // },
+            // Have phantomjs exit if a ResourceError is encountered (useful if
+            // karma exits without killing phantom)
+            exitOnResourceError: true
+        },
 
         mochaReporter: {
             showDiff: true
@@ -153,25 +125,8 @@ module.exports = function(config) {
     };
 
     if (process.env.CIRCLECI) {
-        // @ts-ignore
-        // options.customLaunchers = {
-        //     Chrome_CircleCI: {
-        //         base: 'ChromeHeadless',
-        //         flags: [
-        //             '--no-sandbox',
-        //             '--headless',
-        //             '--disable-gpu',
-        //             '--disable-translate',
-        //             '--disable-extensions'
-        //         ]
-        //     }
-        // };
         options.browsers = [
-            "PhantomJS",
-            // "Firefox",
-            //"IE",
-            //"Opera",
-            // "PhantomJS"
+            "phantomjsLauncher"
         ];
     };
 
