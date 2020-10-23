@@ -7,7 +7,7 @@ import Period      from "./Period"
 
 function getEncounterClass(encounter) {
     return encounter.class && typeof encounter.class == "object" ?
-        getPath(encounter, "class.type.0.text") :
+        getPath(encounter, "class.display") :
         encounter.class;
 }
 
