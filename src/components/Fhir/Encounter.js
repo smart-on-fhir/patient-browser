@@ -63,7 +63,7 @@ export default class Encounter extends React.Component
                     },
                     {
                         label: "Reason",
-                        path : "reason.0.coding.0.display",
+                        path : "reasonCode.0.coding.0.display",
                         defaultValue: "N/A"
                     },
                     {
