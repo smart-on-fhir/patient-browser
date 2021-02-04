@@ -139,9 +139,15 @@ Note that these config files are in `json5` format which is like a loose version
 Any config file might contain the following options:
 
 - `server` - an object describing the FHIR API server
-    - `server.url` - The base URL of the FHIR API server to use. Note that the picker will only work with open servers that do not require authorization.
-    - `server.type` - The FHIR version. Currently this can be `DSTU-2` or `STU-3` or `R4`.
-    - `server.tags` - An array of tag objects to be rendered in the tags auto-complete menu. This defaults to an empty array and in that case the tag selection widget will not have a drop-down menu options but it will still allow you to search by typing some tag manually. In other words, using an empty array is like saying that we just don't know what tags (if any) are available on that server. The list of tags might look like this:
+    - `server.url`     - The base URL of the FHIR API server to use. Note that the picker will only work with open servers that do not require authorization unless the headers option is added.
+    - `server.headers` - Optional headers (as key/value) to send to the FHIR server. Please note that any secret credentials used here are sent to the client browser and are accessible using developper tools. Headers might look like this:
+        ```js
+        {
+            Authorization: "Bearer my-token"
+        }
+        ```    
+    - `server.type`    - The FHIR version. Currently this can be `DSTU-2` or `STU-3` or `R4`.
+    - `server.tags`    - An array of tag objects to be rendered in the tags auto-complete menu. This defaults to an empty array and in that case the tag selection widget will not have a drop-down menu options but it will still allow you to search by typing some tag manually. In other words, using an empty array is like saying that we just don't know what tags (if any) are available on that server. The list of tags might look like this:
         ```js
         [
             {

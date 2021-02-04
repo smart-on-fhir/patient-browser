@@ -2,6 +2,7 @@ import moment from "moment"
 import { CODE_SYSTEMS } from "./constants"
 import { parseQueryString, request } from "."
 import { intVal, getPath } from "."
+import $          from "jquery"
 
 /**
  * This is just a helper class that is used as a query builder. It has some
@@ -818,6 +819,10 @@ export default class PatientSearch
                 "content-type": "application/x-www-form-urlencoded"
             }
         };
+
+        if (server.headers) {
+            options.headers = $.extend(true, options.headers, server.headers);
+        }
 
         return this.getPatientIDs(server)
         .then(ids => {
