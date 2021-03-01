@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/chb/patient-browser#readme",
   "dependencies": {
-    "autoprefixer": "^6.7.7",
+    "autoprefixer": "^10.0.0",
     "babel": "^6.23.0",
     "babel-core": "^6.24.0",
     "babel-eslint": "^10.0.0",
