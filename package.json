@@ -85,7 +85,7 @@
   "devDependencies": {
     "@types/chai": "4.2.11",
     "@types/mocha": "7.0.2",
-    "@types/node": "14.0.13",
+    "@types/node": "14.14.31",
     "chai": "3.5.0",
     "json5-loader": "1.0.1",
     "karma": "1.7.1",
