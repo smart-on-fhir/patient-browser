@@ -73,7 +73,7 @@
     "redux-thunk": "^2.2.0",
     "redux-thunk-actions": "^1.1.6",
     "request": "^2.85.0",
-    "style-loader": "^0.16.1",
+    "style-loader": "^0.23.0",
     "webpack": "^2.3.3",
     "webpack-bundle-analyzer": "^3.3.2"
   },
