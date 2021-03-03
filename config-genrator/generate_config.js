@@ -35,7 +35,7 @@ function requestPromise(options) {
                 strictSSL: false,
                 proxy    : app.proxy,
                 headers  : {
-                    accept: "application/json+fhir"
+                    accept: "application/fhir+json"
                 }
             }),
             (error, res) => {
@@ -179,7 +179,7 @@ getFhirVersion().then(version => {
         strictSSL: false,
         proxy    : app.proxy,
         headers  : {
-            accept: "application/json+fhir"
+            accept: "application/fhir+json"
         }
     }, resources => {
         let conditions = {};

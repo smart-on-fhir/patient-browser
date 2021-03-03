@@ -814,7 +814,7 @@ export default class PatientSearch
             processData: false,
             data,
             headers: {
-                accept: "application/json+fhir",
+                accept: "application/fhir+json",
                 "content-type": "application/x-www-form-urlencoded"
             }
         };

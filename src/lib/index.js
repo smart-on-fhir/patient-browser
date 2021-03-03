@@ -460,7 +460,7 @@ export function request(options) {
     options = typeof options == "string" ? { url : options } : options || {};
     let cfg = $.extend(true, options, {
         headers: {
-            Accept: "application/json+fhir"
+            Accept: "application/fhir+json"
         }
     })
 
