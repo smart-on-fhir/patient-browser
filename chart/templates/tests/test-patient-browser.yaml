@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "patient-browser.fullname" . }}-test"
+  labels:
+    {{- include "patient-browser.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: test
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "patient-browser.fullname" . }}:{{ .Values.service.httpPort }}/index.html']
+  restartPolicy: Never
