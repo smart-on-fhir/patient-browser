@@ -9,9 +9,8 @@ image:
   pullPolicy: Always
   tag: 0.0.1
 
-# The following attribute deliverately includes an unsupported character '@' 
-# to prevent deployment of this chart without the deployer explicitely providing a valid FHIR URL
-fhirServer: @ Please enter valid FHIR URL
+# The user should pass in the URL of their FHIR Server, the UI won't work with this default FHIR server URL
+fhirServer: http://your-fhir-server/fhir-server/api/v4/
 
 service:
   type: ClusterIP
