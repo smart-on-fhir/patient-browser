@@ -1,0 +1,9 @@
+version: "3.9" # optional since v1.27.0
+services:
+  rdatascience:
+    image: ${REGISTRY_PREFIX}/${IMAGE_NAME}:${VERSION_TAG}
+    restart: unless-stopped
+    ports:
+    - "${PORT_HTTP}:80" # nginx non-ssl
+    - "${PORT_HTTPS}:443" # nginx SSL
+    hostname: docker-patientbrowser
