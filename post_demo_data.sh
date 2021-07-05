@@ -36,7 +36,7 @@ do
     -H 'Content-Type:application/fhir+json' \
     --retry-connrefuse \
     --connect-timeout 30 \
-    --max-time 60 \
+    --max-time 600 \
     --retry 5 \
     --retry-delay 15 \
     --data-binary @- \
