@@ -1,9 +1,36 @@
 version: "3.9" # optional since v1.27.0
 services:
+  ## The FHIR-Server:
+  fhir:
+    image: hapiproject/hapi:v5.4.1
+    restart: unless-stopped
+    environment:
+    #   HAPI_FHIR_VALIDATION_REQUESTS_ENABLED: "true"
+    #   HAPI_FHIR_SUBSCRIPTION_RESTHOOK_ENABLED: "true"
+      HAPI_FHIR_FHIR_VERSION: "R4"
+      HAPI_FHIR_CORS_ALLOWCREDENTIALS: "false"
+      HAPI_FHIR_CORS_ALLOWED_ORIGIN: "*"
+    ports:
+    - "${PORT_HAPI_HTTP}:8080"
+    hostname: docker-hapi
+
+## Some demo-files:
+  loader:
+    image: ellerbrock/alpine-bash-curl-ssl:latest
+    command: >
+      bash /data/run.sh
+    volumes:
+      - ./post_demo_data.sh:/data/run.sh:ro
+    depends_on:
+      - fhir
+
+## And then the actual patient browser:
   patient-browser:
     image: ${REGISTRY_PREFIX}/${IMAGE_NAME}:${VERSION_TAG}
     restart: unless-stopped
     ports:
-    - "${PORT_HTTP}:80" # nginx non-ssl
-    - "${PORT_HTTPS}:443" # nginx SSL
+    - "${PORT_PB_HTTP}:80" # nginx non-ssl
+    - "${PORT_PB_HTTPS}:443" # nginx SSL
     hostname: docker-patientbrowser
+    depends_on: 
+    - loader
