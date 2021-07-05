@@ -17,7 +17,7 @@ App to browse sample patients
     sudo bash ./start.sh
     ```
 
-3. Go to [`localhost:8080`](http://localhost:8080) (or whatever port you specified for `PORT_HTTP` in the [`.env`](./.env) file).
+3. Go to [`localhost:8080`](http://localhost:8080) (or whatever port you specified for `PORT_HTTP` in the [`.env`](./.env) file) to access the patient browser. To access the fhir server use [`localhost:8082`](http://localhost:8082).
 4. Finished :tada:
 
 ## Usage
