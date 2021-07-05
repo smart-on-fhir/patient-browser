@@ -1,6 +1,6 @@
 version: "3.9" # optional since v1.27.0
 services:
-  rdatascience:
+  patient-browser:
     image: ${REGISTRY_PREFIX}/${IMAGE_NAME}:${VERSION_TAG}
     restart: unless-stopped
     ports:
