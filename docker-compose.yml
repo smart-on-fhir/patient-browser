@@ -16,7 +16,7 @@ services:
 
 ## Some demo-files:
   loader:
-    image: ellerbrock/alpine-bash-curl-ssl:latest
+    image: joundso/alpine-bash-curl-ssl:latest
     command: >
       bash /data/run.sh
     volumes:
