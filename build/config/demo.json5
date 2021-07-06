@@ -2,7 +2,7 @@
     server: {
         type: "R4",
         // url: "http://fhir:8080/fhir",
-        url: "http://localhost:8082/fhir",
+        url: "http://localhost:8080/fhir",
         tags: [],
         conditions: {}
     },
