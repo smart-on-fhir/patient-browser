@@ -17,7 +17,10 @@ App to browse sample patients
     sudo bash ./start.sh
     ```
 
-3. Go to [`localhost:8080`](http://localhost:8080) (or whatever port you specified for `PORT_HTTP` in the [`.env`](./.env) file) to access the patient browser. To access the fhir server use [`localhost:8082`](http://localhost:8082).
+3. Go to 
+    - [`localhost:8080`](http://localhost:8080) (or whatever port you specified for `PORT_HTTP` in the [`.env`](./.env) file) to access the **patient browser** with demo datafrom external, or
+    - [`localhost:8080/?config=demo#/`](http://localhost:8080/?config=demo#/) to see the demo data which is available in the running hapi fhir server in the patient browser. :bulb: The loading of the demo fhir ressources into the fhir server takes a while. Try refreshing the page continously. To see the progress run `docker-compose logs -f` (which will automatically be called if you ran the `start.sh`).
+    - [`localhost:8082`](http://localhost:8082) to access the fhir server (HAPI) itself.
 4. Finished :tada:
 
 ## Usage
