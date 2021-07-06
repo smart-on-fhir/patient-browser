@@ -32,5 +32,5 @@ services:
     - "${PORT_PB_HTTP}:80" # nginx non-ssl
     - "${PORT_PB_HTTPS}:443" # nginx SSL
     hostname: docker-patientbrowser
-    # depends_on: 
-    # - loader
+    depends_on:
+    - loader
