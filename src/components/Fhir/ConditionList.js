@@ -95,6 +95,20 @@ export default class ConditionList extends React.Component
                                 </div>
                             );
                         }
+                    },
+                    {
+                        label: <div/>,
+                        render: o => {
+                            if (codeIsNLPInsight(null)) {
+                                return (
+                                    <div style={{ color: '#337ab7', textAlign: 'center' }}>
+                                        <i className="fa fa-lightbulb-o fas fa-bold"/>
+                                    </div>
+                                )
+                            } else {
+                                return ( <div/> )
+                            }
+                        }
                     }
                 ]}
             />
