@@ -3,7 +3,7 @@ import PropTypes        from "prop-types"
 import { CODE_SYSTEMS } from "../../lib/constants"
 import Grid             from "./Grid"
 import Date             from "./Date"
-import { getPath, getCodeOrConcept } from "../../lib"
+import { getPath, getCodeOrConcept, codeIsNLPInsight, getInsightSource, InsightSource } from "../../lib"
 import moment           from "moment"
 
 export default class ConditionList extends React.Component
@@ -35,6 +35,11 @@ export default class ConditionList extends React.Component
                             let code   = "-";
                             let system = "";
 
+                            let highlight = "text-muted";
+                            if (codeIsNLPInsight(o.code.coding[0])) {
+                                highlight = "text-success";
+                            }
+
                             if (o.code) {
                                 if (o.code.text) {
                                     name = o.code.text;
@@ -61,7 +66,7 @@ export default class ConditionList extends React.Component
                             return (
                                 <div>
                                     <b>{ name }</b>
-                                    <small className="text-muted pull-right">
+                                    <small className={highlight+" pull-right"}>
                                         { code } {system}
                                     </small>
                                 </div>

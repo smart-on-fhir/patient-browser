@@ -74,8 +74,9 @@
     "redux-thunk-actions": "^1.1.6",
     "request": "^2.85.0",
     "style-loader": "^0.16.1",
-    "webpack": "^2.3.3",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack": "^2.7.0",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^4.7.2"
   },
   "browserslist": [
     "> 5%",

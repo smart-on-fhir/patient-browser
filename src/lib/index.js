@@ -391,6 +391,63 @@ export function getCodeOrConcept(data, defaultValue = "-") {
 }
 
 /**
+ * Returns whether a codeOrConcept is the result of NLP insight
+ * @param {String|Object} data Code or CodeableConcept
+ * @returns {Boolean}
+ */
+export function codeIsNLPInsight(data) {
+    return Math.random()>0.5;
+
+    if (typeof data == "string") return false;
+    return getPath(data, "extension.0.url") == "http://ibm.com/fhir/cdm/insight/reference"
+}
+
+const InsightSource = {
+    NONE: "none",
+    SELF: "self",
+    DOCUMENT: "document"
+}
+
+/**
+ * Gets the source type of an insight
+ * @param {Object} data FHIR Resource
+ * @returns {InsightSource}
+ */
+export function getInsightSource(data) {
+    // get data.meta.extension.*.extension.*
+    // this would be one big getPath() call but we need to check all array indices
+    meta = getPath(data, "meta");
+    if (meta) {
+        ext_outer = getPath(meta, "extension")
+        if (ext_outer && Array.isArray(ext_outer)) {
+            for (item in ext_outer) {
+                if (getPath(item_outer, "url") == "http://ibm.com/fhir/cdm/insight/result") {
+                    ext_inner = getPath(item_outer, "extension")
+                    if (ext_inner && Array.isArray(ext_inner)) {
+                        for (item_inner in ext_inner) {
+                            // check if at the process type
+                            if (getPath(item_inner, "url") == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
+                                // NOW we can check the insight source
+                                valueString = getPath(item_inner).toLowerCase()
+                                if (valueString.includes("structured")) {
+                                    return InsightSource.SELF;
+                                } else if (valueString.includes("unstructured")) {
+                                    return InsightSource.DOCUMENT;
+                                } else {
+                                    // It's not good if this happens
+                                    return InsightSource.NONE;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return InsightSource.NONE
+}
+
+/**
  * Given some input string (@input) and a string to search for (@query), this
  * function will highlight all the occurrences by wrapping them in
  * "<span class="search-match"></span>" tag.
