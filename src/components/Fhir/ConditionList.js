@@ -12,10 +12,13 @@ export default class ConditionList extends React.Component
         resources: PropTypes.arrayOf(PropTypes.object)
     };
 
+    doHighlight = false
+
     render()
     {
         let recs   = this.props.resources || []
         let length = recs.length;
+
         return (
             <Grid
                 rows={(recs || []).map(o => o.resource)}
@@ -36,7 +39,7 @@ export default class ConditionList extends React.Component
                             let system = "";
 
                             let highlight = "text-muted";
-                            if (codeIsNLPInsight(o.code.coding[0])) {
+                            if ( this.doHighlight && codeIsNLPInsight(o.code.coding[0]) ) {
                                 highlight = "text-success";
                             }
 
@@ -97,12 +100,18 @@ export default class ConditionList extends React.Component
                         }
                     },
                     {
-                        label: <div/>,
+                        label: <div style={{ color: 'black', textAlign: 'center' }}>
+                            <button onMouseDown={ this.doHighlight=true } onMouseUp={ this.doHighlight=false }>
+                                <i className="fa fa-lightbulb-o fas fa-bold"/>
+                            </button>
+                        </div>,
                         render: o => {
-                            if (codeIsNLPInsight(null)) {
+                            if (codeIsNLPInsight(null)) { // temp!!
                                 return (
                                     <div style={{ color: '#337ab7', textAlign: 'center' }}>
-                                        <i className="fa fa-lightbulb-o fas fa-bold"/>
+                                        <button>
+                                            <i className="fa fa-lightbulb-o fas fa-bold"/>
+                                        </button>
                                     </div>
                                 )
                             } else {
