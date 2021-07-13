@@ -12,7 +12,17 @@ export default class ConditionList extends React.Component
         resources: PropTypes.arrayOf(PropTypes.object)
     };
 
-    doHighlight = false
+    constructor(props) {
+        super(props);
+        this.state = { doHighlight: false }
+        this.toggleHighlight = this.toggleHighlight.bind(this);
+    }
+
+    toggleHighlight() {
+        this.setState(prevState => ({ 
+            doHighlight: !prevState.doHighlight 
+        }) );
+    }
 
     render()
     {
@@ -39,8 +49,8 @@ export default class ConditionList extends React.Component
                             let system = "";
 
                             let highlight = "text-muted";
-                            if ( this.doHighlight && codeIsNLPInsight(o.code.coding[0]) ) {
-                                highlight = "text-success";
+                            if ( this.state.doHighlight && codeIsNLPInsight(o.code.coding[0]) ) {
+                                highlight = "text-muted mark";
                             }
 
                             if (o.code) {
@@ -100,8 +110,17 @@ export default class ConditionList extends React.Component
                         }
                     },
                     {
-                        label: <div style={{ color: 'black', textAlign: 'center' }}>
-                            <button onMouseDown={ this.doHighlight=true } onMouseUp={ this.doHighlight=false }>
+                        label: <div style={{ textAlign: 'center' }}>
+                            <button
+                                type = 'button'
+                                onMouseDown={ this.toggleHighlight }
+                                style={{ 
+                                    className: 'btn btn-sm',
+                                    backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',
+                                    color: this.state.doHighlight ? 'white' : '#337ab7',
+                                    textAlign: 'center'
+                                }}
+                            >
                                 <i className="fa fa-lightbulb-o fas fa-bold"/>
                             </button>
                         </div>,

@@ -428,11 +428,11 @@ export function getInsightSource(data) {
                             // check if at the process type
                             if (getPath(item_inner, "url") == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
                                 // NOW we can check the insight source
-                                valueString = getPath(item_inner).toLowerCase()
-                                if (valueString.includes("structured")) {
-                                    return InsightSource.SELF;
-                                } else if (valueString.includes("unstructured")) {
+                                valueString = getPath(item_inner, "valueString").toLowerCase().split(" ");
+                                if (valueString.includes("unstructured")) {
                                     return InsightSource.DOCUMENT;
+                                } else if (valueString.includes("structured")) {
+                                    return InsightSource.SELF;
                                 } else {
                                     // It's not good if this happens
                                     return InsightSource.NONE;
