@@ -95,11 +95,11 @@ export default class ConditionList extends React.Component
                     },
                     {
                         label: <div className="text-center">Clinical Status</div>,
-                        render: o => <div className="text-center">{ getCodeOrConcept(o.clinicalStatus) }</div>
+                        render: o => <div className="text-center">{ o.clinicalStatus ? getCodeOrConcept(o.clinicalStatus) : "(none)" }</div>
                     },
                     {
                         label : <div className="text-center">Verification Status</div>,
-                        render: o => <div className="text-center">{ getCodeOrConcept(o.verificationStatus) }</div>
+                        render: o => <div className="text-center">{ o.verificationStatus ? getCodeOrConcept(o.verificationStatus) : "(none)" }</div>
                     },
                     {
                         label: <div className="text-center">Onset Date</div>,
