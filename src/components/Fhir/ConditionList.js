@@ -3,7 +3,13 @@ import PropTypes        from "prop-types"
 import { CODE_SYSTEMS } from "../../lib/constants"
 import Grid             from "./Grid"
 import Date             from "./Date"
-import { getPath, getCodeOrConcept, codeIsNLPInsight, getInsightSource, InsightSource } from "../../lib"
+import { 
+    getPath, 
+    getCodeOrConcept, 
+    codeIsNLPInsight, 
+    getInsightSource, 
+    InsightSource 
+} from "../../lib"
 import moment           from "moment"
 
 export default class ConditionList extends React.Component
@@ -12,6 +18,7 @@ export default class ConditionList extends React.Component
         resources: PropTypes.arrayOf(PropTypes.object)
     };
 
+    // https://reactjs.org/docs/handling-events.html
     constructor(props) {
         super(props);
         this.state = { doHighlight: false }
@@ -48,9 +55,9 @@ export default class ConditionList extends React.Component
                             let code   = "-";
                             let system = "";
 
-                            let highlight = "text-muted";
-                            if ( this.state.doHighlight && codeIsNLPInsight(o.code.coding[0]) ) {
-                                highlight = "text-muted mark";
+                            let highlight = "";
+                            if ( this.state.doHighlight && codeIsNLPInsight(o.code) ) {
+                                highlight = "mark";
                             }
 
                             if (o.code) {
@@ -79,7 +86,7 @@ export default class ConditionList extends React.Component
                             return (
                                 <div>
                                     <b>{ name }</b>
-                                    <small className={highlight+" pull-right"}>
+                                    <small className={highlight+" text-muted pull-right"}>
                                         { code } {system}
                                     </small>
                                 </div>
@@ -112,10 +119,8 @@ export default class ConditionList extends React.Component
                     {
                         label: <div style={{ textAlign: 'center' }}>
                             <button
-                                type = 'button'
                                 onMouseDown={ this.toggleHighlight }
                                 style={{ 
-                                    className: 'btn btn-sm',
                                     backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',
                                     color: this.state.doHighlight ? 'white' : '#337ab7',
                                     textAlign: 'center'
@@ -125,7 +130,7 @@ export default class ConditionList extends React.Component
                             </button>
                         </div>,
                         render: o => {
-                            if (codeIsNLPInsight(null)) { // temp!!
+                            if ( true ) {
                                 return (
                                     <div style={{ color: '#337ab7', textAlign: 'center' }}>
                                         <button>

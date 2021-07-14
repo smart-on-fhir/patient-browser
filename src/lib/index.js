@@ -392,14 +392,11 @@ export function getCodeOrConcept(data, defaultValue = "-") {
 
 /**
  * Returns whether a codeOrConcept is the result of NLP insight
- * @param {String|Object} data Code or CodeableConcept
+ * @param {Object} data Code or CodeableConcept
  * @returns {Boolean}
  */
 export function codeIsNLPInsight(data) {
-    return Math.random()>0.5;
-
-    if (typeof data == "string") return false;
-    return getPath(data, "extension.0.url") == "http://ibm.com/fhir/cdm/insight/reference"
+    return getPath(data, "coding.0.extension.0.url") == "http://ibm.com/fhir/cdm/insight/reference";
 }
 
 const InsightSource = {
@@ -420,18 +417,22 @@ export function getInsightSource(data) {
     if (meta) {
         ext_outer = getPath(meta, "extension")
         if (ext_outer && Array.isArray(ext_outer)) {
-            for (item in ext_outer) {
-                if (getPath(item_outer, "url") == "http://ibm.com/fhir/cdm/insight/result") {
-                    ext_inner = getPath(item_outer, "extension")
+            for (item_outer in ext_outer) {
+                if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
+                    ext_inner = getPath(ext_outer[item_outer], "extension")
                     if (ext_inner && Array.isArray(ext_inner)) {
                         for (item_inner in ext_inner) {
                             // check if at the process type
-                            if (getPath(item_inner, "url") == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
+                            if (getPath(ext_inner[item_inner], "url") == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
                                 // NOW we can check the insight source
-                                valueString = getPath(item_inner, "valueString").toLowerCase().split(" ");
-                                if (valueString.includes("unstructured")) {
+                                valueString = getPath(ext_inner[item_inner], "valueString");
+                                if (typeof valueString != 'string') {
+                                    return InsightSource.NONE;
+                                }
+                                valueStringArr = valueString.toLowerCase().split(" ");
+                                if (valueStringArr.includes("unstructured")) {
                                     return InsightSource.DOCUMENT;
-                                } else if (valueString.includes("structured")) {
+                                } else if (valueStringArr.includes("structured")) {
                                     return InsightSource.SELF;
                                 } else {
                                     // It's not good if this happens
