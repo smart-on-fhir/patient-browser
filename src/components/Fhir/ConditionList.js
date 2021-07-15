@@ -117,7 +117,8 @@ export default class ConditionList extends React.Component
                         }
                     },
                     {
-                        label: <button
+                        label: <div style={{textAlign: 'center'}}>
+                            <button
                                 onMouseDown={ this.toggleHighlight }
                                 style={{ 
                                     backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',
@@ -126,7 +127,8 @@ export default class ConditionList extends React.Component
                                 }}
                             >
                                 <i className="fa fa-lightbulb-o fas fa-bold"/>
-                            </button>,
+                            </button>
+                        </div>,
                         render: o => {
                             if ( getInsightSource(o) != InsightSource.NONE ) {
                                 return (
