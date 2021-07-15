@@ -399,7 +399,7 @@ export function codeIsNLPInsight(data) {
     return getPath(data, "coding.0.extension.0.url") == "http://ibm.com/fhir/cdm/insight/reference";
 }
 
-const InsightSource = {
+export const InsightSource = {
     NONE: "none",
     SELF: "self",
     DOCUMENT: "document"
@@ -413,23 +413,23 @@ const InsightSource = {
 export function getInsightSource(data) {
     // get data.meta.extension.*.extension.*
     // this would be one big getPath() call but we need to check all array indices
-    meta = getPath(data, "meta");
+    let meta = getPath(data, "meta");
     if (meta) {
-        ext_outer = getPath(meta, "extension")
+        let ext_outer = getPath(meta, "extension")
         if (ext_outer && Array.isArray(ext_outer)) {
-            for (item_outer in ext_outer) {
+            for (let item_outer in ext_outer) {
                 if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
-                    ext_inner = getPath(ext_outer[item_outer], "extension")
+                    let ext_inner = getPath(ext_outer[item_outer], "extension")
                     if (ext_inner && Array.isArray(ext_inner)) {
-                        for (item_inner in ext_inner) {
+                        for (let item_inner in ext_inner) {
                             // check if at the process type
                             if (getPath(ext_inner[item_inner], "url") == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
                                 // NOW we can check the insight source
-                                valueString = getPath(ext_inner[item_inner], "valueString");
+                                let valueString = getPath(ext_inner[item_inner], "valueString");
                                 if (typeof valueString != 'string') {
                                     return InsightSource.NONE;
                                 }
-                                valueStringArr = valueString.toLowerCase().split(" ");
+                                let valueStringArr = valueString.toLowerCase().split(" ");
                                 if (valueStringArr.includes("unstructured")) {
                                     return InsightSource.DOCUMENT;
                                 } else if (valueStringArr.includes("structured")) {

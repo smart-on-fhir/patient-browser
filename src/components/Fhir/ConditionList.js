@@ -95,11 +95,11 @@ export default class ConditionList extends React.Component
                     },
                     {
                         label: <div className="text-center">Clinical Status</div>,
-                        render: o => <div className="text-center">{ o.clinicalStatus ? getCodeOrConcept(o.clinicalStatus) : "(none)" }</div>
+                        render: o => <div className="text-center">{ o.clinicalStatus ? getCodeOrConcept(o.clinicalStatus) : "-" }</div>
                     },
                     {
                         label : <div className="text-center">Verification Status</div>,
-                        render: o => <div className="text-center">{ o.verificationStatus ? getCodeOrConcept(o.verificationStatus) : "(none)" }</div>
+                        render: o => <div className="text-center">{ o.verificationStatus ? getCodeOrConcept(o.verificationStatus) : "-" }</div>
                     },
                     {
                         label: <div className="text-center">Onset Date</div>,
@@ -130,7 +130,7 @@ export default class ConditionList extends React.Component
                             </button>
                         </div>,
                         render: o => {
-                            if ( true ) {
+                            if ( getInsightSource(o) != InsightSource.NONE ) {
                                 return (
                                     <div style={{ color: '#337ab7', textAlign: 'center' }}>
                                         <button>
