@@ -3,13 +3,31 @@ import PropTypes   from "prop-types"
 import moment      from "moment"
 import Grid        from "./Grid"
 import Date        from "./Date"
-import { getPath } from "../../lib"
+import { 
+    getPath, 
+    codeIsNLPInsight, 
+    getInsightSource, 
+    InsightSource 
+} from "../../lib"
 
 export default class ImmunizationList extends React.Component
 {
     static propTypes = {
         resources: PropTypes.arrayOf(PropTypes.object)
     };
+
+    // https://reactjs.org/docs/handling-events.html
+    constructor(props) {
+        super(props);
+        this.state = { doHighlight: false }
+        this.toggleHighlight = this.toggleHighlight.bind(this);
+    }
+
+    toggleHighlight() {
+        this.setState(prevState => ({ 
+            doHighlight: !prevState.doHighlight 
+        }) );
+    }
 
     render()
     {
@@ -28,7 +46,11 @@ export default class ImmunizationList extends React.Component
                 cols={[
                     {
                         label: "Type",
-                        path : "vaccineCode.coding.0.display"
+                        render: o => (
+                            <div className={codeIsNLPInsight(getPath(o, "vaccineCode")) ? "mark" : ""}>
+                                { getPath(o, "vaccineCode.coding.0.display") }
+                            </div>
+                        )
                     },
                     {
                         label: "Status",
@@ -43,6 +65,31 @@ export default class ImmunizationList extends React.Component
                                     <Date moment={o.occurrenceDateTime}/> :
                                     o.occurrenceString || "-"
                         )
+                    },
+                    {
+                        label: <button
+                                onMouseDown={ this.toggleHighlight }
+                                style={{ 
+                                    backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',
+                                    color: this.state.doHighlight ? 'white' : '#337ab7',
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <i className="fa fa-lightbulb-o fas fa-bold"/>
+                            </button>,
+                        render: o => {
+                            if ( getInsightSource(o) != InsightSource.NONE ) {
+                                return (
+                                    <div style={{ color: '#337ab7', textAlign: 'center' }}>
+                                        <button>
+                                            <i className="fa fa-lightbulb-o fas fa-bold"/>
+                                        </button>
+                                    </div>
+                                )
+                            } else {
+                                return ( <div/> )
+                            }
+                        }
                     }
                 ]}
             />
