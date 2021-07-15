@@ -50,9 +50,9 @@ function renderCell(record, doHighlight, allOf, oneOf) {
                 <tbody>
                     {
                         entries.map((o, i) => (
-                            <tr key={i}>
+                            <tr key={i} className={o.isNLP ? "mark" : ""}>
                                 <td className="label-cell">{ o.label }</td>
-                                <td className={o.isNLP ? "mark" : ""}>{ o.value }</td>
+                                <td>{ o.value }</td>
                             </tr>
                         ))
                     }

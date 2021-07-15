@@ -51,11 +51,7 @@ export class Grid extends React.Component
         }
 
         return (
-            <tr
-                key={i}
-                onClick={ () => window.open(url, "_blank") }
-                style={{ cursor: "pointer" }}
-            >
+            <tr key={i}>
                 {
                     this.props.cols.map((col, i) => {
                         let { render, path, cellProps, defaultValue } = col
