@@ -119,7 +119,7 @@ export default class ConditionList extends React.Component
                     {
                         label: <div style={{textAlign: 'center'}}>
                             <button
-                                onMouseDown={ this.toggleHighlight }
+                                onMouseUp={ this.toggleHighlight }
                                 style={{ 
                                     backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',
                                     color: this.state.doHighlight ? 'white' : '#337ab7',
