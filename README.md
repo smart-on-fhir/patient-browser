@@ -255,3 +255,14 @@ The **config** option is the base name of the config file that should be loaded 
 
 - `_tab` - Which tab to open by default. Can be `tags`, `conditions` or `demographics`. If missing the Demographics tab will be activated.
 - `_selection` - Comma-separated list of patient IDs to be rendered as selected. Note that this is only evaluated once, while the picker is loading.
+
+## Further Information
+
+Some files of these repos were merged into this fork of the patient browser:
+
+- The Helm Chart stuff from here: <https://github.com/Alvearie/patient-browser>
+- Updates in the Encounter Ressource from here: <https://github.com/BillyYarosh-WellSky/patient-browser>
+- `animations.css` and R4 adaptions from <https://github.com/RufManuel/patient-browser>
+- Updates in `package.json` and demo-config comments from <https://github.com/zeronote/patient-browser>
+- LineCharts and CandlestickChart from <https://github.com/s4s-discovery/patient-browser>
+- Dockerfile from <https://github.com/rodriperez/patient-browser>
