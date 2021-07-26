@@ -6,7 +6,10 @@ import {
     codeIsNLPInsight, 
     getProcessType,
     getInsightSource, 
-    InsightSource
+    InsightSource,
+    getConfidence,
+    getBasedOn,
+    getCoveredText
 } from "../../lib"
 
 export default class InsightsPopup extends React.Component
@@ -34,14 +37,26 @@ export default class InsightsPopup extends React.Component
                     <table className="table table-condensed table-hover table-striped table-bordered">
                         <tbody>
                             <tr>
-                                <td className="label-cell" style={{fontWeight: "bold"}}>Insight Source</td>
-                                <td>{getInsightSource(rec)}</td>
-                            </tr>
-                            <tr>
                                 <td className="label-cell" style={{fontWeight: "bold"}}>Process Type</td>
                                 <td>{getProcessType(rec)}</td>
                             </tr>
+                            <tr>
+                                <td className="label-cell" style={{fontWeight: "bold"}}>Insight Source</td>
+                                <td>{getInsightSource(rec)==InsightSource.DOCUMENT ? getBasedOn(rec) : "Self"}</td>
+                            </tr>
                         </tbody>
+                        { getInsightSource(rec)==InsightSource.DOCUMENT ?
+                        <tbody>
+                            <tr>
+                                <td className="label-cell" style={{fontWeight: "bold"}}>Confidence</td>
+                                <td>{Number(getConfidence(rec))*100}%</td>
+                            </tr>
+                            <tr>
+                                <td className="label-cell" style={{fontWeight: "bold"}}>Covered Text</td>
+                                <td><em>"{getCoveredText(rec)}"</em></td>
+                            </tr>
+                        </tbody>
+                        : null}
                     </table>
                 </div>
             </div>
