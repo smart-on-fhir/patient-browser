@@ -23,10 +23,8 @@ export default class InsightsPopup extends React.Component
     {
         let rec = this.props.resource
         return (
-            <div style={{display: 'none', position: 'fixed', zIndex: '99'}}>
-                <div style={{backgroundColor: 'white', position: 'absolute'}}>
-                    <p>I'm A Pop Up!!!</p>
-                </div>
+            <div style={{backgroundColor: 'white', position: 'absolute'}}>
+                <p>I'm A Pop Up!!!</p>
             </div>
         )
     }

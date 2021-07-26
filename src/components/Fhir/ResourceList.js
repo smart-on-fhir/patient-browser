@@ -12,6 +12,7 @@ import Period      from "./Period"
 import Date        from "./Date"
 import moment      from "moment"
 import InsightsPopup from "../InsightsPopup"
+import Popup       from "reactjs-popup"
 
 function renderCell(record, doHighlight, allOf, oneOf) {
 
@@ -123,7 +124,7 @@ export default class ResourceList extends React.Component
         super(props);
         this.state = {
             doHighlight: false,
-            showPopup: false
+            showPopup: null
         }
         this.toggleHighlight = this.toggleHighlight.bind(this);
         this.closePopup = this.closePopup.bind(this);
@@ -468,14 +469,9 @@ export default class ResourceList extends React.Component
                         return dB - dA;
                     }}
                 />
-                <p>Please can I get Something to display</p>
-                <div style={{display: 'none', position: 'fixed', zIndex: 1}}>
-                    <div style={{backgroundColor: 'white', position: 'absolute'}}>
-                        <p>I'm A Pop Up!!!</p>
-                    </div>
-                </div>
-                <InsightsPopup resource={this.state.showPopup} closeWindow={this.closePopup} />
-                {this.state.showPopup ? <InsightsPopup resource={this.state.showPopup} closeWindow={this.closePopup} /> : null}
+                <Popup open={this.state.showPopup != null} onClose={this.closePopup} modal>
+                    <InsightsPopup resource={this.state.showPopup} closeWindow={this.closePopup} />
+                </Popup>
             </div>
         )
     }
