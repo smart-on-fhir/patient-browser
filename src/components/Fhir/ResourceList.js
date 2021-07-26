@@ -127,7 +127,6 @@ export default class ResourceList extends React.Component
         }
         this.toggleHighlight = this.toggleHighlight.bind(this);
         this.closePopup = this.closePopup.bind(this);
-        this.openPopup = this.openPopup.bind(this);
     }
 
     toggleHighlight() {
@@ -143,7 +142,6 @@ export default class ResourceList extends React.Component
     openPopup(resource) {
         this.setState({showPopup: resource});
         console.log('button clicked')
-        console.log(JSON.stringify(resource))
     }
 
     /**
@@ -438,7 +436,7 @@ export default class ResourceList extends React.Component
                 if ( getInsightSource(o) != InsightSource.NONE ) {
                     return (
                         <div style={{ color: '#337ab7', textAlign: 'center' }}>
-                            <button onMouseUp={ this.openPopup(o) }>
+                            <button onMouseUp={ () => this.openPopup(o) }>
                                 <i className="fa fa-lightbulb-o fas fa-bold"/>
                             </button>
                         </div>
