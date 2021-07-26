@@ -122,26 +122,14 @@ export default class ResourceList extends React.Component
     // https://reactjs.org/docs/handling-events.html
     constructor(props) {
         super(props);
-        this.state = {
-            doHighlight: false,
-            showPopup: null
-        }
+        this.state = { doHighlight: false }
         this.toggleHighlight = this.toggleHighlight.bind(this);
-        this.closePopup = this.closePopup.bind(this);
     }
 
     toggleHighlight() {
         this.setState(prevState => ({ 
             doHighlight: !prevState.doHighlight 
         }) );
-    }
-
-    closePopup() {
-        this.setState({showPopup: null});
-    }
-
-    openPopup(resource) {
-        this.setState({showPopup: resource});
     }
 
     /**
@@ -436,9 +424,17 @@ export default class ResourceList extends React.Component
                 if ( getInsightSource(o) != InsightSource.NONE ) {
                     return (
                         <div style={{ color: '#337ab7', textAlign: 'center' }}>
-                            <button onMouseUp={ () => this.openPopup(o) }>
-                                <i className="fa fa-lightbulb-o fas fa-bold"/>
-                            </button>
+                            <Popup
+                                trigger={
+                                    <button>
+                                        <i className="fa fa-lightbulb-o fas fa-bold"/>
+                                    </button>
+                                }
+                                position="left center"
+                                on={['hover', 'click', "focus"]}
+                            >
+                                <InsightsPopup resource={o}/>
+                            </Popup>
                         </div>
                     )
                 } else {
@@ -479,9 +475,6 @@ export default class ResourceList extends React.Component
                     bottom="0"
                     backgroundColor="rgba(0,0,0,0.5)"
                 />
-                <Popup open={this.state.showPopup != null} onClose={this.closePopup} modal>
-                    <InsightsPopup resource={this.state.showPopup} closeWindow={this.closePopup} />
-                </Popup>
             </div>
         )
     }
