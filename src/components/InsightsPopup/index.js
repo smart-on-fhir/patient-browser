@@ -4,8 +4,9 @@ import {
     getPath, 
     getCodeOrConcept, 
     codeIsNLPInsight, 
+    getInsightSystem,
     getInsightSource, 
-    InsightSource 
+    InsightSource
 } from "../../lib"
 
 export default class InsightsPopup extends React.Component
@@ -23,8 +24,28 @@ export default class InsightsPopup extends React.Component
     {
         let rec = this.props.resource
         return (
-            <div style={{backgroundColor: 'white', position: 'absolute'}}>
-                <p>I'm A Pop Up!!!</p>
+            <div>
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <b className="text-primary">
+                            Insights for {rec.resourceType} {rec.id}
+                        </b>
+                    </div>
+                    <div className="table-responsive">
+                        <table className="table table-condensed table-hover table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td className="label-cell" style={{fontWeight: "bold"}}>Insight Source</td>
+                                    <td>{getInsightSource(rec)}</td>
+                                </tr>
+                                <tr>
+                                    <td className="label-cell" style={{fontWeight: "bold"}}>Insight System</td>
+                                    <td>{getInsightSystem(rec)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         )
     }

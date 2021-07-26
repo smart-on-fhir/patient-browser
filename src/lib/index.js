@@ -400,9 +400,9 @@ export function codeIsNLPInsight(data) {
 }
 
 export const InsightSource = {
-    NONE: "none",
-    SELF: "self",
-    DOCUMENT: "document"
+    NONE: "None",
+    SELF: "Self",
+    DOCUMENT: "Document"
 }
 
 /**
@@ -411,6 +411,22 @@ export const InsightSource = {
  * @returns {InsightSource}
  */
 export function getInsightSource(data) {
+    let insightSystem = getInsightSystem(data)
+    if (typeof insightSystem != 'string') {
+        return InsightSource.NONE;
+    }
+    let valueStringArr = insightSystem.toLowerCase().split(" ");
+    if (valueStringArr.includes("unstructured")) {
+        return InsightSource.DOCUMENT;
+    } else if (valueStringArr.includes("structured")) {
+        return InsightSource.SELF;
+    } else {
+        // It's not good if this happens
+        return InsightSource.NONE;
+    }
+}
+
+export function getInsightSystem(data) {
     // get data.meta.extension.*.extension.*
     // this would be one big getPath() call but we need to check all array indices
     let meta = getPath(data, "meta");
@@ -425,19 +441,7 @@ export function getInsightSource(data) {
                             // check if at the process type
                             if (getPath(ext_inner[item_inner], "url") == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
                                 // NOW we can check the insight source
-                                let valueString = getPath(ext_inner[item_inner], "valueString");
-                                if (typeof valueString != 'string') {
-                                    return InsightSource.NONE;
-                                }
-                                let valueStringArr = valueString.toLowerCase().split(" ");
-                                if (valueStringArr.includes("unstructured")) {
-                                    return InsightSource.DOCUMENT;
-                                } else if (valueStringArr.includes("structured")) {
-                                    return InsightSource.SELF;
-                                } else {
-                                    // It's not good if this happens
-                                    return InsightSource.NONE;
-                                }
+                                return getPath(ext_inner[item_inner], "valueString");
                             }
                         }
                     }
@@ -445,7 +449,7 @@ export function getInsightSource(data) {
             }
         }
     }
-    return InsightSource.NONE
+    return null
 }
 
 /**

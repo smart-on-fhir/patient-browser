@@ -469,6 +469,17 @@ export default class ResourceList extends React.Component
                         return dB - dA;
                     }}
                 />
+                <div
+                    display={this.state.showPopup ? "block" : "none"}
+                    position="fixed"
+                    width="100%"
+                    height="100%"
+                    top="0"
+                    left="0"
+                    right="0"
+                    bottom="0"
+                    backgroundColor="rgba(0,0,0,0.5)"
+                />
                 <Popup open={this.state.showPopup != null} onClose={this.closePopup} modal>
                     <InsightsPopup resource={this.state.showPopup} closeWindow={this.closePopup} />
                 </Popup>
