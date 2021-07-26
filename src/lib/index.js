@@ -411,14 +411,14 @@ export const InsightSource = {
  * @returns {InsightSource}
  */
 export function getInsightSource(data) {
-    let insightSystem = getInsightSystem(data)
-    if (typeof insightSystem != 'string') {
+    let processType = getProcessType(data)
+    if (typeof processType != 'string') {
         return InsightSource.NONE;
     }
-    let valueStringArr = insightSystem.toLowerCase().split(" ");
-    if (valueStringArr.includes("unstructured")) {
+    let processTypeArr = processType.toLowerCase().split(" ");
+    if (processTypeArr.includes("unstructured")) {
         return InsightSource.DOCUMENT;
-    } else if (valueStringArr.includes("structured")) {
+    } else if (processTypeArr.includes("structured")) {
         return InsightSource.SELF;
     } else {
         // It's not good if this happens
@@ -426,7 +426,7 @@ export function getInsightSource(data) {
     }
 }
 
-export function getInsightSystem(data) {
+export function getProcessType(data) {
     // get data.meta.extension.*.extension.*
     // this would be one big getPath() call but we need to check all array indices
     let meta = getPath(data, "meta");

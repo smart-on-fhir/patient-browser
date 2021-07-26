@@ -9,6 +9,8 @@ import {
     getInsightSource, 
     InsightSource 
 } from "../../lib"
+import InsightsPopup from "../InsightsPopup"
+import Popup       from "reactjs-popup"
 
 export default class ImmunizationList extends React.Component
 {
