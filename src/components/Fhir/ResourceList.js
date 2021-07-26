@@ -142,7 +142,6 @@ export default class ResourceList extends React.Component
 
     openPopup(resource) {
         this.setState({showPopup: resource});
-        console.log('button clicked')
     }
 
     /**
