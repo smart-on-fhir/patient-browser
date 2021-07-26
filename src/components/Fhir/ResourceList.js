@@ -11,6 +11,7 @@ import {
 import Period      from "./Period"
 import Date        from "./Date"
 import moment      from "moment"
+import InsightsPopup from "../InsightsPopup"
 
 function renderCell(record, doHighlight, allOf, oneOf) {
 
@@ -120,14 +121,29 @@ export default class ResourceList extends React.Component
     // https://reactjs.org/docs/handling-events.html
     constructor(props) {
         super(props);
-        this.state = { doHighlight: false }
+        this.state = {
+            doHighlight: false,
+            showPopup: false
+        }
         this.toggleHighlight = this.toggleHighlight.bind(this);
+        this.closePopup = this.closePopup.bind(this);
+        this.openPopup = this.openPopup.bind(this);
     }
 
     toggleHighlight() {
         this.setState(prevState => ({ 
             doHighlight: !prevState.doHighlight 
         }) );
+    }
+
+    closePopup() {
+        this.setState({showPopup: null});
+    }
+
+    openPopup(resource) {
+        this.setState({showPopup: resource});
+        console.log('button clicked')
+        console.log(JSON.stringify(resource))
     }
 
     /**
@@ -422,7 +438,7 @@ export default class ResourceList extends React.Component
                 if ( getInsightSource(o) != InsightSource.NONE ) {
                     return (
                         <div style={{ color: '#337ab7', textAlign: 'center' }}>
-                            <button>
+                            <button onMouseUp={ this.openPopup(o) }>
                                 <i className="fa fa-lightbulb-o fas fa-bold"/>
                             </button>
                         </div>
@@ -441,18 +457,28 @@ export default class ResourceList extends React.Component
         let recs   = this.props.resources || []
         let length = recs.length;
         return (
-            <Grid
-                rows={recs.map(o => o.resource)}
-                title={`${length} resource${length === 1 ? "" : "s"} of type ${this.props.type}`}
-                cols={this.determineSchema(recs[0].resource)}
-                comparator={(a,b) => {
-                    let dA = getSortValue(a);
-                    let dB = getSortValue(b);
-                    dA = dA ? +moment(dA) : 0;
-                    dB = dB ? +moment(dB) : 0;
-                    return dB - dA;
-                }}
-            />
+            <div>
+                <Grid
+                    rows={recs.map(o => o.resource)}
+                    title={`${length} resource${length === 1 ? "" : "s"} of type ${this.props.type}`}
+                    cols={this.determineSchema(recs[0].resource)}
+                    comparator={(a,b) => {
+                        let dA = getSortValue(a);
+                        let dB = getSortValue(b);
+                        dA = dA ? +moment(dA) : 0;
+                        dB = dB ? +moment(dB) : 0;
+                        return dB - dA;
+                    }}
+                />
+                <p>Please can I get Something to display</p>
+                <div style={{display: 'none', position: 'fixed', zIndex: 1}}>
+                    <div style={{backgroundColor: 'white', position: 'absolute'}}>
+                        <p>I'm A Pop Up!!!</p>
+                    </div>
+                </div>
+                <InsightsPopup resource={this.state.showPopup} closeWindow={this.closePopup} />
+                {this.state.showPopup ? <InsightsPopup resource={this.state.showPopup} closeWindow={this.closePopup} /> : null}
+            </div>
         )
     }
 }
