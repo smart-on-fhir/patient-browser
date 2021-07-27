@@ -406,157 +406,93 @@ export const InsightSource = {
 }
 
 /**
+ * Gets the details of an insight
+ * @param {Object} data FHIR Resource
+ * @returns {Object}
+ */
+ export function getInsightDetails(data) {
+    var result = {}
+
+    let meta = getPath(data, "meta");
+    if (meta) {
+        let ext_outer = getPath(meta, "extension")
+        if (ext_outer && Array.isArray(ext_outer)) {
+            for (let item_outer in ext_outer) {
+                if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
+                    let ext_inner = getPath(ext_outer[item_outer], "extension")
+                    if (ext_inner && Array.isArray(ext_inner)) {
+                        for (let item_inner in ext_inner) {
+                            // check if at the process type
+                            let url = getPath(ext_inner[item_inner], "url")
+                            if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
+                                // NOW we can check the insight source
+                                result.processType = getPath(ext_inner[item_inner], "valueString");
+                            } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-name") {
+                                // NOW we can check the insight source
+                                result.processName = getPath(ext_inner[item_inner], "valueString");
+                            } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-version") {
+                                // NOW we can check the insight source
+                                result.processVersion = getPath(ext_inner[item_inner], "valueString");
+                            } else if (url == "http://ibm.com/fhir/cdm/insight/basedOn") {
+                                // NOW we can check the insight source
+                                result.basedOn = getPath(ext_inner[item_inner], "valueReference.reference");
+                            } else if (url == "http://ibm.com/fhir/cdm/insight/insight-entry") {
+                                // NOW we can check the insight source
+                                let entry_arr = getPath(ext_inner[item_inner], "extension");
+                                for (let arr_ext_outer in entry_arr) {
+                                    if (getPath(entry_arr[arr_ext_outer], "url") == "http://ibm.com/fhir/cdm/insight/confidence") {
+                                        let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
+                                        for (let e in arr_ext_inner) {
+                                            if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-score") {
+                                                result.confidence = getPath(arr_ext_inner[e], "valueString")
+                                                break
+                                            }
+                                        }
+                                    } else if (getPath(entry_arr[arr_ext_outer], "url") == "http://ibm.com/fhir/cdm/insight/span") {
+                                        let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
+                                        for (let e in arr_ext_inner) {
+                                            if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/covered-text") {
+                                                result.coveredText = getPath(arr_ext_inner[e], "valueString")
+                                            } else if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/offset-begin") {
+                                                result.offsetBegin = getPath(arr_ext_inner[e], "valueInteger")
+                                            } else if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/offset-end") {
+                                                result.offsetEnd = getPath(arr_ext_inner[e], "valueInteger")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (typeof result.processType != 'string') {
+        result.insightSource = InsightSource.NONE;
+    } else {
+        let processTypeArr = result.processType.toLowerCase().split(" ");
+        if (processTypeArr.includes("unstructured")) {
+            result.insightSource = InsightSource.DOCUMENT;
+        } else if (processTypeArr.includes("structured")) {
+            result.insightSource = InsightSource.SELF;
+        } else {
+            // It's not good if this happens
+            result.insightSource = InsightSource.NONE;
+        }
+    }
+
+    return result
+}
+
+/**
  * Gets the source type of an insight
  * @param {Object} data FHIR Resource
  * @returns {InsightSource}
  */
 export function getInsightSource(data) {
-    let processType = getProcessType(data)
-    if (typeof processType != 'string') {
-        return InsightSource.NONE;
-    }
-    let processTypeArr = processType.toLowerCase().split(" ");
-    if (processTypeArr.includes("unstructured")) {
-        return InsightSource.DOCUMENT;
-    } else if (processTypeArr.includes("structured")) {
-        return InsightSource.SELF;
-    } else {
-        // It's not good if this happens
-        return InsightSource.NONE;
-    }
-}
-
-/**
- * Gets the process type of an insight
- * @param {Object} data FHIR Resource
- * @returns {String}
- */
-export function getProcessType(data) {
-    // get data.meta.extension.*.extension.*
-    // this would be one big getPath() call but we need to check all array indices
-    let meta = getPath(data, "meta");
-    if (meta) {
-        let ext_outer = getPath(meta, "extension")
-        if (ext_outer && Array.isArray(ext_outer)) {
-            for (let item_outer in ext_outer) {
-                if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
-                    let ext_inner = getPath(ext_outer[item_outer], "extension")
-                    if (ext_inner && Array.isArray(ext_inner)) {
-                        for (let item_inner in ext_inner) {
-                            // check if at the process type
-                            if (getPath(ext_inner[item_inner], "url") == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
-                                // NOW we can check the insight source
-                                return getPath(ext_inner[item_inner], "valueString");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return null
-}
-
-/**
- * Gets path to the document an insight is based on
- * @param {Object} data FHIR Resource
- * @returns {String}
- */
-export function getBasedOn(data) {
-    // get data.meta.extension.*.extension.*
-    // this would be one big getPath() call but we need to check all array indices
-    let meta = getPath(data, "meta");
-    if (meta) {
-        let ext_outer = getPath(meta, "extension")
-        if (ext_outer && Array.isArray(ext_outer)) {
-            for (let item_outer in ext_outer) {
-                if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
-                    let ext_inner = getPath(ext_outer[item_outer], "extension")
-                    if (ext_inner && Array.isArray(ext_inner)) {
-                        for (let item_inner in ext_inner) {
-                            // check if at the process type
-                            if (getPath(ext_inner[item_inner], "url") == "http://ibm.com/fhir/cdm/insight/basedOn") {
-                                // NOW we can check the insight source
-                                return getPath(ext_inner[item_inner], "valueReference.reference");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return null
-}
-
-/**
- * Gets the confidence of a document insight
- * @param {Object} data FHIR Resource
- * @returns {String}
- */
-export function getConfidence(data) {
-    let insightEntry = getInsightEntry(data)
-    for (let ext in insightEntry) {
-        if (getPath(insightEntry[ext], "url") == "http://ibm.com/fhir/cdm/insight/confidence") {
-            let ext_inner = getPath(insightEntry[ext], "extension")
-            for (let e in ext_inner) {
-                if (getPath(ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-score") {
-                    return (getPath(ext_inner[e], "valueString"))
-                }
-            }
-        }
-    }
-    return null
-}
-
-/**
- * Gets the covered text a document insight
- * @param {Object} data FHIR Resource
- * @returns {String}
- */
- export function getCoveredText(data) {
-    let insightEntry = getInsightEntry(data)
-    for (let ext in insightEntry) {
-        if (getPath(insightEntry[ext], "url") == "http://ibm.com/fhir/cdm/insight/span") {
-            let ext_inner = getPath(insightEntry[ext], "extension")
-            for (let e in ext_inner) {
-                if (getPath(ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/covered-text") {
-                    return (getPath(ext_inner[e], "valueString"))
-                }
-            }
-        }
-    }
-    return null
-}
-
-/**
- * Gets the insight entry of a document insight
- * @param {Object} data FHIR Resource
- * @returns {Array}
- */
-export function getInsightEntry(data) {
-    // get data.meta.extension.*.extension.*
-    // this would be one big getPath() call but we need to check all array indices
-    let meta = getPath(data, "meta");
-    if (meta) {
-        let ext_outer = getPath(meta, "extension")
-        if (ext_outer && Array.isArray(ext_outer)) {
-            for (let item_outer in ext_outer) {
-                if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
-                    let ext_inner = getPath(ext_outer[item_outer], "extension")
-                    if (ext_inner && Array.isArray(ext_inner)) {
-                        for (let item_inner in ext_inner) {
-                            // check if at the process type
-                            if (getPath(ext_inner[item_inner], "url") == "http://ibm.com/fhir/cdm/insight/insight-entry") {
-                                // NOW we can check the insight source
-                                return getPath(ext_inner[item_inner], "extension");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return null
+    return getInsightDetails(data).insightSource
 }
 
 /**
