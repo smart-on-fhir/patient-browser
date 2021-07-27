@@ -9,8 +9,7 @@ import {
     getInsightSource, 
     InsightSource 
 } from "../../lib"
-import InsightsPopup from "../InsightsPopup"
-import Popup       from "reactjs-popup"
+import InsightsDetailButton from "./InsightsDetailButton"
 
 export default class ImmunizationList extends React.Component
 {
@@ -83,21 +82,7 @@ export default class ImmunizationList extends React.Component
                         </div>,
                         render: o => {
                             if ( getInsightSource(o) != InsightSource.NONE ) {
-                                return (
-                                    <div style={{ color: '#337ab7', textAlign: 'center' }}>
-                                        <Popup
-                                            trigger={
-                                                <button>
-                                                    <i className="fa fa-lightbulb-o fas fa-bold"/>
-                                                </button>
-                                            }
-                                            position="left center"
-                                            on={['hover', 'click', "focus"]}
-                                        >
-                                            <InsightsPopup resource={o}/>
-                                        </Popup>
-                                    </div>
-                                )
+                                return ( <InsightsDetailButton resource={o}/> )
                             } else {
                                 return ( <div/> )
                             }
