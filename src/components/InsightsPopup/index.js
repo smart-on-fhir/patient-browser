@@ -18,7 +18,6 @@ export default class InsightsPopup extends React.Component
     {
         let rec = this.props.resource
         let deets = getInsightDetails(rec)
-        console.log(deets)
         return (
             <div style={{boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}} className="panel panel-default">
                 <div className="panel-heading">

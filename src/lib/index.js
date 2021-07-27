@@ -413,6 +413,7 @@ export const InsightSource = {
  export function getInsightDetails(data) {
     var result = {}
 
+    // get data.meta.extension.*.extension.*.url
     let meta = getPath(data, "meta");
     if (meta) {
         let ext_outer = getPath(meta, "extension")
@@ -422,30 +423,32 @@ export const InsightSource = {
                     let ext_inner = getPath(ext_outer[item_outer], "extension")
                     if (ext_inner && Array.isArray(ext_inner)) {
                         for (let item_inner in ext_inner) {
-                            // check if at the process type
                             let url = getPath(ext_inner[item_inner], "url")
+                            // now that we've got the url, find all the different bits
                             if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
-                                // NOW we can check the insight source
                                 result.processType = getPath(ext_inner[item_inner], "valueString");
                             } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-name") {
-                                // NOW we can check the insight source
                                 result.processName = getPath(ext_inner[item_inner], "valueString");
                             } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-version") {
-                                // NOW we can check the insight source
                                 result.processVersion = getPath(ext_inner[item_inner], "valueString");
                             } else if (url == "http://ibm.com/fhir/cdm/insight/basedOn") {
-                                // NOW we can check the insight source
                                 result.basedOn = getPath(ext_inner[item_inner], "valueReference.reference");
                             } else if (url == "http://ibm.com/fhir/cdm/insight/insight-entry") {
-                                // NOW we can check the insight source
+                                // get the confidence, text, and offst\et
                                 let entry_arr = getPath(ext_inner[item_inner], "extension");
                                 for (let arr_ext_outer in entry_arr) {
                                     if (getPath(entry_arr[arr_ext_outer], "url") == "http://ibm.com/fhir/cdm/insight/confidence") {
+                                        // This is gonna be gross, but name and score are stored side-by-side so we gotta iterate twice
                                         let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
                                         for (let e in arr_ext_inner) {
-                                            if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-score") {
-                                                result.confidence = getPath(arr_ext_inner[e], "valueString")
-                                                break
+                                            if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-name") {
+                                                if (getPath(arr_ext_inner[e], "valueString") == "Explicit Score") {
+                                                    for (let e in arr_ext_inner) {
+                                                        if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-score") {
+                                                            result.confidence = getPath(arr_ext_inner[e], "valueString")
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     } else if (getPath(entry_arr[arr_ext_outer], "url") == "http://ibm.com/fhir/cdm/insight/span") {
@@ -469,6 +472,7 @@ export const InsightSource = {
         }
     }
 
+    // get insightSource from processType
     if (typeof result.processType != 'string') {
         result.insightSource = InsightSource.NONE;
     } else {
