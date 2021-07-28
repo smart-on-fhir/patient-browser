@@ -153,7 +153,7 @@ export default class ConditionList extends React.Component
                         </div>,
                         render: o => {
                             if ( getInsightSource(o) != InsightSource.NONE ) {
-                                return ( <InsightsDetailButton resource={o}/> )
+                                return ( <InsightsDetailButton resource={o} settings={this.props.settings}/> )
                             } else {
                                 return ( <div/> )
                             }

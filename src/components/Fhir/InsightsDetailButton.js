@@ -8,6 +8,7 @@ import {
 
 export default class InsightsDetailButton extends React.Component {
     static PropTypes = {
+        settings: PropTypes.object.isRequired,
         resource: PropTypes.object
     }
 
@@ -16,6 +17,18 @@ export default class InsightsDetailButton extends React.Component {
         let deets = getInsightDetails(rec)
         let isDocument = deets.insightSource==InsightSource.DOCUMENT
         let prettyDate = new Date(deets.lastUpdated).toUTCString()
+
+        let url
+        if (isDocument) {
+            url = `${this.props.settings.server.url}/${deets.basedOn}`;
+            if (this.props.settings.fhirViewer.enabled) {
+                url = this.props.settings.fhirViewer.url +
+                    (this.props.settings.fhirViewer.url.indexOf("?") > -1 ? "&" : "?") +
+                    this.props.settings.fhirViewer.param + "=" +
+                    encodeURIComponent(url);
+            }
+        }
+
         return (
             <div style={{ color: '#337ab7', textAlign: 'center' }}>
                 <Popup
@@ -54,7 +67,7 @@ export default class InsightsDetailButton extends React.Component {
                                     </tr>
                                     <tr>
                                         <td style={{fontWeight: "bold"}}>Insight Source</td>
-                                        <td>{isDocument ? deets.basedOn.replace("/", " ") : deets.insightSource}</td>
+                                        <td>{isDocument ? <a href={url}>{deets.basedOn.replace("/", " ")}</a> : deets.insightSource}</td>
                                     </tr>
                                 </tbody>
                                 { isDocument ?
