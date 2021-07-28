@@ -69,26 +69,6 @@ export default class ImmunizationList extends React.Component
                         )
                     },
                     {
-                        label: <div className="text-center">View</div>,
-                        render: o => {
-                            let url = `${this.props.settings.server.url}/${o.resourceType}/${o.id}`;
-                            if (this.props.settings.fhirViewer.enabled) {
-                                url = this.props.settings.fhirViewer.url +
-                                    (this.props.settings.fhirViewer.url.indexOf("?") > -1 ? "&" : "?") +
-                                    this.props.settings.fhirViewer.param + "=" +
-                                    encodeURIComponent(url);
-                            }
-
-                            return (
-                                <div style={{ color: '#337ab7', textAlign: 'center' }}>
-                                    <button onClick={ () => window.open(url, "_blank") }>
-                                        <i className="fa fa-eye fas fa-bold"/>
-                                    </button>
-                                </div>
-                            )
-                        }
-                    },
-                    {
                         label: <div style={{textAlign: 'center'}}>
                             <button
                                 onMouseUp={ this.toggleHighlight }

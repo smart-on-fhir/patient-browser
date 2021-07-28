@@ -73,6 +73,15 @@ export class Grid extends React.Component
                         )
                     })
                 }
+                {this.props.settings.fhirViewer.enabled ?
+                    <td>
+                        <div style={{ color: '#337ab7', textAlign: 'center' }}>
+                            <button onClick={ () => window.open(url, "_blank") }>
+                                <i className="fa fa-eye fas fa-bold"/>
+                            </button>
+                        </div>
+                    </td>
+                : null}
             </tr>
         )
     }
@@ -168,6 +177,9 @@ export class Grid extends React.Component
                                         )
                                     })
                                 }
+                                { this.props.settings.fhirViewer.enabled ?
+                                    <th><div className="text-center">View</div></th>
+                                : null}
                             </tr>
                         </thead>
                         <tbody>
