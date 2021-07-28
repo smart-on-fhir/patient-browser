@@ -416,6 +416,7 @@ export const InsightSource = {
     // get data.meta.extension.*.extension.*.url
     let meta = getPath(data, "meta");
     if (meta) {
+        result.lastUpdated = getPath(meta, "lastUpdated")
         let ext_outer = getPath(meta, "extension")
         if (ext_outer && Array.isArray(ext_outer)) {
             for (let item_outer in ext_outer) {

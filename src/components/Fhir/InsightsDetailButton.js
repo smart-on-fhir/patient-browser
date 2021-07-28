@@ -15,6 +15,7 @@ export default class InsightsDetailButton extends React.Component {
         let rec = this.props.resource
         let deets = getInsightDetails(rec)
         let isDocument = deets.insightSource==InsightSource.DOCUMENT
+        let prettyDate = new Date(deets.lastUpdated).toUTCString()
         return (
             <div style={{ color: '#337ab7', textAlign: 'center' }}>
                 <Popup
@@ -36,6 +37,10 @@ export default class InsightsDetailButton extends React.Component {
                             <table className="table table-condensed table-hover table-striped table-bordered">
                                 <tbody>
                                     <tr>
+                                        <td style={{fontWeight: "bold"}}>Last Updated</td>
+                                        <td>{prettyDate}</td>
+                                    </tr>
+                                    <tr>
                                         <td style={{fontWeight: "bold"}}>Process Name</td>
                                         <td>{deets.processName}</td>
                                     </tr>
@@ -56,7 +61,7 @@ export default class InsightsDetailButton extends React.Component {
                                 <tbody>
                                     <tr>
                                         <td style={{fontWeight: "bold"}}>Covered Text</td>
-                                        <td><em>"{deets.coveredText}"</em></td>
+                                        <td>"...<em>{deets.coveredText}</em>..." [{deets.offsetBegin}:{deets.offsetEnd}]</td>
                                     </tr>
                                     <tr>
                                         <td style={{fontWeight: "bold"}}>Confidence</td>
