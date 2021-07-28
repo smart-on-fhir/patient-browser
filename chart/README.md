@@ -28,22 +28,17 @@ Install the helm chart, setting the URL of your FHIR server.
 **Important:**
 - The FHIR server URL needs to be reachable from your browser, i.e. from your computer
 - The FHIR server needs to be unauthenticated. There is a FHIR Proxy Chart that can remove the authentication of an IBM FHIR server. 
-- In order to expose the FHIR server, an ingress can be created by including ingress.class and ingress.host values.
+- In order to expose the FHIR server, an ingress can be created by including ingress.class and ingress.hostname values.
 
 ```bash
-helm install fhir-ui . --set fhirServer=http://my-fhir-server/fhir-server/api/v4 --set ingress.class=<<INGRESS_CLASS>> --set ingress.host=<<INGRESS_HOST>>
+helm install fhir-ui . --set fhirServer=http://my-fhir-server/fhir-server/api/v4 --set ingress.hostname=<<INGRESS_HOSTNAME>>
 ```
 
-INGRESS_CLASS refers to the ingress class used by your cloud provider.  Currently, these are the preferred values: 
-  - IBM: public-iks-k8s-nginx
-  - Azure: addon-http-application-routing
-  - AWS: nginx
-
-INGRESS_HOST refers to the pre-determined domain name that will be used to access your FHIR Patient Browser instance.
+INGRESS_HOSTNAME refers to the pre-determined domain name that will be used to access your FHIR Patient Browser instance.
 
 ### Using the Chart
 
-Access your FHIR UI at: `http://<<INGRESS_HOST>>/index.html`
+Access your FHIR UI at: `http://<<INGRESS_HOSTNAME>>/index.html`
 
 ## Uninstallation
 

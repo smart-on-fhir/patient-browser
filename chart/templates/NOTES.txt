@@ -1,42 +1,23 @@
-Welcome to the
+Welcome to
 
-       d8888 888                                    d8b          
-      d88888 888                                    Y8P          
-     d88P888 888                                                 
-    d88P 888 888 888  888  .d88b.   8888b.  888d888 888  .d88b.  
-   d88P  888 888 888  888 d8P  Y8b     "88b 888P"   888 d8P  Y8b 
-  d88P   888 888 Y88  88P 88888888 .d888888 888     888 88888888 
- d8888888888 888  Y8bd8P  Y8b.     888  888 888     888 Y8b.     
-d88P     888 888   Y88P    "Y8888  "Y888888 888     888  "Y8888  
-                                                                 
-                               Clinical Data Ingestion Framework 
+       d8888 888                                    d8b
+      d88888 888                                    Y8P
+     d88P888 888
+    d88P 888 888 888  888  .d88b.   8888b.  888d888 888  .d88b.
+   d88P  888 888 888  888 d8P  Y8b     "88b 888P"   888 d8P  Y8b
+  d88P   888 888 Y88  88P 88888888 .d888888 888     888 88888888
+ d8888888888 888  Y8bd8P  Y8b.     888  888 888     888 Y8b.
+d88P     888 888   Y88P    "Y8888  "Y888888 888     888  "Y8888
 
-Pattern: Sample FHIR User Interface
+The FHIR Patient Browser has been successfully deployed.
 
-Get the application URL by running these commands:
-{{- if contains "NodePort" .Values.service.type }}
+It can be accessed from within your cluster at the following location:
 
-  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "patient-browser.fullname" . }})
-  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[1].address}")  
-  echo Patient Browser: http://$NODE_IP:$NODE_PORT/index.html
-  
-{{- else if contains "LoadBalancer" .Values.service.type }}
+  {{ include "patient-browser.fullname" .}}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain}}
 
-It may take a few minutes for the LoadBalancer IP to be available.
+{{- if .Values.ingress.enabled }}
 
-You can watch the status by running the following command and wait unti the external IP address appears: 
+It can also be accessed via ingress at this location:
 
-  kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "patient-browser.fullname" . }}
-
-Once the external IP has been assigned run the following:
-
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "patient-browser.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}') 
-  echo Patient Browser: http://$SERVICE_IP:{{ .Values.service.Port }}/index.html
-
-{{- else if contains "ClusterIP" .Values.service.type }}
-
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "patient-browser.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-  echo Patient Browser: http://127.0.0.1:{{ .Values.service.port }}/index.html
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME {{ .Values.service.port }}:{{ .Values.service.port }}
-
+https://{{ .Values.ingress.hostname }}/{{ .Chart.Name }}/
 {{- end }}

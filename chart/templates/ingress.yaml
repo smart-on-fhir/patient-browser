@@ -1,21 +1,28 @@
+{{- if .Values.enabled -}}
 {{- if .Values.ingress.enabled -}}
 {{- $ingressPort := .Values.service.httpPort -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "patient-browser.fullname" . }}-ingress
+  name: {{ include "patient-browser.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "patient-browser.labels" . | nindent 4 }}
   annotations:
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     kubernetes.io/ingress.class: {{ .Values.ingress.class }}
 spec:
   rules:
-    - host: {{ .Values.ingress.host}}
+    - host: {{ .Values.ingress.hostname }}
       http:
         paths:
-          - path: /
+          - path: /{{ .Chart.Name }}(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
                 name: {{ include "patient-browser.fullname" . }}
                 port: 
                   number: {{ $ingressPort }}
+{{- end }}
 {{- end }}
