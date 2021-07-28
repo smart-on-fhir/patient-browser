@@ -14,6 +14,7 @@ import InsightsDetailButton from "./InsightsDetailButton"
 export default class ImmunizationList extends React.Component
 {
     static propTypes = {
+        settings: PropTypes.object.isRequired,
         resources: PropTypes.arrayOf(PropTypes.object)
     };
 
@@ -66,6 +67,26 @@ export default class ImmunizationList extends React.Component
                                     <Date moment={o.occurrenceDateTime}/> :
                                     o.occurrenceString || "-"
                         )
+                    },
+                    {
+                        label: <div className="text-center">View</div>,
+                        render: o => {
+                            let url = `${this.props.settings.server.url}/${o.resourceType}/${o.id}`;
+                            if (this.props.settings.fhirViewer.enabled) {
+                                url = this.props.settings.fhirViewer.url +
+                                    (this.props.settings.fhirViewer.url.indexOf("?") > -1 ? "&" : "?") +
+                                    this.props.settings.fhirViewer.param + "=" +
+                                    encodeURIComponent(url);
+                            }
+
+                            return (
+                                <div style={{ color: '#337ab7', textAlign: 'center' }}>
+                                    <button onClick={ () => window.open(url, "_blank") }>
+                                        <i className="fa fa-eye fas fa-bold"/>
+                                    </button>
+                                </div>
+                            )
+                        }
                     },
                     {
                         label: <div style={{textAlign: 'center'}}>
