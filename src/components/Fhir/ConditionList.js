@@ -121,6 +121,7 @@ export default class ConditionList extends React.Component
                     {
                         label: <div style={{textAlign: 'center'}}>
                             <button
+                                title="Highlight NLP Codes"
                                 onMouseUp={ this.toggleHighlight }
                                 style={{ 
                                     backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',

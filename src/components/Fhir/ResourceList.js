@@ -409,6 +409,7 @@ export default class ResourceList extends React.Component
         out.push ({
             label: <div style={{textAlign: 'center'}}>
                 <button
+                    title="Highlight NLP Codes"
                     onMouseUp={ this.toggleHighlight }
                     style={{ 
                         backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',
