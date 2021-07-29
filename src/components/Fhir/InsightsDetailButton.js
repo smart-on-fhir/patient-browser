@@ -26,8 +26,11 @@ export default class InsightsDetailButton extends React.Component {
                     (this.props.settings.fhirViewer.url.indexOf("?") > -1 ? "&" : "?") +
                     this.props.settings.fhirViewer.param + "=" +
                     encodeURIComponent(sourceUrl);
+            } else {
+                sourceUrl += "?_format=json&_pretty=true"
             }
         }
+        console.log(sourceUrl)
 
         return (
             <div style={{ color: '#337ab7', textAlign: 'center' }}>
@@ -67,7 +70,7 @@ export default class InsightsDetailButton extends React.Component {
                                     </tr>
                                     <tr>
                                         <td style={{fontWeight: "bold"}}>Insight Source</td>
-                                        <td>{isDocument ? <a href={sourceUrl}>{deets.basedOn.replace("/", " ")}</a> : deets.insightSource}</td>
+                                        <td>{isDocument ? <a href={sourceUrl} target="_blank" rel="noopener noreferrer">{deets.basedOn.replace("/", " ")}</a> : deets.insightSource}</td>
                                     </tr>
                                 </tbody>
                                 { isDocument ?

@@ -48,6 +48,8 @@ export class Grid extends React.Component
                 (this.props.settings.fhirViewer.url.indexOf("?") > -1 ? "&" : "?") +
                 this.props.settings.fhirViewer.param + "=" +
                 encodeURIComponent(url);
+        } else {
+            url += "?_format=json&_pretty=true"
         }
 
         return (
@@ -75,7 +77,7 @@ export class Grid extends React.Component
                 }
                 <td>
                     <div style={{ color: '#337ab7', textAlign: 'center' }}>
-                        <button onClick={ () => window.open(url, "_blank") }>
+                        <button onClick={ () => window.open(url, "_blank", "noopener,noreferrer") }>
                             <i className="fa fa-eye fas fa-bold"/>
                         </button>
                     </div>

@@ -1039,7 +1039,7 @@
     timeout: 20000,
     renderSelectedOnly: false,
     fhirViewer: {
-        enabled: true,
+        enabled: false,
         url: "http://docs.smarthealthit.org/fhir-viewer/index.html",
         param: "url"
     },
