@@ -7,6 +7,7 @@
 # unzip file.zip "generated-sample-data-master/R4/SYNTHEA/*" -d .
 # rm file.zip
 
+## Post the online-demo-ressources:
 files=(
     https://raw.githubusercontent.com/joundso/fhir-demo-data/master/fhir/hospitalInformation1625487628939.json
     https://raw.githubusercontent.com/joundso/fhir-demo-data/master/fhir/practitionerInformation1625487628939.json
@@ -40,6 +41,17 @@ for item in ${files[*]}; do
         --data-binary @- \
         http://fhir:8080/fhir
 done
+
+## Post local FHIR ressources:
+# curl -X POST \
+#     -H 'Content-Type:application/fhir+json' \
+#     --retry-connrefuse \
+#     --connect-timeout 30 \
+#     --max-time 60 \
+#     --retry 5 \
+#     --retry-delay 15 \
+#     --data '@/data/sample-record-1.json' \
+#     http://fhir:8080/fhir
 
 printf "\n##################################\n"
 printf "\n  Finished sending the demo data\n"
