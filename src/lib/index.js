@@ -411,68 +411,92 @@ export const InsightSource = {
 }
 
 /**
+ * Gets data.meta.extension.*.extension
+ * @param {Object} data FHIR Resource
+ * @returns {Object}
+ */
+function getInnerExtentsion(data) {
+    let meta = getPath(data, "meta");
+    if (meta) {
+        let ext_outer = getPath(meta, "extension")
+        if (ext_outer && Array.isArray(ext_outer)) {
+            for (let item_outer in ext_outer) {
+                if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
+                    let ext_inner = getPath(ext_outer[item_outer], "extension")
+                    return ext_inner
+                }
+            }
+        }
+    }
+    return null
+}
+
+/**
+ * Gets details for an http://ibm.com/fhir/cdm/insight/insight-entry
+ * @param {Object} item dictionary
+ * @returns {Object}
+ */
+function getInsightEntryDetails(item) {
+    let result = {}
+    let entry_arr = getPath(item, "extension");
+    for (let arr_ext_outer in entry_arr) {
+        let url = getPath(entry_arr[arr_ext_outer], "url")
+        if (url == "http://ibm.com/fhir/cdm/insight/confidence") {
+            // This is gonna be gross, but name and score are stored side-by-side so we gotta iterate twice
+            let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
+            for (let e in arr_ext_inner) {
+                if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-name") {
+                    if (getPath(arr_ext_inner[e], "valueString") == "Explicit Score") {
+                        for (let e in arr_ext_inner) {
+                            if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-score") {
+                                result.confidence = getPath(arr_ext_inner[e], "valueString")
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (url == "http://ibm.com/fhir/cdm/insight/span") {
+            let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
+            for (let e in arr_ext_inner) {
+                if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/covered-text") {
+                    result.coveredText = getPath(arr_ext_inner[e], "valueString")
+                } else if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/offset-begin") {
+                    result.offsetBegin = getPath(arr_ext_inner[e], "valueInteger")
+                } else if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/offset-end") {
+                    result.offsetEnd = getPath(arr_ext_inner[e], "valueInteger")
+                }
+            }
+        }
+    }
+    return result
+}
+
+/**
  * Gets the details of an insight
  * @param {Object} data FHIR Resource
  * @returns {Object}
  */
  export function getInsightDetails(data) {
     var result = {}
+    result.lastUpdated = getPath(data, "meta.lastUpdated")
 
-    // get data.meta.extension.*.extension.*.url
-    let meta = getPath(data, "meta");
-    if (meta) {
-        result.lastUpdated = getPath(meta, "lastUpdated")
-        let ext_outer = getPath(meta, "extension")
-        if (ext_outer && Array.isArray(ext_outer)) {
-            for (let item_outer in ext_outer) {
-                if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
-                    let ext_inner = getPath(ext_outer[item_outer], "extension")
-                    if (ext_inner && Array.isArray(ext_inner)) {
-                        for (let item_inner in ext_inner) {
-                            let url = getPath(ext_inner[item_inner], "url")
-                            // now that we've got the url, find all the different bits
-                            if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
-                                result.processType = getPath(ext_inner[item_inner], "valueString");
-                            } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-name") {
-                                result.processName = getPath(ext_inner[item_inner], "valueString");
-                            } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-version") {
-                                result.processVersion = getPath(ext_inner[item_inner], "valueString");
-                            } else if (url == "http://ibm.com/fhir/cdm/insight/basedOn") {
-                                result.basedOn = getPath(ext_inner[item_inner], "valueReference.reference");
-                            } else if (url == "http://ibm.com/fhir/cdm/insight/insight-entry") {
-                                // get the confidence, text, and offst\et
-                                let entry_arr = getPath(ext_inner[item_inner], "extension");
-                                for (let arr_ext_outer in entry_arr) {
-                                    if (getPath(entry_arr[arr_ext_outer], "url") == "http://ibm.com/fhir/cdm/insight/confidence") {
-                                        // This is gonna be gross, but name and score are stored side-by-side so we gotta iterate twice
-                                        let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
-                                        for (let e in arr_ext_inner) {
-                                            if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-name") {
-                                                if (getPath(arr_ext_inner[e], "valueString") == "Explicit Score") {
-                                                    for (let e in arr_ext_inner) {
-                                                        if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-score") {
-                                                            result.confidence = getPath(arr_ext_inner[e], "valueString")
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    } else if (getPath(entry_arr[arr_ext_outer], "url") == "http://ibm.com/fhir/cdm/insight/span") {
-                                        let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
-                                        for (let e in arr_ext_inner) {
-                                            if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/covered-text") {
-                                                result.coveredText = getPath(arr_ext_inner[e], "valueString")
-                                            } else if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/offset-begin") {
-                                                result.offsetBegin = getPath(arr_ext_inner[e], "valueInteger")
-                                            } else if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/offset-end") {
-                                                result.offsetEnd = getPath(arr_ext_inner[e], "valueInteger")
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+    let ext_inner = getInnerExtentsion(data)
+    if (ext_inner && Array.isArray(ext_inner)) {
+        for (let item in ext_inner) {
+            let url = getPath(ext_inner[item], "url")
+            // now that we've got the url, find all the different bits
+            if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
+                result.processType = getPath(ext_inner[item], "valueString");
+            } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-name") {
+                result.processName = getPath(ext_inner[item], "valueString");
+            } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-version") {
+                result.processVersion = getPath(ext_inner[item], "valueString");
+            } else if (url == "http://ibm.com/fhir/cdm/insight/basedOn") {
+                result.basedOn = getPath(ext_inner[item], "valueReference.reference");
+            } else if (url == "http://ibm.com/fhir/cdm/insight/insight-entry") {
+                let insightEntryDetails = getInsightEntryDetails(ext_inner[item])
+                for (let key in insightEntryDetails) {
+                    result[key] = insightEntryDetails[key]
                 }
             }
         }

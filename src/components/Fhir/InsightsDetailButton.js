@@ -30,7 +30,6 @@ export default class InsightsDetailButton extends React.Component {
                 sourceUrl += "?_format=json&_pretty=true"
             }
         }
-        console.log(sourceUrl)
 
         return (
             <div className="text-primary text-center">
