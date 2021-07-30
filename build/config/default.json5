@@ -1,7 +1,7 @@
 {
     server: {
         type: "STU-3",
-        url: "http://localhost:8080/fhir-server/api/v4",
+        url: "https://r3.smarthealthit.org",
         tags: [
             {
                 key  : "pro-7-2017",
@@ -3303,7 +3303,7 @@
     timeout: 20000,
     renderSelectedOnly: false,
     fhirViewer: {
-        enabled: false,
+        enabled: true,
         url: "http://docs.smarthealthit.org/fhir-viewer/index.html",
         param: "url"
     },
