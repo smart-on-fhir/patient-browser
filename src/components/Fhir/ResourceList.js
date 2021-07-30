@@ -4,6 +4,7 @@ import Grid        from "./Grid"
 import { 
     getPath, 
     getCodeOrConcept, 
+    highlightToggleButtonText,
     codeIsNLPInsight, 
     getInsightSource, 
     InsightSource 
@@ -51,7 +52,7 @@ function renderCell(record, doHighlight, allOf, oneOf) {
                 <tbody>
                     {
                         entries.map((o, i) => (
-                            <tr key={i} className={o.isNLP ? "mark" : ""}>
+                            <tr key={i} className={o.isNLP ? "bg-primary" : ""}>
                                 <td className="label-cell">{ o.label }</td>
                                 <td>{ o.value }</td>
                             </tr>
@@ -407,17 +408,13 @@ export default class ResourceList extends React.Component
 
         // 4. Insights ---------------------------------------------------------
         out.push ({
-            label: <div style={{textAlign: 'center'}}>
+            label: <div className="text-center">
                 <button
-                    title="Highlight NLP Codes"
+                    title={highlightToggleButtonText}
                     onMouseUp={ this.toggleHighlight }
-                    style={{ 
-                        backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',
-                        color: this.state.doHighlight ? 'white' : '#337ab7',
-                        textAlign: 'center'
-                    }}
+                    className="text-center"
                 >
-                    <i className="fa fa-lightbulb-o fas fa-bold"/>
+                    <i className={"fa fa-lightbulb-o fa-bold"}/>
                 </button>
             </div>,
             render: o => {

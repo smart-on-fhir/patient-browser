@@ -366,6 +366,11 @@ export function getPatientImageUri(patient, base="") {
 }
 
 /**
+ * Text for highlight toggle button
+ */
+export const highlightToggleButtonText = "Highlight NLP Codes"
+
+/**
  * Return the display text for the given CodeableConcept
  * @param {Object} concept CodeableConcept
  * @returns {String}

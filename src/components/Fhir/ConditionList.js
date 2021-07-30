@@ -6,6 +6,7 @@ import Date             from "./Date"
 import { 
     getPath, 
     getCodeOrConcept, 
+    highlightToggleButtonText,
     codeIsNLPInsight, 
     getInsightSource, 
     InsightSource 
@@ -59,7 +60,7 @@ export default class ConditionList extends React.Component
 
                             let highlight = "";
                             if ( this.state.doHighlight && codeIsNLPInsight(o.code) ) {
-                                highlight = "mark";
+                                highlight = "bg-primary";
                             }
 
                             if (o.code) {
@@ -119,17 +120,13 @@ export default class ConditionList extends React.Component
                         }
                     },
                     {
-                        label: <div style={{textAlign: 'center'}}>
+                        label: <div className="text-center">
                             <button
-                                title="Highlight NLP Codes"
+                                title={highlightToggleButtonText}
                                 onMouseUp={ this.toggleHighlight }
-                                style={{ 
-                                    backgroundColor: this.state.doHighlight ? '#337ab7' : 'white',
-                                    color: this.state.doHighlight ? 'white' : '#337ab7',
-                                    textAlign: 'center'
-                                }}
+                                className="text-center"
                             >
-                                <i className="fa fa-lightbulb-o fas fa-bold"/>
+                                <i className={"fa fa-lightbulb-o fa-bold"}/>
                             </button>
                         </div>,
                         render: o => {

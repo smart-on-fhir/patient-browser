@@ -14,13 +14,13 @@ export default class InsightsDetailButton extends React.Component {
 
     render() {
         let rec = this.props.resource
-        let deets = getInsightDetails(rec)
-        let isDocument = deets.insightSource==InsightSource.DOCUMENT
-        let prettyDate = new Date(deets.lastUpdated).toUTCString()
+        let details = getInsightDetails(rec)
+        let isDocument = details.insightSource==InsightSource.DOCUMENT
+        let prettyDate = new Date(details.lastUpdated).toUTCString()
 
         let sourceUrl
         if (isDocument) {
-            sourceUrl = `${this.props.settings.server.url}/${deets.basedOn}`;
+            sourceUrl = `${this.props.settings.server.url}/${details.basedOn}`;
             if (this.props.settings.fhirViewer.enabled) {
                 sourceUrl = this.props.settings.fhirViewer.url +
                     (this.props.settings.fhirViewer.url.indexOf("?") > -1 ? "&" : "?") +
@@ -33,7 +33,7 @@ export default class InsightsDetailButton extends React.Component {
         console.log(sourceUrl)
 
         return (
-            <div style={{ color: '#337ab7', textAlign: 'center' }}>
+            <div className="text-primary text-center">
                 <Popup
                     trigger={
                         <button>
@@ -43,45 +43,45 @@ export default class InsightsDetailButton extends React.Component {
                     position="left center"
                     on={['hover', 'click', "focus"]}
                 >
-                    <div style={{boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}} className="panel panel-default">
+                    <div className="drop-shadow panel panel-default">
                         <div className="panel-heading">
                             <b className="text-primary">
                                 <i className="fa fa-lightbulb-o fas fa-bold" style={{paddingRight: 10}}/>Insights for {rec.resourceType} {rec.id}
                             </b>
                         </div>
-                        <div className="table-responsive">
+                        <div className="table-responsive" role="presentation">
                             <table className="table table-condensed table-hover table-striped table-bordered">
                                 <tbody>
                                     <tr>
-                                        <td style={{fontWeight: "bold"}}>Last Updated</td>
+                                        <td><strong>Last Updated</strong></td>
                                         <td>{prettyDate}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{fontWeight: "bold"}}>Process Name</td>
-                                        <td>{deets.processName}</td>
+                                        <td><strong>Process Name</strong></td>
+                                        <td>{details.processName}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{fontWeight: "bold"}}>Process Type</td>
-                                        <td>{deets.processType}</td>
+                                        <td><strong>Process Type</strong></td>
+                                        <td>{details.processType}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{fontWeight: "bold"}}>Process Version</td>
-                                        <td>{deets.processVersion}</td>
+                                        <td><strong>Process Version</strong></td>
+                                        <td>{details.processVersion}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{fontWeight: "bold"}}>Insight Source</td>
-                                        <td>{isDocument ? <a href={sourceUrl} target="_blank" rel="noopener noreferrer">{deets.basedOn.replace("/", " ")}</a> : deets.insightSource}</td>
+                                        <td><strong>Insight Source</strong></td>
+                                        <td>{isDocument ? <a href={sourceUrl} target="_blank" rel="noopener noreferrer">{details.basedOn.replace("/", " ")}</a> : details.insightSource}</td>
                                     </tr>
                                 </tbody>
                                 { isDocument ?
                                 <tbody>
                                     <tr>
-                                        <td style={{fontWeight: "bold"}}>Covered Text</td>
-                                        <td>"...<em>{deets.coveredText}</em>..." [{deets.offsetBegin}:{deets.offsetEnd}]</td>
+                                        <td><strong>Covered Text</strong></td>
+                                        <td>"...<em>{details.coveredText}</em>..." [{details.offsetBegin}:{details.offsetEnd}]</td>
                                     </tr>
                                     <tr>
-                                        <td style={{fontWeight: "bold"}}>Confidence</td>
-                                        <td>{Number(deets.confidence)*100}%</td>
+                                        <td><strong>Confidence</strong></td>
+                                        <td>{Number(details.confidence)*100}%</td>
                                     </tr>
                                 </tbody>
                                 : null }

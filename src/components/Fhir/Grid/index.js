@@ -76,7 +76,7 @@ export class Grid extends React.Component
                     })
                 }
                 <td>
-                    <div style={{ color: '#337ab7', textAlign: 'center' }}>
+                    <div className="text-primary text-center">
                         <button onClick={ () => window.open(url, "_blank", "noopener,noreferrer") }>
                             <i className="fa fa-eye fas fa-bold"/>
                         </button>
