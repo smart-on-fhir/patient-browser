@@ -13,6 +13,7 @@ import Period      from "./Period"
 import Date        from "./Date"
 import moment      from "moment"
 import InsightsDetailButton from "./InsightsDetailButton"
+import { on } from "events"
 
 function renderCell(record, doHighlight, allOf, oneOf) {
 
@@ -22,18 +23,18 @@ function renderCell(record, doHighlight, allOf, oneOf) {
         let propValue = getPath(record, meta.path);
         if (propValue !== undefined) {
             let value = meta.render ? meta.render(record) : propValue;
-            let isNLP = doHighlight && Boolean(meta.nlpCodePath) && codeIsNLPInsight(getPath(record, meta.nlpCodePath));
+            let isHighlight = doHighlight && Boolean(meta.nlpCodePath) && codeIsNLPInsight(getPath(record, meta.nlpCodePath));
             let raw   = meta.raw ? meta.raw(record) : value;
             let label = typeof meta.label == "function" ? meta.label(record) : meta.label;
             let existing = entries.find(o => o.value === raw);
             if (existing) {
                 existing.label += ", " + label
-                if (isNLP) {
-                    existing.isNLP = true;
+                if (isHighlight) {
+                    existing.isHighlight = true;
                 }
             }
             else {
-                entries.push({ label, value, isNLP });
+                entries.push({ label, value, isHighlight });
             }
             return true;
         }
@@ -52,8 +53,8 @@ function renderCell(record, doHighlight, allOf, oneOf) {
                 <tbody>
                     {
                         entries.map((o, i) => (
-                            <tr key={i} className={o.isNLP ? "bg-primary" : ""}>
-                                <td className="label-cell">{ o.label }</td>
+                            <tr key={i} className={o.isHighlight ? "bg-primary" : ""}>
+                                <td className="label-cell" style={o.isHighlight ? {color: "white"} : null}>{ o.label }</td>
                                 <td>{ o.value }</td>
                             </tr>
                         ))
