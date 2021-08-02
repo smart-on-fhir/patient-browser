@@ -48,8 +48,8 @@ export default class InsightsDetailButton extends React.Component {
                                 <i className="fa fa-lightbulb-o fas fa-bold" style={{paddingRight: 10}}/>Insights for {rec.resourceType} {rec.id}
                             </b>
                         </div>
-                        <div className="table-responsive" role="presentation">
-                            <table className="table table-condensed table-hover table-striped table-bordered">
+                        <div className="table-responsive">
+                            <table className="table table-condensed table-hover table-striped table-bordered" role="presentation">
                                 <tbody>
                                     <tr>
                                         <td><strong>Last Updated</strong></td>
