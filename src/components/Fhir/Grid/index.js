@@ -48,14 +48,12 @@ export class Grid extends React.Component
                 (this.props.settings.fhirViewer.url.indexOf("?") > -1 ? "&" : "?") +
                 this.props.settings.fhirViewer.param + "=" +
                 encodeURIComponent(url);
+        } else {
+            url += "?_format=json&_pretty=true"
         }
 
         return (
-            <tr
-                key={i}
-                onClick={ () => window.open(url, "_blank") }
-                style={{ cursor: "pointer" }}
-            >
+            <tr key={i}>
                 {
                     this.props.cols.map((col, i) => {
                         let { render, path, cellProps, defaultValue } = col
@@ -77,6 +75,13 @@ export class Grid extends React.Component
                         )
                     })
                 }
+                <td>
+                    <div className="text-primary text-center">
+                        <button onClick={ () => window.open(url, "_blank", "noopener,noreferrer") }>
+                            <i className="fa fa-eye fas fa-bold"/>
+                        </button>
+                    </div>
+                </td>
             </tr>
         )
     }
@@ -172,6 +177,7 @@ export class Grid extends React.Component
                                         )
                                     })
                                 }
+                                <th><div className="text-center">View</div></th>
                             </tr>
                         </thead>
                         <tbody>

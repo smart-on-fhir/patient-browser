@@ -3,13 +3,34 @@ import PropTypes   from "prop-types"
 import moment      from "moment"
 import Grid        from "./Grid"
 import Date        from "./Date"
-import { getPath } from "../../lib"
+import { 
+    getPath, 
+    codeIsNLPInsight, 
+    highlightToggleButtonText,
+    getInsightSource, 
+    InsightSource 
+} from "../../lib"
+import InsightsDetailButton from "./InsightsDetailButton"
 
 export default class ImmunizationList extends React.Component
 {
     static propTypes = {
+        settings: PropTypes.object.isRequired,
         resources: PropTypes.arrayOf(PropTypes.object)
     };
+
+    // https://reactjs.org/docs/handling-events.html
+    constructor(props) {
+        super(props);
+        this.state = { doHighlight: false }
+        this.toggleHighlight = this.toggleHighlight.bind(this);
+    }
+
+    toggleHighlight() {
+        this.setState(prevState => ({ 
+            doHighlight: !prevState.doHighlight 
+        }) );
+    }
 
     render()
     {
@@ -28,7 +49,11 @@ export default class ImmunizationList extends React.Component
                 cols={[
                     {
                         label: "Type",
-                        path : "vaccineCode.coding.0.display"
+                        render: o => (
+                            <div className={codeIsNLPInsight(getPath(o, "vaccineCode")) ? "bg-primary" : ""}>
+                                { getPath(o, "vaccineCode.coding.0.display") }
+                            </div>
+                        )
                     },
                     {
                         label: "Status",
@@ -43,6 +68,24 @@ export default class ImmunizationList extends React.Component
                                     <Date moment={o.occurrenceDateTime}/> :
                                     o.occurrenceString || "-"
                         )
+                    },
+                    {
+                        label: <div className="text-center">
+                            <button
+                                title={highlightToggleButtonText}
+                                onMouseUp={ this.toggleHighlight }
+                                className="text-center"
+                            >
+                                <i className={"fa fa-lightbulb-o fa-bold"}/>
+                            </button>
+                        </div>,
+                        render: o => {
+                            if ( getInsightSource(o) != InsightSource.NONE ) {
+                                return ( <InsightsDetailButton resource={o} settings={this.props.settings}/> )
+                            } else {
+                                return ( <div/> )
+                            }
+                        }
                     }
                 ]}
             />

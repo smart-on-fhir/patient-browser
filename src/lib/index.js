@@ -366,6 +366,11 @@ export function getPatientImageUri(patient, base="") {
 }
 
 /**
+ * Text for highlight toggle button
+ */
+export const highlightToggleButtonText = "Highlight NLP Codes"
+
+/**
  * Return the display text for the given CodeableConcept
  * @param {Object} concept CodeableConcept
  * @returns {String}
@@ -388,6 +393,140 @@ export function getCodeableConcept(concept, defaultValue = "-") {
 export function getCodeOrConcept(data, defaultValue = "-") {
     if (typeof data == "string") return data || defaultValue;
     return getCodeableConcept(data, defaultValue);
+}
+
+/**
+ * Returns whether a codeOrConcept is the result of NLP insight
+ * @param {Object} data Code or CodeableConcept
+ * @returns {Boolean}
+ */
+export function codeIsNLPInsight(data) {
+    return getPath(data, "coding.0.extension.0.url") == "http://ibm.com/fhir/cdm/insight/reference";
+}
+
+export const InsightSource = {
+    NONE: "None",
+    SELF: "Self",
+    DOCUMENT: "Document"
+}
+
+/**
+ * Gets data.meta.extension.*.extension
+ * @param {Object} data FHIR Resource
+ * @returns {Object}
+ */
+function getInnerExtentsion(data) {
+    let meta = getPath(data, "meta");
+    if (meta) {
+        let ext_outer = getPath(meta, "extension")
+        if (ext_outer && Array.isArray(ext_outer)) {
+            for (let item_outer in ext_outer) {
+                if (getPath(ext_outer[item_outer], "url") == "http://ibm.com/fhir/cdm/insight/result") {
+                    let ext_inner = getPath(ext_outer[item_outer], "extension")
+                    return ext_inner
+                }
+            }
+        }
+    }
+    return null
+}
+
+/**
+ * Gets details for an http://ibm.com/fhir/cdm/insight/insight-entry
+ * @param {Object} item dictionary
+ * @returns {Object}
+ */
+function getInsightEntryDetails(item) {
+    let result = {}
+    let entry_arr = getPath(item, "extension");
+    for (let arr_ext_outer in entry_arr) {
+        let url = getPath(entry_arr[arr_ext_outer], "url")
+        if (url == "http://ibm.com/fhir/cdm/insight/confidence") {
+            // This is gonna be gross, but name and score are stored side-by-side so we gotta iterate twice
+            let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
+            for (let e in arr_ext_inner) {
+                if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-name") {
+                    if (getPath(arr_ext_inner[e], "valueString") == "Explicit Score") {
+                        for (let e in arr_ext_inner) {
+                            if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/confidence-score") {
+                                result.confidence = getPath(arr_ext_inner[e], "valueString")
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (url == "http://ibm.com/fhir/cdm/insight/span") {
+            let arr_ext_inner = getPath(entry_arr[arr_ext_outer], "extension")
+            for (let e in arr_ext_inner) {
+                if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/covered-text") {
+                    result.coveredText = getPath(arr_ext_inner[e], "valueString")
+                } else if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/offset-begin") {
+                    result.offsetBegin = getPath(arr_ext_inner[e], "valueInteger")
+                } else if (getPath(arr_ext_inner[e], "url") == "http://ibm.com/fhir/cdm/insight/offset-end") {
+                    result.offsetEnd = getPath(arr_ext_inner[e], "valueInteger")
+                }
+            }
+        }
+    }
+    return result
+}
+
+/**
+ * Gets the details of an insight
+ * @param {Object} data FHIR Resource
+ * @returns {Object}
+ */
+ export function getInsightDetails(data) {
+    var result = {}
+    result.lastUpdated = getPath(data, "meta.lastUpdated")
+
+    let ext_inner = getInnerExtentsion(data)
+    if (ext_inner && Array.isArray(ext_inner)) {
+        for (let item in ext_inner) {
+            let url = getPath(ext_inner[item], "url")
+            // now that we've got the url, find all the different bits
+            if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-type") {
+                result.processType = getPath(ext_inner[item], "valueString");
+            } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-name") {
+                result.processName = getPath(ext_inner[item], "valueString");
+            } else if (url == "http://ibm.com/fhir/cdm/StructureDefinition/process-version") {
+                result.processVersion = getPath(ext_inner[item], "valueString");
+            } else if (url == "http://ibm.com/fhir/cdm/insight/basedOn") {
+                result.basedOn = getPath(ext_inner[item], "valueReference.reference");
+            } else if (url == "http://ibm.com/fhir/cdm/insight/insight-entry") {
+                let insightEntryDetails = getInsightEntryDetails(ext_inner[item])
+                for (let key in insightEntryDetails) {
+                    result[key] = insightEntryDetails[key]
+                }
+            }
+        }
+    }
+
+    // get insightSource from processType
+    if (typeof result.processType != 'string') {
+        result.insightSource = InsightSource.NONE;
+    } else {
+        let processTypeArr = result.processType.toLowerCase().split(" ");
+        if (processTypeArr.includes("unstructured")) {
+            result.insightSource = InsightSource.DOCUMENT;
+        } else if (processTypeArr.includes("structured")) {
+            result.insightSource = InsightSource.SELF;
+        } else {
+            // It's not good if this happens
+            result.insightSource = InsightSource.NONE;
+        }
+    }
+
+    return result
+}
+
+/**
+ * Gets the source type of an insight
+ * @param {Object} data FHIR Resource
+ * @returns {InsightSource}
+ */
+export function getInsightSource(data) {
+    return getInsightDetails(data).insightSource
 }
 
 /**

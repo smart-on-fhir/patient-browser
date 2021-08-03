@@ -3,19 +3,42 @@ import PropTypes        from "prop-types"
 import { CODE_SYSTEMS } from "../../lib/constants"
 import Grid             from "./Grid"
 import Date             from "./Date"
-import { getPath, getCodeOrConcept } from "../../lib"
+import { 
+    getPath, 
+    getCodeOrConcept, 
+    highlightToggleButtonText,
+    codeIsNLPInsight, 
+    getInsightSource, 
+    InsightSource 
+} from "../../lib"
 import moment           from "moment"
+import InsightsDetailButton from "./InsightsDetailButton"
 
 export default class ConditionList extends React.Component
 {
     static propTypes = {
+        settings: PropTypes.object.isRequired,
         resources: PropTypes.arrayOf(PropTypes.object)
     };
+
+    // https://reactjs.org/docs/handling-events.html
+    constructor(props) {
+        super(props);
+        this.state = { doHighlight: false }
+        this.toggleHighlight = this.toggleHighlight.bind(this);
+    }
+
+    toggleHighlight() {
+        this.setState(prevState => ({ 
+            doHighlight: !prevState.doHighlight 
+        }) );
+    }
 
     render()
     {
         let recs   = this.props.resources || []
         let length = recs.length;
+
         return (
             <Grid
                 rows={(recs || []).map(o => o.resource)}
@@ -34,6 +57,11 @@ export default class ConditionList extends React.Component
                             let name   = "-";
                             let code   = "-";
                             let system = "";
+
+                            let highlight = "";
+                            if ( this.state.doHighlight && codeIsNLPInsight(o.code) ) {
+                                highlight = "bg-primary";
+                            }
 
                             if (o.code) {
                                 if (o.code.text) {
@@ -61,7 +89,7 @@ export default class ConditionList extends React.Component
                             return (
                                 <div>
                                     <b>{ name }</b>
-                                    <small className="text-muted pull-right">
+                                    <small className={highlight+" text-muted pull-right"}>
                                         { code } {system}
                                     </small>
                                 </div>
@@ -70,11 +98,11 @@ export default class ConditionList extends React.Component
                     },
                     {
                         label: <div className="text-center">Clinical Status</div>,
-                        render: o => <div className="text-center">{ getCodeOrConcept(o.clinicalStatus) }</div>
+                        render: o => <div className="text-center">{ o.clinicalStatus ? getCodeOrConcept(o.clinicalStatus) : "-" }</div>
                     },
                     {
                         label : <div className="text-center">Verification Status</div>,
-                        render: o => <div className="text-center">{ getCodeOrConcept(o.verificationStatus) }</div>
+                        render: o => <div className="text-center">{ o.verificationStatus ? getCodeOrConcept(o.verificationStatus) : "-" }</div>
                     },
                     {
                         label: <div className="text-center">Onset Date</div>,
@@ -89,6 +117,24 @@ export default class ConditionList extends React.Component
                                     }
                                 </div>
                             );
+                        }
+                    },
+                    {
+                        label: <div className="text-center">
+                            <button
+                                title={highlightToggleButtonText}
+                                onMouseUp={ this.toggleHighlight }
+                                className="text-center"
+                            >
+                                <i className={"fa fa-lightbulb-o fa-bold"}/>
+                            </button>
+                        </div>,
+                        render: o => {
+                            if ( getInsightSource(o) != InsightSource.NONE ) {
+                                return ( <InsightsDetailButton resource={o} settings={this.props.settings}/> )
+                            } else {
+                                return ( <div/> )
+                            }
                         }
                     }
                 ]}

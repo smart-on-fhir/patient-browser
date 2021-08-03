@@ -347,9 +347,9 @@ export class PatientDetail extends React.Component
 
         switch (type) {
         case "Immunization":
-            return <ImmunizationList resources={items}/>;
+            return <ImmunizationList resources={items} settings={this.props.settings}/>;
         case "Condition":
-            return <ConditionList resources={items}/>
+            return <ConditionList resources={items} settings={this.props.settings}/>
         case "Encounter":
             return <Encounter resources={items}/>;
         case "CarePlan":

@@ -1,12 +1,21 @@
 import React       from "react"
 import PropTypes   from "prop-types"
 import Grid        from "./Grid"
-import { getPath, getCodeOrConcept } from "../../lib"
+import { 
+    getPath, 
+    getCodeOrConcept, 
+    highlightToggleButtonText,
+    codeIsNLPInsight, 
+    getInsightSource, 
+    InsightSource 
+} from "../../lib"
 import Period      from "./Period"
 import Date        from "./Date"
 import moment      from "moment"
+import InsightsDetailButton from "./InsightsDetailButton"
+import { on } from "events"
 
-function renderCell(record, allOf, oneOf) {
+function renderCell(record, doHighlight, allOf, oneOf) {
 
     const entries = [];
 
@@ -14,14 +23,18 @@ function renderCell(record, allOf, oneOf) {
         let propValue = getPath(record, meta.path);
         if (propValue !== undefined) {
             let value = meta.render ? meta.render(record) : propValue;
+            let isHighlight = doHighlight && Boolean(meta.nlpCodePath) && codeIsNLPInsight(getPath(record, meta.nlpCodePath));
             let raw   = meta.raw ? meta.raw(record) : value;
             let label = typeof meta.label == "function" ? meta.label(record) : meta.label;
             let existing = entries.find(o => o.value === raw);
             if (existing) {
                 existing.label += ", " + label
+                if (isHighlight) {
+                    existing.isHighlight = true;
+                }
             }
             else {
-                entries.push({ label, value });
+                entries.push({ label, value, isHighlight });
             }
             return true;
         }
@@ -40,8 +53,8 @@ function renderCell(record, allOf, oneOf) {
                 <tbody>
                     {
                         entries.map((o, i) => (
-                            <tr key={i}>
-                                <td className="label-cell">{ o.label }</td>
+                            <tr key={i} className={o.isHighlight ? "bg-primary" : ""}>
+                                <td className="label-cell" style={o.isHighlight ? {color: "white"} : null}>{ o.label }</td>
                                 <td>{ o.value }</td>
                             </tr>
                         ))
@@ -107,6 +120,19 @@ export default class ResourceList extends React.Component
         settings : PropTypes.object.isRequired
     };
 
+    // https://reactjs.org/docs/handling-events.html
+    constructor(props) {
+        super(props);
+        this.state = { doHighlight: false }
+        this.toggleHighlight = this.toggleHighlight.bind(this);
+    }
+
+    toggleHighlight() {
+        this.setState(prevState => ({ 
+            doHighlight: !prevState.doHighlight 
+        }) );
+    }
+
     /**
      * The idea is to have 3 columns by default:
      * 1. Identifier - something like a name, type, id etc.
@@ -124,7 +150,7 @@ export default class ResourceList extends React.Component
         // 1. Identifier -------------------------------------------------------
         out.push({
             label: "Identifier",
-            render: o => renderCell(o, [
+            render: o => renderCell(o, this.state.doHighlight, [
                 {
                     path: "id",
                     label: "ID",
@@ -154,7 +180,7 @@ export default class ResourceList extends React.Component
         // 2. Details ----------------------------------------------------------
         out.push({
             label: "Details",
-            render: o => renderCell(o, [
+            render: o => renderCell(o, this.state.doHighlight, [
                 {
                     path: "description.text",
                     label: "Description"
@@ -165,18 +191,22 @@ export default class ResourceList extends React.Component
                 },
                 {
                     path: "code.coding.0.display",
+                    nlpCodePath: "code",
                     label: "Display"
                 },
                 {
                     path: "medicationCodeableConcept.coding.0.display",
+                    nlpCodePath: "medicationCodeableConcept",
                     label: "Medication"
                 },
                 {
                     path: "medicationCodeableConcept.coding.0.code",
+                    nlpCodePath: "medicationCodeableConcept",
                     label: rec => (getPath(rec, "medicationCodeableConcept.coding.0.system") || "").split(/\b/).pop()
                 },
                 {
                     path: "code.coding.0.code",
+                    nlpCodePath: "code",
                     label: rec => ((getPath(rec, "code.coding.0.system") || "")
                         .replace(/\/$/, "").split(/\//).pop() + " code")
                 },
@@ -295,7 +325,7 @@ export default class ResourceList extends React.Component
             ])
         });
 
-        // 2. Timings ----------------------------------------------------------
+        // 3. Timings ----------------------------------------------------------
         out.push({
             label: "Date",
             render: o => renderCell(o, [
@@ -376,6 +406,26 @@ export default class ResourceList extends React.Component
                 }
             ])
         });
+
+        // 4. Insights ---------------------------------------------------------
+        out.push ({
+            label: <div className="text-center">
+                <button
+                    title={highlightToggleButtonText}
+                    onMouseUp={ this.toggleHighlight }
+                    className="text-center"
+                >
+                    <i className={"fa fa-lightbulb-o fa-bold"}/>
+                </button>
+            </div>,
+            render: o => {
+                if ( getInsightSource(o) != InsightSource.NONE ) {
+                    return ( <InsightsDetailButton resource={o} settings={this.props.settings}/> )
+                } else {
+                    return ( <div/> )
+                }
+            }
+        })
 
         return out;
     }
