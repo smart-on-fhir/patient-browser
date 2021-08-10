@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "colors": "^1.2.1",
-    "commander": "^2.15.1",
-    "json5": "^0.5.1",
-    "mixin-deep": "^1.2.0",
+    "commander": "^7.0.0",
+    "json5": "^2.0.0",
+    "mixin-deep": "^2.0.0",
     "request": "^2.85.0"
   }
 }

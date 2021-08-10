@@ -1,18 +1,36 @@
 # patient-browser
+
 App to browse sample patients
 [DEMO](https://patient-browser.smarthealthit.org/index.html)
 
+## Quick installation
+
+1. Clone this repository:
+
+   ```sh
+   git clone https://github.com/joundso/patient-browser.git patient-browser
+   ```
+
+2. Run [`start.sh`](./start.sh):
+
+    ```sh
+    sudo bash ./start.sh
+    ```
+
+3. Go to
+    - [`localhost:8090`](http://localhost:8090) (or whatever port you specified for `PORT_HTTP` in the [`.env`](./.env) file) to access the **patient browser** with demo datafrom external, or
+    - [`localhost:8090/?config=demo#/`](http://localhost:8090/?config=demo#/) to see the demo data which is available in the running hapi fhir server in the patient browser. :bulb: The loading of the demo fhir ressources into the fhir server takes a while. Try refreshing the page continously. To see the progress run `docker-compose logs -f` (which will automatically be called if you ran the `start.sh`).
+    - [`localhost:8080`](http://localhost:8080) to access the fhir server (HAPI) itself.
+4. Finished :tada:
+
 ## Usage
-The patient browser is standalone static html5 app living at 
-https://patient-browser.smarthealthit.org that is supposed to be invoked in
-dialog windows or iFrames giving you the ability to select patients. It
-would typically be rendered in a popup window but an iFrame inside a
-layered dialog is often a preferred option. In any case, the patient
-browser will be in it's own window which will be in another domain,
+
+The patient browser is standalone static html5 app living at <https://patient-browser.smarthealthit.org> that is supposed to be invoked in
+dialog windows or iFrames giving you the ability to select patients. It would typically be rendered in a popup window but an iFrame inside a
+layered dialog is often a preferred option. In any case, the patient browser will be in it's own window which will be in another domain,
 thus the post messages are used for the cross-window communication.
 
-The host app (the one that invokes the patient browser) can also
-"inject" some configuration to the patient browser to customize it.
+The host app (the one that invokes the patient browser) can also "inject" some configuration to the patient browser to customize it.
 Here is one commented example of how that works:
 
 ```js
@@ -122,16 +140,16 @@ jQuery(function($) {
 The patient browser is designed to load external config file while starting. This way you can change the settings without having to re-build the app. Additionally, the app can be told which config file to load using an `config` get parameter like so:
 
 **Official FHIR STU3 Picker:**
-https://patient-browser.smarthealthit.org/index.html?config=stu3-open-sandbox
+<https://patient-browser.smarthealthit.org/index.html?config=stu3-open-sandbox>
 
 **Official FHIR DSTU2 Picker:**
-https://patient-browser.smarthealthit.org/index.html?config=dstu2-open-sandbox
+<https://patient-browser.smarthealthit.org/index.html?config=dstu2-open-sandbox>
 
 **HAPI FHIR STU3 Picker:**
-https://patient-browser.smarthealthit.org/index.html?config=stu3-open-hapi
+<https://patient-browser.smarthealthit.org/index.html?config=stu3-open-hapi>
 
 **HAPI FHIR DSTU2 Picker:**
-https://patient-browser.smarthealthit.org/index.html?config=dstu2-open-hapi
+<https://patient-browser.smarthealthit.org/index.html?config=dstu2-open-hapi>
 
 If you need to support other servers you can just submit a pull request adding dedicated config file to this folder `/build/config`.
 Note that these config files are in `json5` format which is like a loose version of JSON and you can even have comments inside it.
@@ -139,9 +157,9 @@ Note that these config files are in `json5` format which is like a loose version
 Any config file might contain the following options:
 
 - `server` - an object describing the FHIR API server
-    - `server.url` - The base URL of the FHIR API server to use. Note that the picker will only work with open servers that do not require authorization.
-    - `server.type` - The FHIR version. Currently this can be `DSTU-2` or `STU-3` or `R4`.
-    - `server.tags` - An array of tag objects to be rendered in the tags auto-complete menu. This defaults to an empty array and in that case the tag selection widget will not have a drop-down menu options but it will still allow you to search by typing some tag manually. In other words, using an empty array is like saying that we just don't know what tags (if any) are available on that server. The list of tags might look like this:
+  - `server.url` - The base URL of the FHIR API server to use. Note that the picker will only work with open servers that do not require authorization.
+  - `server.type` - The FHIR version. Currently this can be `DSTU-2` or `STU-3` or `R4`.
+  - `server.tags` - An array of tag objects to be rendered in the tags auto-complete menu. This defaults to an empty array and in that case the tag selection widget will not have a drop-down menu options but it will still allow you to search by typing some tag manually. In other words, using an empty array is like saying that we just don't know what tags (if any) are available on that server. The list of tags might look like this:
         ```js
         [
             {
@@ -164,6 +182,7 @@ Any config file might contain the following options:
         ```
         If your server does not have any tags then the tag selector widget will be useless and it is better if you hide it - see the `hideTagSelector` option below.
     - `server.conditions` - An object containing all the predefined medical conditions. Each condition is stored by it's unique key and has a shape similar to this one:
+
         ```js
         prediabetes: {
             description: 'Prediabetes',
@@ -172,12 +191,14 @@ Any config file might contain the following options:
             }
         }
         ```
+
         This is an empty object by default since we can't know what conditions are available on each server. We have that list pre-built for the smart sandbox servers but for the others you are expected to that yourself (see the Config Generator section below).
 
 - `patientsPerPage` - Patients per page. Defaults to `10`.
 - `timeout` - AJAX requests timeout in milliseconds. Defaults to `20000`.
 - `renderSelectedOnly` - Only the selected patients are rendered. Should be false or the preselected patient IDs should be passed to the window. Otherwise It will result in rendering no patients at all. Defaults to `false`.
-- `fhirViewer` - If `fhirViewer.enabled` is true (then `fhirViewer.url and `fhirViewer.param` MUST be set) then clicking on the patient-related resources in detail view will open their source in that external viewer. Otherwise they will just be opened in new browser tab. Defaults to
+- `fhirViewer` - If `fhirViewer.enabled` is true (then `fhirViewer.url` and `fhirViewer.param` MUST be set) then clicking on the patient-related resources in detail view will open their source in that external viewer. Otherwise they will just be opened in new browser tab. Defaults to
+
     ```js
     {
         enabled: false,
@@ -185,24 +206,29 @@ Any config file might contain the following options:
         param  : "url"
     }
     ```
+
 - `outputMode` - How to return the selection. Defaults to `id-list`. Options are:
-    - `id-list`  - return the selection as comma-separated list of patient IDs.
-    - `id-array` - return the selection as an array of patient IDs.
-    - `patients` - return the selection as an array of patient JSON objects.
+  - `id-list`  - return the selection as comma-separated list of patient IDs.
+  - `id-array` - return the selection as an array of patient IDs.
+  - `patients` - return the selection as an array of patient JSON objects.
 - `submitStrategy` - Defaults to `automatic`. Options are:
-    - `automatic` - Submit on change and defer that in some cases
-    - `manual`    - Render a submit button
+  - `automatic` - Submit on change and defer that in some cases
+  - `manual`    - Render a submit button
 - hideTagSelector - If there are no tags in the server  the tag selector will not be useful. You can hide the Tags tab by passing `true` here.
 
 ### Config Generator
+
 Creating a config file might be a difficult task if you also want to have reliable  condition list. We have created a special command-line tool to help you with that.
 It will expect you to provide a FHIR server base URL and a config name and will handle everything else.
 Example, ran within the project directory:
+
 ```sh
 cd config-genrator
 node generate_config.js -s http://127.0.0.1:18300 -f my-test-config
 ```
+
 This will do the following:
+
 1. Connect to the specified open server provided with the `-s` or `--server` option.
 2. Load the conformance statement and detect the FHIR version (`"DSTU-2"` or `"STU-3"` or `"R4"`).
 3. Load all the conditions that are found ot that server.
@@ -216,15 +242,27 @@ Keep in mind that when using this tool tu update existing config file, the data 
 NOTE: If you don't provide the `-f` the result configuration will be printed to stdout.
 
 ## URL Options
+
 Some of the options above plus some additional ones can be passed via the URL. The app recognizes two types of parameters - search parameters and hash parameters. The search parameters are those listed after the first `?` and hash parameters are listed after a `?` character that is preceded by a `#` character. In other words, the hash portion of the URL can have it's own query string portion.
 
 ### Search parameters
+
 This can contain `config` parameter plus some of the config variable described above - `patientsPerPage`, `submitStrategy`, `hideTagSelector`.
 
 The **config** option is the base name of the config file that should be loaded from `/build/config/`. Defaults to `stu3-open-sandbox`.
 
 ### Hash parameters
+
 - `_tab` - Which tab to open by default. Can be `tags`, `conditions` or `demographics`. If missing the Demographics tab will be activated.
 - `_selection` - Comma-separated list of patient IDs to be rendered as selected. Note that this is only evaluated once, while the picker is loading.
 
+## Further Information
 
+Some files of these repos were merged into this fork of the patient browser:
+
+- The Helm Chart stuff from here: <https://github.com/Alvearie/patient-browser>
+- Updates in the Encounter Ressource from here: <https://github.com/BillyYarosh-WellSky/patient-browser>
+- `animations.css` and R4 adaptions from <https://github.com/RufManuel/patient-browser>
+- Updates in `package.json` and demo-config comments from <https://github.com/zeronote/patient-browser>
+- LineCharts and CandlestickChart from <https://github.com/s4s-discovery/patient-browser>
+- Dockerfile from <https://github.com/rodriperez/patient-browser>

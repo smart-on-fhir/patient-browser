@@ -1,0 +1,19 @@
+{
+    server: {
+        type: "R4",
+        // url: "http://fhir:8080/fhir",
+        url: "http://localhost:8080/fhir",
+        tags: [],
+        conditions: {}
+    },
+    patientsPerPage: 25,
+    timeout: 20000,
+    renderSelectedOnly: false,
+    fhirViewer: {
+        enabled: true,
+        url: "http://docs.smarthealthit.org/fhir-viewer/index.html",
+        param: "url"
+    },
+    outputMode: "id-list",
+    submitStrategy: "manual"
+}
