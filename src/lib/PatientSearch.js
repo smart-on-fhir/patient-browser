@@ -70,6 +70,15 @@ export default class PatientSearch
         this.offset = null;
 
         /**
+         * How many pages to skip. Defaults to null meaning that
+         * this param will not be included in the query and we are leaving it
+         * for the server to decide.
+         * @type {Number}
+         * @private
+         */
+        this.page = null;
+
+        /**
          * A collection of additional parameters
          * @type {Object}
          * @private
@@ -361,6 +370,20 @@ export default class PatientSearch
     }
 
     /**
+     * Sets how many pages will be skipped
+     * @param {number|string} page The number of pages to skip
+     * @returns {PatientSearch} Returns the instance
+     */
+    setPage(page) {
+        this.page = intVal(page);
+        if (this.page < 1) {
+        this.page = null;
+        }
+        return this;
+    }
+
+
+    /**
      * Sets the sorting to use
      * @param {string} sort A fhir sort string like "status,-date,category"
      * @returns {PatientSearch} Returns the instance
@@ -410,6 +433,7 @@ export default class PatientSearch
         this.offset       = null;
         this.cacheId      = null;
         this.ageGroup     = null;
+        this.page         = null;
         this.params       = {};
         this.queryString  = "";
         this.queryType    = "default"
@@ -432,6 +456,7 @@ export default class PatientSearch
             limit       : this.limit,
             offset      : this.offset,
             cacheId     : this.cacheId,
+            page        : this.page,
             ageGroup    : this.ageGroup,
             params      : { ...this.params },
             queryString : this.queryString,
@@ -585,6 +610,14 @@ export default class PatientSearch
             }, {
                 name : "_getpagesoffset",
                 value: this.offset
+            });
+        }
+
+        // page offset ----------------------------------------------------------
+        if (this.page) {
+            params.push({
+                name: "_page",
+                value: this.page,
             });
         }
 
@@ -809,8 +842,8 @@ export default class PatientSearch
 
         // prepare the base options for the patient ajax request
         let options = {
-            url: this.offset && this.cacheId ? server.url : `${server.url}/Patient/_search`,
-            method: this.offset && this.cacheId ? "GET" : "POST",
+            url: (this.offset && this.cacheId) || this.page ? server.url : `${server.url}/Patient/_search`,
+            method: (this.offset && this.cacheId) || this.page ? "GET" : "POST",
             processData: false,
             data,
             headers: {
