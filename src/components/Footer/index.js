@@ -1,7 +1,7 @@
 import React               from "react"
 import PropTypes           from "prop-types"
 import { goNext, goPrev }  from "../../redux/query"
-import { getBundleURL }    from "../../lib"
+import { getBundleURL, parseQueryString }    from "../../lib"
 import DialogFooter        from "../DialogFooter"
 import                          "./Footer.less"
 
@@ -21,6 +21,19 @@ export default class Footer extends React.Component
         let bundle  = this.props.bundle;
         let hasPrev = bundle && getBundleURL(bundle, "previous");
         let hasNext = bundle && getBundleURL(bundle, "next");
+        let url;
+
+        if (hasNext) {
+            url = getBundleURL(bundle, "next");
+            if (url) {
+                url = parseQueryString(url);
+            }
+        } else if (hasPrev) {
+            url = getBundleURL(bundle, "previous");
+            if (url) {
+                url = parseQueryString(url);
+            }
+        }
 
         if (bundle && !this.props.query.error) {
             if (this.props.query.params._id) {
@@ -29,7 +42,10 @@ export default class Footer extends React.Component
             else {
                 let len = bundle && bundle.entry ? bundle.entry.length : 0
                 if (len) {
-                    let startRec = +(this.props.query.offset || 0) + 1
+                    let pageOffset = this.props.query.page
+                        ? +url._count * (this.props.query.page - 1)
+                        : null;
+                    let startRec = +(this.props.query.offset || pageOffset || 0) + 1
                     let endRec   = startRec + len - 1;
 
                     msg = ` patient ${startRec} to ${ endRec } `

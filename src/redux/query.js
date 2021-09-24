@@ -87,6 +87,7 @@ export const goNext = function() {
         if (url) {
             url = parseQueryString(url);
             queryBuilder.setOffset(url._getpages, +url._getpagesoffset);
+            queryBuilder.setPage(url._page);
             dispatch(fetch());
         }
     }
@@ -99,6 +100,7 @@ export const goPrev = function() {
         if (url) {
             url = parseQueryString(url);
             queryBuilder.setOffset(url._getpages, +url._getpagesoffset);
+            queryBuilder.setPage(url._page);
             dispatch(fetch());
         }
     }
