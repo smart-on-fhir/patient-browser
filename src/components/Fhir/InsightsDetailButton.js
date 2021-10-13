@@ -80,7 +80,7 @@ export default class InsightsDetailButton extends React.Component {
                                     </tr>
                                     <tr>
                                         <td><strong>Confidence</strong></td>
-                                        <td>{Number(details.confidence)*100}%</td>
+                                        <td>{isNaN(Number(details.confidence) * 100) ? "Not available" : Number(details.confidence) * 100 + "%"}</td>
                                     </tr>
                                 </tbody>
                                 : null }
