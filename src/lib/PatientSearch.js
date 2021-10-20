@@ -842,8 +842,8 @@ export default class PatientSearch
 
         // prepare the base options for the patient ajax request
         let options = {
-            url: (this.offset && this.cacheId) || this.page ? server.url : `${server.url}/Patient/_search`,
-            method: (this.offset && this.cacheId) || this.page ? "GET" : "POST",
+            url: `${server.url}/Patient/_search`,
+            method: "POST",
             processData: false,
             data,
             headers: {
