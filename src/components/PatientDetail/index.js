@@ -127,6 +127,22 @@ export class PatientDetail extends React.Component
         .then(state => {
             this.query.cacheId = null;
             this.query.offset  = null;
+            
+            // Where /patient/_search returns by page and not by offset then current page needs to be fetched here instead
+            let currentParams = parseQueryString(
+            getBundleURL(state.bundle, "self")
+          );
+          if (!!currentParams._page) {
+            let currentPage =
+              (index + 1) / currentParams._count <= 1
+                ? 1
+                : (index + 1) % currentParams._count == 0
+                ? (index + 1) / currentParams._count
+                : (((index + 1) / currentParams._count) >> 0) + 1;
+
+            this.query.page = currentPage;
+          }
+            
             return this.query.fetch(server).then(
                 bundle => {
                     state.bundle = bundle;
@@ -141,7 +157,14 @@ export class PatientDetail extends React.Component
             if (index < 0) {
                 return Promise.reject("Invalid patient index");
             }
-
+            // If /patient/_search returns by page and not offset, then index calculated differently
+            let currentParams = parseQueryString(
+            getBundleURL(state.bundle, "self")
+          );
+          if (!!currentParams._page) {
+            index = index - (currentParams._page - 1) * currentParams._count;
+          }
+            
             state.patient = getPath(state, `bundle.entry.${index}.resource`);
             state.nextURL = getBundleURL(state.bundle, "next");
             state.hasNext = !!state.nextURL || (state.patient ? index < state.bundle.entry.length - 1 : false);
