@@ -79,7 +79,7 @@ export class PatientList extends React.Component
             return key && this.props.selection[key] !== false;
         }
 
-        let offset = this.props.query.offset || 0
+        let offset = this.props.query.offset || (this.props.query.page !== null ? (this.props.query.page - 1) * this.props.query.limit : null) || 0;
         let items = this.props.query.bundle.entry || [];
         if (this.props.settings.renderSelectedOnly) {
             items = items.filter(isSelected);
