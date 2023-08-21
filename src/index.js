@@ -9,9 +9,9 @@ import { Router, Route, Switch } from "react-router"
 import createHistory from "history/createHashHistory"
 import jQuery    from "jquery"
 
-window.$ = window.jQuery = jQuery
+window.$ = window.jQuery = jQuery;
 
-const history = createHistory()
+const history = createHistory();
 
 ReactDOM.render(
     <Provider store={STORE}>
@@ -25,10 +25,10 @@ ReactDOM.render(
         </Router>
     </Provider>,
     document.getElementById("main")
-)
+);
 
 $(function () {
     $("body").tooltip({
         selector : ".patient-detail-page [title]"
     })
-})
+});

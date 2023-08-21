@@ -1,14 +1,14 @@
 "use strict";
 
-const Path                 = require("path");
-const Webpack              = require("webpack");
-const Package              = require("./package.json");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const HtmlWebpackPlugin    = require('html-webpack-plugin');
+const Path = require("path");
+const Webpack = require("webpack");
+const Package = require("./package.json");
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const ENV  = process.env.NODE_ENV || "production";
-const SRC  = Path.join(__dirname, "src");
-const DST  = Path.join(__dirname, "build");
+const ENV = process.env.NODE_ENV || "development";
+const SRC = Path.join(__dirname, "src");
+const DST = Path.join(__dirname, "build");
 const PORT = process.env.PORT || 9001;
 const HOST = process.env.HOST || "0.0.0.0";
 
@@ -17,7 +17,7 @@ let config = {
     context: SRC,
 
     entry: {
-        index : [
+        index: [
             Path.join(SRC, "index.js")
         ],
         "vendor": [
@@ -36,8 +36,8 @@ let config = {
     },
 
     output: {
-        filename  : "[name].js",
-        path      : `${DST}/js/`,
+        filename: "[name].js",
+        path: `${DST}/js/`,
         publicPath: "/js/",
         sourceMapFilename: "[file].[hash].map"
     },
@@ -45,14 +45,18 @@ let config = {
     module: {
         rules: [
             {
-                test   : /\.less$/,
-                include: [ SRC ],
+                test: /\.less$/,
+                include: [SRC],
                 use: [
                     "style-loader?singleton",
                     "css-loader",
                     "postcss-loader",
                     "less-loader"
                 ]
+            },
+            {
+                test: /\.html$/,
+                loader: 'html-loader'
             }
         ]
     },
@@ -66,33 +70,59 @@ let config = {
     //     "react-dom": "ReactDOM"
     // },
 
-    resolve : {
-        extensions : [ ".js", ".jsx", ".less" ]
+    resolve: {
+        extensions: [".js", ".jsx", ".less"]
     },
 
-    devtool: "#source-map",
+    devtool: "source-map",
 
     stats: {
-        colors      : true,
-        modules     : true,
-        reasons     : true,
+        colors: true,
+        modules: true,
+        reasons: true,
         errorDetails: true
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'async',
+            minSize: 20000,
+            minRemainingSize: 0,
+            minChunks: 1,
+            maxAsyncRequests: 30,
+            maxInitialRequests: 30,
+            enforceSizeThreshold: 50000,
+            cacheGroups: {
+                defaultVendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    reuseExistingChunk: true,
+                },
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+            },
+        },
+        moduleIds: 'named',
+    },
+    mode: 'development',
 
-    plugins : [
+    plugins: [
         new Webpack.DefinePlugin({
-            "process.env.NODE_ENV": "'" + ENV + "'",
-            "__APP_VERSION__" : "'" + Package.version + "'"
+            "process.env.NODE_ENV": '"' + ENV + '"',
+            "__APP_VERSION__": "'" + Package.version + "'"
         }),
-        new Webpack.optimize.CommonsChunkPlugin({
-            name     : "vendor",
-            filename : "commons.js",
-            minChunks: 2
-        }),
+        // new Webpack.optimize.CommonsChunkPlugin({
+        //     name: "vendor",
+        //     filename: "commons.js",
+        //     minChunks: 2
+        // }),
         new HtmlWebpackPlugin({
             filename: DST + "/index.html",
             template: SRC + "/index.ejs",
-            inject  : false,
+            inject: false,
+            hash: true,
             Webpack
         })
     ]
@@ -100,13 +130,13 @@ let config = {
 
 if (ENV == "development") {
     config.devServer = {
-        contentBase       : DST,
+        contentBase: DST,
         historyApiFallback: true,
-        hot               : true,
+        hot: true,
         // inline            : true,
-        quiet             : false,
-        noInfo            : false,
-        clientLogLevel    : "warning",
+        quiet: false,
+        noInfo: false,
+        clientLogLevel: "warning",
         publicPath: `http://${HOST}:${PORT}/js/`,
         // publicPath: "/js/",
 
@@ -164,10 +194,10 @@ if (ENV == "development") {
     };
 
     config.module.rules.push({
-        test   : /\.jsx?$/,
-        include: [ SRC ],
-        // exclude: [/node_modules/],
-        use    : [ "react-hot-loader", "babel-loader" ]
+        test: /\.jsx?$/,
+        include: [SRC],
+        exclude: [/node_modules/],
+        use: ["babel-loader"]
     });
 
     config.plugins.push(
@@ -175,34 +205,34 @@ if (ENV == "development") {
 
         // prints more readable module names in the browser console
         // on HMR updates
-        new Webpack.NamedModulesPlugin()
+        //new Webpack.NamedModulesPlugin()
     );
 
     config.entry.index = [
-        "webpack-dev-server/client?http://localhost:" + PORT,
-        "webpack/hot/only-dev-server", // "only" prevents reload on syntax errors
+        "webpack-dev-server/client?http://localhost:" + PORT + "?reload=true",
         "./index.js"
     ];
 
-    config.output.publicPath = "http://localhost:" + PORT + "/js/";
+    //  config.output.path = Path.join(__dirname, 'build'),
+    //  config.output.filename = "index.html";
 }
 
-else if (ENV == "production") {
-    config.plugins.push(
-        new Webpack.optimize.UglifyJsPlugin({
-            sourceMap: true
-        }),
-        new BundleAnalyzerPlugin({
-            analyzerMode: "static",
-            openAnalyzer: false
-        })
-    );
+// else if (ENV == "production") {
+//     config.plugins.push(
+//         // new Webpack.optimize.UglifyJsPlugin({
+//         //     sourceMap: true
+//         // }),
+//         new BundleAnalyzerPlugin({
+//             analyzerMode: "static",
+//             openAnalyzer: false
+//         })
+//     );
 
-    config.module.rules.push({
-        test   : /\.jsx?$/,
-        include: [ SRC ],
-        use    : [ "babel-loader" ]
-    });
-}
+//     config.module.rules.push({
+//         test: /\.jsx?$/,
+//         include: [SRC],
+//         use: ["babel-loader"]
+//     });
+// }
 
 module.exports = config;
