@@ -9,3 +9,10 @@ selenium-debug.log
 
 !.gitkeep
 /build/config/*-custom.json5
+
+.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class

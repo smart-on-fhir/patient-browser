@@ -15,7 +15,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm i"
+	"postCreateCommand": "npm i && cd proxy_api && pip install -r requirements.txt"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
