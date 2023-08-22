@@ -13,12 +13,12 @@ To get going and run the project:
 - An Azure OpenAI deployment you can access, with a URL + API Key.
   - Create an Azure OpenAI resource (you may need to fill in a form to request one)
   - Deployments -> Create new deployment -> Choose your model (I have been using the GPT 3.5 turbo 16k to test with so far)
-  - Open in Chat Playground -> View Code -> Get your `OPENAI_API_BASE` and `OPENAI_API_KEY` values from the sample code there.
+  - Open in Chat Playground -> View Code -> Get your `OPENAI_API_BASE` and `OPENAI_API_KEY` values from the sample code there. The `OPENAI_DEPLOYMENT_NAME` is the name you gave to your model when creating your deployment.
 
 Then...
 - Clone this repo
 - Open in VS Code, and when prompted, reopen in the Container. This will build the dev container and reopen VS Code 'inside' it. It will also install all the npm dependencies for the frontend app, and all the python dependencies for the API.
-- Create a copy of `.env.sample` => `.env`, and fill in the `OPENAI_API_BASE` and `OPENAI_API_KEY` values.
+- Create a copy of `.env.sample` => `.env`, and fill in the `OPENAI_*` values.
 - Run the frontend app: `make run-app`
 - Run the proxy api: `make run-api`
 
