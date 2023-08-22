@@ -8,7 +8,7 @@ export default class OpenApiWidget extends React.Component {
             loading: false,
             error: null,
             items: [],
-            openApiResponse: ""
+            openAIResponse: ""
         };
     }
 
@@ -22,7 +22,7 @@ export default class OpenApiWidget extends React.Component {
 
     getOpenApiResponse(items, patient, type) {
         this.setState({ loading: true, error: null }, () => {
-            fetch("http://localhost:8000/openapi",
+            fetch("http://localhost:8000/openai",
                 {
                     method: "POST",
                     headers: {
@@ -31,7 +31,7 @@ export default class OpenApiWidget extends React.Component {
                     body: JSON.stringify({ "patient": patient, "entries": items, "category": type })
                 }).then((response) => response.json())
                 .then(data => {
-                    this.state.openApiResponse = data.response;
+                    this.state.openAIResponse = data.response;
                     this.setState({
                         ...this.state,
                         error: null,
@@ -55,13 +55,13 @@ export default class OpenApiWidget extends React.Component {
                 <div className="panel-heading"><b className="text-primary"><i className="fa fa-magic" style={{ marginRight: 5 }}></i>Open AI</b></div>
                 <div className="table-responsive" style={{ padding: 10 }}>
                     {
-                        this.state.loading && <div style={{ textAlign: 'center' }}><i className="fa fa-spinner fa-spin fa-2x" title="Asking OpenAPI..." style={{ margin: '20px auto' }}></i></div>
+                        this.state.loading && <div style={{ textAlign: 'center' }}><i className="fa fa-spinner fa-spin fa-2x" title="Asking OpenAI..." style={{ margin: '20px auto' }}></i></div>
                     }
                     {
-                        !this.state.loading && !this.state.error && this.state.openApiResponse && this.state.openApiResponse.choices && this.state.openApiResponse.choices[0].message.content
+                        !this.state.loading && !this.state.error && this.state.openAIResponse && this.state.openAIResponse.choices && this.state.openAIResponse.choices[0].message.content
                     }
                     {
-                        this.state.error && "Error calling OpenAPI - check the browser console"
+                        this.state.error && "Error calling OpenAI - check the browser console"
                     }
 
                 </div>
