@@ -9,6 +9,7 @@ class FHIRBundle(BaseModel):
     patient: dict
     entries: list
     category: str
+    role: str
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,5 +20,5 @@ app.add_middleware(
 
 @app.post("/openai")
 def open_ai(patient_data: FHIRBundle):
-    response = open_ai_proxy.query_open_ai(patient_data.patient, patient_data.entries, patient_data.category)
+    response = open_ai_proxy.query_open_ai(patient_data.patient, patient_data.entries, patient_data.category, patient_data.role)
     return {"response": response}
