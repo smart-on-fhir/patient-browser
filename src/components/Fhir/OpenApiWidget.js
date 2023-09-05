@@ -13,14 +13,14 @@ export default class OpenApiWidget extends React.Component {
     }
 
     componentDidMount() {
-        this.getOpenApiResponse(this.props.items, this.props.patient, this.props.type);
+        this.getOpenApiResponse(this.props.items, this.props.patient, this.props.type, this.props.role);
     }
 
     componentWillReceiveProps(newProps) {
-        this.getOpenApiResponse(newProps.items, newProps.patient, newProps.type);
+        this.getOpenApiResponse(newProps.items, newProps.patient, newProps.type, newProps.role);
     }
 
-    getOpenApiResponse(items, patient, type) {
+    getOpenApiResponse(items, patient, type, role = 'patient') {
         this.setState({ loading: true, error: null }, () => {
             fetch("http://localhost:8000/openai",
                 {
@@ -28,7 +28,7 @@ export default class OpenApiWidget extends React.Component {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ "patient": patient, "entries": items, "category": type })
+                    body: JSON.stringify({ "patient": patient, "entries": items, "category": type, "role": role })
                 }).then((response) => response.json())
                 .then(data => {
                     this.state.openAIResponse = data.response;
@@ -52,7 +52,7 @@ export default class OpenApiWidget extends React.Component {
     render() {
         return (
             <div className="panel panel-default">
-                <div className="panel-heading"><b className="text-primary"><i className="fa fa-magic" style={{ marginRight: 5 }}></i>Open AI</b></div>
+                <div className="panel-heading"><b className="text-primary"><i className="fa fa-magic" style={{ marginRight: 5 }}></i>Open AI - {this.props.role}</b></div>
                 <div className="table-responsive" style={{ padding: 10 }}>
                     {
                         this.state.loading && <div style={{ textAlign: 'center' }}><i className="fa fa-spinner fa-spin fa-2x" title="Asking OpenAI..." style={{ margin: '20px auto' }}></i></div>

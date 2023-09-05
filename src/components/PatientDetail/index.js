@@ -346,7 +346,7 @@ export class PatientDetail extends React.Component {
 
         if (type.indexOf("Observation") === 0) {
             return <div><Observations resources={items} />
-                <OpenApiWidget items={items} patient={this.state.patient} type={type} />
+                <OpenApiWidget items={items} patient={this.state.patient} type={type} role="patient" />
             </div>
         }
 
@@ -354,20 +354,24 @@ export class PatientDetail extends React.Component {
             case "Immunization":
                 return <div>
                     <ImmunizationList resources={items} />
-                    <OpenApiWidget items={items} patient={this.state.patient} type={type} />
+                    <OpenApiWidget items={items} patient={this.state.patient} type={type} role="patient" />
                 </div>
             case "Condition":
-                return <div><ConditionList resources={items} /><OpenApiWidget items={items}  patient={this.state.patient} type={type} /></div>
+                return <div><ConditionList resources={items} /><OpenApiWidget items={items}  patient={this.state.patient} type={type} role="patient" /></div>
             case "Encounter":
-                return <div><Encounter resources={items} /><OpenApiWidget items={items}  patient={this.state.patient} type={type} /></div>
+                return <div><Encounter resources={items} /><OpenApiWidget items={items}  patient={this.state.patient} type={type} role="patient" /></div>
             case "CarePlan":
-                return <div><CarePlan resources={items} /><OpenApiWidget items={items}  patient={this.state.patient} type={type} /></div>
+                return <div><CarePlan resources={items} /><OpenApiWidget items={items}  patient={this.state.patient} type={type} role="patient" /></div>
             case "Patient":
             case "Practitioner":
             case "RelatedPerson":
-                return <div><Person resources={items} title={type} /><OpenApiWidget items={allResources} patient={this.state.patient} type="all" /></div>
+                return <div>
+                    <Person resources={items} title={type} />
+                    <OpenApiWidget items={allResources} patient={this.state.patient} type="all" role="patient" />
+                    <OpenApiWidget items={allResources} patient={this.state.patient} type="all" role="nurse" />
+                    </div>
             default:
-                return <div><ResourceList resources={items} type={type} settings={this.props.settings} /><OpenApiWidget items={items} patient={this.state.patient} type={type} /></div>
+                return <div><ResourceList resources={items} type={type} settings={this.props.settings} /><OpenApiWidget items={items} patient={this.state.patient} type={type} role="patient" /></div>
         }
     }
 
