@@ -58,7 +58,7 @@ export default class OpenApiWidget extends React.Component {
                         this.state.loading && <div style={{ textAlign: 'center' }}><i className="fa fa-spinner fa-spin fa-2x" title="Asking OpenAI..." style={{ margin: '20px auto' }}></i></div>
                     }
                     {
-                        !this.state.loading && !this.state.error && this.state.openAIResponse && this.state.openAIResponse.choices && this.state.openAIResponse.choices[0].message.content
+                        !this.state.loading && !this.state.error && this.state.openAIResponse && this.state.openAIResponse.choices && <span dangerouslySetInnerHTML={{__html: this.state.openAIResponse.choices[0].message.content}}></span>
                     }
                     {
                         this.state.error && "Error calling OpenAI - check the browser console"
