@@ -81,13 +81,31 @@ def query_open_ai(patient: dict, entries: list, category: str, role: str):
         frequency_penalty=0,
         presence_penalty=0,
         stop=None)
+    
+    my_openai_obj = list(response_chain_of_thought_alerts.choices)[0]
+    response_text_alerts = my_openai_obj.to_dict()['message']['content']
 
+    # Checks if an alert was generated or not
+    response_chain_of_thought_alerts_check = openai.ChatCompletion.create(
+        engine=openai_deployment_name,
+        messages=[
+            {"role": "system", "content": setup_prompt},
+            {"role": "user", "content": f'this is my patient data: {json.dumps(clean_patient(patient))}'},
+            {"role": "user", "content": f'this is my clinical data: {json.dumps(clean_entries(entries))}'},
+            {"role": "system", "content": f'A review of possible health risks and side effects for this patient is included here: {response_text_alerts}. If health risks or side effects were not able to be determined, or if none were listed, then respond "No", otherwise respond "Yes". Please only say "Yes" or "No".'}],
+        temperature=0,
+        max_tokens=800,
+        top_p=0.95,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=None) 
 
+    print(response_chain_of_thought_alerts_check)
     '''
     Return
     
     '''
-    return response_chain_of_thought_alerts, response_medications, response_health_concerns
+    return response_chain_of_thought_alerts, response_medications, response_health_concerns, response_chain_of_thought_alerts_check
 
 
 '''

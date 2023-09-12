@@ -20,5 +20,5 @@ app.add_middleware(
 
 @app.post("/openai")
 def open_ai(patient_data: FHIRBundle):
-    response_alerts, response_medications, response_health_concerns = open_ai_proxy_alerts.query_open_ai(patient_data.patient, patient_data.entries, patient_data.category, patient_data.role)
-    return {"response": response_alerts, "medications": response_medications, "health_conditions":response_health_concerns}
+    response_alerts, response_medications, response_health_concerns, response_chain_of_thought_alerts_check = open_ai_proxy_alerts.query_open_ai(patient_data.patient, patient_data.entries, patient_data.category, patient_data.role)
+    return {"response": response_alerts, "medications": response_medications, "health_conditions":response_health_concerns, "any_alerts_check": response_chain_of_thought_alerts_check}
