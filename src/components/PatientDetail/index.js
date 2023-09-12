@@ -368,7 +368,6 @@ export class PatientDetail extends React.Component {
                 return <div>
                     <Person resources={items} title={type} />
                     <OpenApiWidget items={allResources} patient={this.state.patient} type="all" role="patient" />
-                    <OpenApiWidget items={allResources} patient={this.state.patient} type="all" role="nurse" />
                     </div>
             default:
                 return <div><ResourceList resources={items} type={type} settings={this.props.settings} /><OpenApiWidget items={items} patient={this.state.patient} type={type} role="patient" /></div>
