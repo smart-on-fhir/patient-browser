@@ -17,11 +17,10 @@ def query_open_ai(patient: dict, entries: list, category: str, role: str):
 
     # TODO - actual data restructuring / prompt work here...
 
-    role_map = { 
-        'nurse': "I am a nurse treating this patient:", 
-        'patient': "I am this patient:" }
-    if role not in role_map.keys():
-        role = 'patient'
+    setup_prompt = """You play the role of a medical doctor. 
+    Read data about the following patient and respond to their questions. 
+    Provide references for any clinical advice from well trusted authorities. 
+    Explain your answers using simple and concise language."""
 
     '''
     Chain of thought
@@ -34,11 +33,10 @@ def query_open_ai(patient: dict, entries: list, category: str, role: str):
     response_medications = openai.ChatCompletion.create(
         engine=openai_deployment_name,
         messages=[
-            {"role": "system", "content": role_map[role]},
-            {"role": "system", "content": json.dumps(patient)},
-            {"role": "system", "content": "And these are their clinical measurements in FHIR format:"},
-            {"role": "system", "content": json.dumps(entries)},
-            {"role": "system", "content": f'What are recent (last five years) the perscribed medications given to this patient for this {category}? Please only state the list of the medications and do not include any preambles, disclaimers, notes about the information source, or other superfluous information.'}],
+            {"role": "system", "content": setup_prompt},
+            {"role": "user", "content": f'this is my patient data: {json.dumps(clean_patient(patient))}'},
+            {"role": "user", "content": f'this is my clinical data: {json.dumps(clean_entries(entries))}'},
+            {"role": "system", "content": f'What are recent (last five years) the perscribed medications given to this patient for this {category}? Please only state the list of the medications and do not include any preambles, disclaimers, notes about the information source, or other superfluous information. Format your response as HTML body.'}],
         temperature=0,
         max_tokens=400,
         top_p=0.95,
@@ -52,11 +50,10 @@ def query_open_ai(patient: dict, entries: list, category: str, role: str):
     response_health_concerns = openai.ChatCompletion.create(
         engine=openai_deployment_name,
         messages=[
-            {"role": "system", "content": role_map[role]},
-            {"role": "system", "content": json.dumps(patient)},
-            {"role": "system", "content": "And these are their clinical measurements in FHIR format:"},
-            {"role": "system", "content": json.dumps(entries)},
-            {"role": "system", "content": f'What are significantly different, odd or anomalous health conditions of this patient for this {category}? Please only state the list of the anomalous health conditions and do not include any preambles, disclaimers, notes about the information source, or other superfluous information.'}],
+            {"role": "system", "content": setup_prompt},
+            {"role": "user", "content": f'this is my patient data: {json.dumps(clean_patient(patient))}'},
+            {"role": "user", "content": f'this is my clinical data: {json.dumps(clean_entries(entries))}'},
+            {"role": "system", "content": f'What are significantly different, odd or anomalous health conditions of this patient for this {category}? Please only state the list of the anomalous health conditions and do not include any preambles, disclaimers, notes about the information source, or other superfluous information. Format your response as HTML body.'}],
         temperature=0,
         max_tokens=400,
         top_p=0.95,
@@ -74,11 +71,10 @@ def query_open_ai(patient: dict, entries: list, category: str, role: str):
     response_chain_of_thought_alerts = openai.ChatCompletion.create(
         engine=openai_deployment_name,
         messages=[
-            {"role": "system", "content": role_map[role]},
-            {"role": "system", "content": json.dumps(patient)},
-            {"role": "system", "content": "And these are their clinical measurements in FHIR format:"},
-            {"role": "system", "content": json.dumps(entries)},
-            {"role": "system", "content": f'For this {category}, the recent (in the last 5 years) medications taken by this patient are listed here: {response_text_medications}. The anomalous health conditions of the patient are listed here: {response_text_health_concerns}. State the top 3 possible side effects, provided in a bulletted list and without additional text or disclaimers, from these medications considering the health conditions of the patient?'}],
+            {"role": "system", "content": setup_prompt},
+            {"role": "user", "content": f'this is my patient data: {json.dumps(clean_patient(patient))}'},
+            {"role": "user", "content": f'this is my clinical data: {json.dumps(clean_entries(entries))}'},
+            {"role": "system", "content": f'For this {category}, the recent (in the last 5 years) medications taken by this patient are listed here: {response_text_medications}. The anomalous health conditions of the patient are listed here: {response_text_health_concerns}. State the top 3 possible health risks or side effects, provided in a bulletted list, from these medications considering the health conditions of the patient? Only include the text listing of the possible risks, without superfluous text, notes, information about sources or disclaimers. Format your response as HTML body.'}],
         temperature=0,
         max_tokens=800,
         top_p=0.95,
@@ -92,3 +88,44 @@ def query_open_ai(patient: dict, entries: list, category: str, role: str):
     
     '''
     return response_chain_of_thought_alerts, response_medications, response_health_concerns
+
+
+'''
+Cleaning functions
+'''
+
+def try_get_val(input: dict, key: str) -> str:
+    try:
+        return input[key]
+    except:
+        return ""
+
+
+def clean_patient(input: dict) -> dict:
+    clean_patient = {
+        "name": f"{try_get_val(input['name'][0], 'given')[0]} {try_get_val(input['name'][0], 'family')}",
+        "gender": try_get_val(input, 'gender'),
+        "birthDate": try_get_val(input,'birthDate'),
+        "address": f"{try_get_val(input['address'][0], 'line')[0]}, {try_get_val(input['address'][0], 'city')}, {try_get_val(input['address'][0], 'state')}, {try_get_val(input['address'][0], 'postalCode')}, {try_get_val(input['address'][0], 'country')}",
+        "maritalStatus": try_get_val(try_get_val(input, 'maritalStatus'), 'text')
+    }
+    return clean_patient
+
+
+def clean_entries(entries: list):
+    for entry in entries:
+        entry.pop('fullUrl', None)
+        entry.pop('search', None)
+        entry['resource'].pop('meta', None)
+        entry['resource'].pop('subject', None)
+        entry['resource'].pop('id', None)
+        entry['resource'].pop('context', None)
+        entry['resource'].pop('reasonReference', None)
+        entry['resource'].pop('medicationReference', None)
+        if entry['resource']['resourceType'] == 'CommunicationRequest' or \
+            entry['resource']['resourceType'] == 'Encounter' or \
+            entry['resource']['resourceType'] == 'Questionnaire' or \
+            entry['resource']['resourceType'] == 'QuestionnaireResponse':
+            entry = {}
+    
+    return entries
