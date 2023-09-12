@@ -74,7 +74,9 @@ let config = {
         extensions: [".js", ".jsx", ".less"]
     },
 
-    devtool: "source-map",
+    devtool: "eval",
+    mode: 'development',
+    cache: true,
 
     stats: {
         colors: true,
@@ -106,7 +108,6 @@ let config = {
         },
         moduleIds: 'named',
     },
-    mode: 'development',
 
     plugins: [
         new Webpack.DefinePlugin({
@@ -187,7 +188,8 @@ if (ENV == "development") {
             warnings: true
         },
         watchOptions: {
-            ignored: /node_modules/
+            ignored: /node_modules/,
+            poll: 1000
         },
         host: HOST,
         port: PORT
