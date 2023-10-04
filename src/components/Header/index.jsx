@@ -271,7 +271,7 @@ export default class Header extends React.Component
                                 <b>Demographics</b>
                                 {
                                     demographicsCount ?
-                                    <span className="d-none d-sm-inline"> <small className="badge">{ demographicsCount }</small></span> :
+                                    <span className="d-none d-sm-inline"> <small className="badge rounded-pill">{ demographicsCount }</small></span> :
                                     null
                                 }
                             </a>
@@ -284,7 +284,7 @@ export default class Header extends React.Component
                                 <b>Conditions</b>
                                 {
                                     conditionsCount ?
-                                    <span className="d-none d-sm-inline"> <small className="badge">{ conditionsCount }</small></span> :
+                                    <span className="d-none d-sm-inline"> <small className="badge rounded-pill">{ conditionsCount }</small></span> :
                                     null
                                 }
                             </a>
@@ -301,7 +301,7 @@ export default class Header extends React.Component
                                     <b>Tags</b>
                                     {
                                         tagsCount ?
-                                        <span className="d-none d-sm-inline"> <small className="badge">{ tagsCount }</small></span> :
+                                        <span className="d-none d-sm-inline"> <small className="badge rounded-pill">{ tagsCount }</small></span> :
                                         null
                                     }
                                 </a>

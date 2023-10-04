@@ -113,7 +113,7 @@ export class Grid extends React.Component
                         <th colSpan={this.props.cols.length} onClick={() => this.setState({[group] : this.state[group] === false ? true : false })}>
                         <i className={"glyphicon glyphicon-triangle-" + (
                             this.state[group] !== false ? "bottom" : "right")
-                        }/> {group} <small className="badge">{groups[group].length}</small>
+                        }/> {group} <small className="badge rounded-pill">{groups[group].length}</small>
                         </th>
                     </tr>
                 );
