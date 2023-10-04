@@ -1,5 +1,7 @@
-// Import all of Bootstrap's CSS
-@import "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
 
 // Create your own map
 $custom-colors: (
@@ -8,3 +10,11 @@ $custom-colors: (
 
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
+
+// set changes
+@import "bootstrap";
+
+
+html { 
+  font-size: 14px !important;
+}

@@ -85,7 +85,6 @@ export default class Header extends React.Component
                 <div className="row">
                     <div className={ "**custom**" === this.props.query.ageGroup ? "col-sm-6" : "col-sm-12" }>
                         <div className="form-group">
-                            {/*<label>Name:</label>*/}
                             <div className="input-group">
                                 <span className="input-group-text"><small>Name:</small></span>
                                 <input
@@ -107,7 +106,7 @@ export default class Header extends React.Component
                     <div className="col-sm-6">
                         <div className="form-group">
                             <select
-                                className="form-control form-control-sm"
+                                className="form-select"
                                 onChange={ e => {
                                     store.dispatch(setGender(e.target.value))
                                     this.fetch()
@@ -251,7 +250,7 @@ export default class Header extends React.Component
             <div className="app-header">
                 <div style={{ flexDirection: "row" }}>
                     <label className="float-end advanced-label text-warning">
-                        Advanced <span className="d-none-xs">Mode </span> <input
+                        Advanced <span className="d-none d-sm-inline ">Mode </span> <input
                             type="checkbox"
                             checked={ _advanced }
                             onChange={ e => {

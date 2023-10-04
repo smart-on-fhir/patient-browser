@@ -18,6 +18,10 @@ export function intVal(x, defaultValue = 0) {
     return out;
 }
 
+export async function sleep(ms) {
+    await new Promise((r) => setTimeout(r, ms));
+}  
+
 /**
  * Converts the argument to boolean value. "0" and "no" are recognized as false.
  * "1" and "yes" are recognized as true. Everything else is just !!var
