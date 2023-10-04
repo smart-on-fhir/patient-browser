@@ -384,13 +384,13 @@ export class PatientDetail extends React.Component
                                     disabled={ this.state.index < 1 }
                                 >
                                     <i className="fa fa-chevron-left"/>
-                                    <b>Prev<span className="hidden-xs">ious Patient</span></b>
+                                    <b>Prev<span className="d-none d-sm-inline">ious Patient</span></b>
                                 </Link>
                             </div>
                             <div className="col col-xs-4 col-sm-4 col-md-6 col-lg-8 text-center">
                                 <Link className="btn btn-block text-center" to="/">
-                                    <span className="hidden-xs">Browse Patients</span>
-                                    <span className="visible-xs">Browse</span>
+                                    <span className="d-none d-sm-inline">Browse Patients</span>
+                                    <span className="d-inline d-sm-none">Browse</span>
                                 </Link>
                             </div>
                             <div className="col col-xs-4 col-sm-4 col-md-3 col-lg-2 text-end">
@@ -399,7 +399,7 @@ export class PatientDetail extends React.Component
                                     className="btn btn-primary btn-block"
                                     disabled={ !this.state.hasNext }
                                 >
-                                    <b>Next<span className="hidden-xs"> Patient</span></b>
+                                    <b>Next<span className="d-none d-sm-inline"> Patient</span></b>
                                     <i className="fa fa-chevron-right"/>
                                 </Link>
                             </div>
