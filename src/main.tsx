@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import * as bootstrap from "bootstrap";
 import { Provider } from "react-redux";
 import { Route, Routes } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import STORE from "./redux";
 // Import early so other children component styles cascade over bootstrap styles
 import "./main.scss";
@@ -19,12 +19,12 @@ import PatientDetail from "./components/PatientDetail";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={STORE}>
     <App>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" Component={PatientList} />
           <Route path="/patient/:index" Component={PatientDetail} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </App>
   </Provider>
 );
