@@ -4,7 +4,8 @@
  *
  * ```import STORE from "./redux"```
  */
-import { createStore, applyMiddleware, combineReducers } from "redux"
+import { legacy_createStore as createStore, applyMiddleware, combineReducers } from "redux"
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk     from "redux-thunk"
 import selection from "./selection"
 import query     from "./query"
@@ -15,7 +16,8 @@ const middleWares = [thunk]
 
 // Create logger middleware that will log all redux action but only
 // use that in development env.
-if (process.env.NODE_ENV == "development" && console && console.groupCollapsed) {
+// NOTE: ENV in vite is accessible with import.meta.env:  https://vitejs.dev/guide/env-and-mode.html
+if (import.meta.env.NODE_ENV == "development" && console && console.groupCollapsed) {
     let logger = _store => next => action => {
         let result;
         if (!action.__no_log) {
@@ -41,5 +43,7 @@ export default createStore(
         settings,
         urlParams
     }),
-    applyMiddleware(...middleWares)
+    composeWithDevTools(
+        applyMiddleware(...middleWares)
+    )
 );

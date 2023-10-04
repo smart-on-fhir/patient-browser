@@ -1,0 +1,10 @@
+// Import all of Bootstrap's CSS
+@import "bootstrap/scss/bootstrap";
+
+// Create your own map
+$custom-colors: (
+  "warning": #8a6d3b
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
