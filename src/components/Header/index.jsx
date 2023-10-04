@@ -59,8 +59,8 @@ export default class Header extends React.Component
                     e.preventDefault()
                     store.dispatch(fetch())
                 }}>
-                    <div className="input-group input-group-sm">
-                        <span className="input-group-addon">/Patient?</span>
+                    <div className="input-group form-control-sm">
+                        <span className="input-group-text">/Patient?</span>
                         <input
                             type="text"
                             className="form-control"
@@ -69,9 +69,7 @@ export default class Header extends React.Component
                             onChange={ e => store.dispatch(setQueryString(e.target.value)) }
                             value={ this.props.query.queryString }
                         />
-                        <span className="input-group-btn">
-                            <button className="btn btn-warning" type="submit">Go</button>
-                        </span>
+                        <button className="input-group-text btn btn-warning" type="submit">Go</button>
                     </div>
                 </form>
             </div>
@@ -89,10 +87,10 @@ export default class Header extends React.Component
                         <div className="form-group">
                             {/*<label>Name:</label>*/}
                             <div className="input-group">
-                                <span className="input-group-addon"><small>Name:</small></span>
+                                <span className="input-group-text"><small>Name:</small></span>
                                 <input
                                     type="text"
-                                    className="form-control input-sm"
+                                    className="form-control form-control-sm"
                                     placeholder="Search by name..."
                                     value={ this.props.query.params.name || "" }
                                     onChange={e => {
@@ -108,9 +106,8 @@ export default class Header extends React.Component
                     </div>
                     <div className="col-sm-6">
                         <div className="form-group">
-                            {/*<label>Gender:</label>*/}
                             <select
-                                className="form-control input-sm"
+                                className="form-control form-control-sm"
                                 onChange={ e => {
                                     store.dispatch(setGender(e.target.value))
                                     this.fetch()
@@ -333,7 +330,7 @@ export default class Header extends React.Component
                     }
                     {
                         !_advanced && this.props.settings.submitStrategy == "manual" ?
-                        <div className="text-right" style={{ height: 0 }}>
+                        <div className="text-end" style={{ height: 0 }}>
                             <button
                                 type="button"
                                 onClick={ () => store.dispatch(fetch()) }

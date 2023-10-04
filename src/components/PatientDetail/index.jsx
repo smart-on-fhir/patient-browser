@@ -250,7 +250,7 @@ export class PatientDetail extends React.Component
                                     null
                                 }
                             </div>
-                            <div className="col-xs-5 text-right" style={{ paddingRight: 0 }}>
+                            <div className="col-xs-5 text-end" style={{ paddingRight: 0 }}>
                                 <button
                                     type="button"
                                     className={`btn btn-sm btn-${selected ? "danger" : "primary"}`}
@@ -270,43 +270,43 @@ export class PatientDetail extends React.Component
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Gender:</div>
-                            <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
+                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Gender:</div>
+                            <div className="col-xs-8 col-sm-3 col-lg-3 text-start">
                                 { this.state.patient.gender || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">DOB:</div>
-                            <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
+                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">DOB:</div>
+                            <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
                                 { this.state.patient.birthDate || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
 
-                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Age:</div>
-                            <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
+                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Age:</div>
+                            <div className="col-xs-8 col-sm-3 col-lg-3 text-start">
                                 { getPatientAge(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Email</div>
-                            <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
+                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Email</div>
+                            <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
                                 { getPatientEmail(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Phone:</div>
-                            <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
+                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Phone:</div>
+                            <div className="col-xs-8 col-sm-3 col-lg-3 text-start">
                                 { getPatientPhone(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">Address:</div>
-                            <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
+                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Address:</div>
+                            <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
                                 { getPatientHomeAddress(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">ID:</div>
-                            <div className="col-xs-8 col-sm-3 col-lg-3 text-left">
+                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">ID:</div>
+                            <div className="col-xs-8 col-sm-3 col-lg-3 text-start">
                                 { this.state.patient.id || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">MRN:</div>
-                            <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
+                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">MRN:</div>
+                            <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
                                 { getPatientMRN(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                             {
                                 this.state.patient.deceasedBoolean || this.state.patient.deceasedDateTime ?
                                 (
-                                    <div className="col-xs-4 col-sm-2 col-lg-1 text-right text-muted">
+                                    <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">
                                         <span className="deceased-label">Deceased:</span>
                                     </div>
                                 ) :
@@ -315,7 +315,7 @@ export class PatientDetail extends React.Component
                             {
                                 this.state.patient.deceasedBoolean || this.state.patient.deceasedDateTime ?
                                 (
-                                    <div className="col-xs-8 col-sm-5 col-lg-3 text-left">
+                                    <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
                                         {
                                             this.state.patient.deceasedDateTime ?
                                             <span>{ this.state.patient.deceasedDateTime }</span> :
@@ -374,10 +374,10 @@ export class PatientDetail extends React.Component
 
         return (
             <div className="page patient-detail-page">
-                <nav className="navbar bg-primary navbar-fixed-top">
+                <nav className="bg-primary fixed-top">
                     <div className="container-fluid">
                         <div className="row navigator">
-                            <div className="col-xs-4 col-sm-4 col-md-3 col-lg-2">
+                            <div className="col col-xs-4 col-sm-4 col-md-3 col-lg-2">
                                 <Link
                                     to={ `/patient/${this.state.index - 1}` }
                                     className="btn btn-primary btn-block"
@@ -387,13 +387,13 @@ export class PatientDetail extends React.Component
                                     <b>Prev<span className="hidden-xs">ious Patient</span></b>
                                 </Link>
                             </div>
-                            <div className="col-xs-4 col-sm-4 col-md-6 col-lg-8 text-center">
+                            <div className="col col-xs-4 col-sm-4 col-md-6 col-lg-8 text-center">
                                 <Link className="btn btn-block text-center" to="/">
                                     <span className="hidden-xs">Browse Patients</span>
                                     <span className="visible-xs">Browse</span>
                                 </Link>
                             </div>
-                            <div className="col-xs-4 col-sm-4 col-md-3 col-lg-2 text-right">
+                            <div className="col col-xs-4 col-sm-4 col-md-3 col-lg-2 text-end">
                                 <Link
                                     to={ `/patient/${this.state.index + 1}` }
                                     className="btn btn-primary btn-block"

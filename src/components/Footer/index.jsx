@@ -48,7 +48,7 @@ export default class Footer extends React.Component
             <div className="app-footer">
                 <div className="container-fluid" style={{ width: "100%" }}>
                     <div className="row">
-                        <div className="col-xs-3 col-sm-4 text-right">
+                        <div className="col-xs-3 col-sm-4 text-end">
                             <a
                                 href="#prev"
                                 onClick={ e => { e.preventDefault(); this.props.dispatch(goPrev()) }}
@@ -60,7 +60,7 @@ export default class Footer extends React.Component
                         <div className="col-xs-6 col-sm-4 text-center">
                             { msg }
                         </div>
-                        <div className="col-xs-3 col-sm-4 text-left">
+                        <div className="col-xs-3 col-sm-4 text-start">
                             <a
                                 href="#next"
                                 onClick={ e => { e.preventDefault(); this.props.dispatch(goNext()) }}

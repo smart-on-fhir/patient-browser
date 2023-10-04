@@ -370,7 +370,7 @@ export default class TagSelector extends React.Component
             <div className={ "tag-selector" + (this.state.open ? " open" : "") }>
                 { tags.length ? <div className="tags">{tags}</div> : null }
                 <input
-                    className="input form-control input-sm"
+                    className="input form-control form-control-sm"
                     placeholder={placeholder}
                     onFocus={ this.onFocus }
                     onClick={ this.onFocus }
