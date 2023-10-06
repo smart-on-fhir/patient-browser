@@ -7,7 +7,7 @@ export default class Loader extends React.Component
         return (
             <div className="loader">
                 <div>
-                    <i className="fa fa-spinner spin" /> Loading...
+                    <i className="fa-solid fa-spinner spin" /> Loading...
                 </div>
             </div>
         )

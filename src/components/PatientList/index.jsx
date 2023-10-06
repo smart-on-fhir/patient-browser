@@ -55,7 +55,7 @@ export class PatientList extends React.Component
         if (!this.props.query.bundle || this.props.query.loading) {
             return (
                 <div className="patient-search-loading">
-                    <i className="fa fa-spinner spin" /> Loading. Please wait...
+                    <i className="fa-regular fa-spinner spin" /> Loading. Please wait...
                 </div>
             )
         }

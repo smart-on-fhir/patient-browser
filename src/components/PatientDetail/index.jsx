@@ -230,13 +230,12 @@ export class PatientDetail extends React.Component
                 <div className="row">
                     { this.state.loading ? <Loader/> : null }
                     <div className="col-2 col-md-2 col-lg-1">
-                        <div className="ratio ratio-1x1">
-                            <PatientImage
-                                patient={ this.state.patient }
-                                // className="embed-responsive-item"
-                                base={ this.props.settings.server.url }
-                            />
-                        </div>
+                        {/* Ratio styling will stretch to the size of the container */}
+                        <PatientImage
+                            patient={ this.state.patient }
+                            className="ratio ratio-1x1"
+                            base={ this.props.settings.server.url }
+                        />
                     </div>
                     <div className="col-10 col-lg-11">
                         <div className="row patient-row">
@@ -265,7 +264,7 @@ export class PatientDetail extends React.Component
                                     className="btn btn-light btn-sm reload-button"
                                     onClick={() => this.fetch(this.props.params.index)}
                                 >
-                                    <i className="fa fa-refresh"/> Reload
+                                    <i className="fa-solid fa-refresh"/> Reload
                                 </button>
                             </div>
                         </div>
@@ -383,7 +382,7 @@ export class PatientDetail extends React.Component
                                     className="btn btn-primary btn-block"
                                     disabled={ this.state.index < 1 }
                                 >
-                                    <i className="fa fa-chevron-left"/>
+                                    <i className="fa-solid fa-chevron-left me-1"/>
                                     <b>Prev<span className="d-none d-sm-inline">ious Patient</span></b>
                                 </Link>
                             </div>
@@ -400,7 +399,7 @@ export class PatientDetail extends React.Component
                                     disabled={ !this.state.hasNext }
                                 >
                                     <b>Next<span className="d-none d-sm-inline"> Patient</span></b>
-                                    <i className="fa fa-chevron-right"/>
+                                    <i className="fa-solid fa-chevron-right ms-1"/>
                                 </Link>
                             </div>
                         </div>

@@ -150,7 +150,7 @@ export class Grid extends React.Component
                             </label>
                         }
                         <b className="text-primary">
-                            <i className="fa-regular fa-address-card"/> { this.props.title }
+                            <i className="fa-regular  fa-address-card"/> { this.props.title }
                         </b>
                     </div> :
                     null

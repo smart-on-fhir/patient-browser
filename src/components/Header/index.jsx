@@ -51,7 +51,7 @@ export default class Header extends React.Component
         return (
             <div className="form-group">
                 <p className="text-warning" style={{ padding: "0 5px 5px", margin: 0 }}>
-                    <i className="fa fa-info-circle" /> In advanced mode, provide a
+                    <i className="fa-solid fa-circle-info" /> In advanced mode, provide a
                     query string to browse and select from a list of matching
                     patients. <a target="_blank" href="http://hl7.org/fhir/patient.html#search">More Info...</a>
                 </p>
@@ -335,7 +335,7 @@ export default class Header extends React.Component
                                 onClick={ () => store.dispatch(fetch()) }
                                 className="btn btn-primary btn-submit"
                             >
-                                <i className="fa fa-search"/> Search
+                                <i className="fa-solid fa-search"/> Search
                             </button>
                         </div> :
                         null

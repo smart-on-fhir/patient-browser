@@ -2,10 +2,10 @@ import React     from "react";
 import PropTypes from "prop-types";
 
 const ICONS = {
-    info   : "fa fa-info-circle",
-    warning: "fa fa-exclamation-circle",
-    danger : "fa fa-exclamation-triangle",
-    success: "fa fa-thumbs-up"
+    info   : "fa-solid fa-circle-info",
+    warning: "fa-solid fa-circle-exclamation",
+    danger : "fa-solid fa-triangle-exclamation",
+    success: "fa-solid fa-thumbs-up"
 };
 
 export default class Alert extends React.Component

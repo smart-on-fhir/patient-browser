@@ -347,7 +347,7 @@ export default class TagSelector extends React.Component
             <div className={"tag" + (tag.custom ? " custom" : "") } key={ tag.key }>
                 { tag.label }
                 <i
-                    className="tag-remove fa fa-times-circle"
+                    className="tag-remove fa-solid fa-circle-xmark"
                     title="Remove"
                     onMouseDown={
                         e => {
@@ -380,7 +380,7 @@ export default class TagSelector extends React.Component
                     onChange={ ()=>1 }
                     value={ this.state.search }
                 />
-                <i className="fa fa-caret-down"/>
+                <i className="fa-solid fa-caret-down"/>
                 {
                     emptyMenu && !this.state.search ?
                     null :

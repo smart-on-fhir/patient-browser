@@ -51,8 +51,8 @@ export default class PatientListItem extends React.Component
                 >
                     <i className={
                         this.props.selected ?
-                        "fa fa-check-square-o" :
-                        "fa fa-square-o"
+                        "fa-regular fa-check-square" :
+                        "fa-regular fa-square"
                     }/>
                 </div>
                 <PatientImage patient={ this.props.patient } base={ this.props.settings.server.url }/>
@@ -76,7 +76,7 @@ export default class PatientListItem extends React.Component
                         <span>MRN: { getPatientMRN(this.props.patient) || "Unknown" }</span>
                     </footer>
                 </div>
-                <i className="fa fa-angle-right"/>
+                <i className="fa-solid fa-angle-right"/>
             </Link>
         )
     }

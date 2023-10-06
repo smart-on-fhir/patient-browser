@@ -54,7 +54,7 @@ export default class Footer extends React.Component
                                 onClick={ e => { e.preventDefault(); this.props.dispatch(goPrev()) }}
                                 disabled={ !hasPrev }
                             >
-                                <i className="fa fa-arrow-left"/> Prev
+                                <i className="fa-solid fa-arrow-left"/> Prev
                             </a>
                         </div>
                         <div className="col-6 col-md-4 text-center">
@@ -66,7 +66,7 @@ export default class Footer extends React.Component
                                 onClick={ e => { e.preventDefault(); this.props.dispatch(goNext()) }}
                                 disabled={!hasNext}
                             >
-                                Next <i className="fa fa-arrow-right"/>
+                                Next <i className="fa-solid fa-arrow-right"/>
                             </a>
                         </div>
                     </div>

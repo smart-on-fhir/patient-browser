@@ -84,7 +84,7 @@ export default class SortWidget extends React.Component
                         <li
                             key={ i }
                             role="presentation"
-                            className={ o.value in sort ? "active" : null }
+                            className={ o.value in sort ? "active nav-item" : 'nav-item' }
                         >
                             <a href="#" onClick={ e => {
                                 e.preventDefault()
@@ -101,9 +101,9 @@ export default class SortWidget extends React.Component
                                 { o.label || o.name }
                                 {
                                     sort[o.value] == "asc" ?
-                                    <span className="sort"><span className="d-none d-sm-inline"> Asc</span> <i className="fa fa-sort-amount-asc"/></span> :
+                                    <span className="sort"><span className="d-none d-sm-inline"> Asc</span> <i className="fa-solid fa-sort-amount-asc"/></span> :
                                         sort[o.value] == "desc" ?
-                                        <span className="sort"><span className="d-none d-sm-inline"> Desc</span> <i className="fa fa-sort-amount-desc"/></span> :
+                                        <span className="sort"><span className="d-none d-sm-inline"> Desc</span> <i className="fa-solid fa-sort-amount-desc"/></span> :
                                         null
                                 }
                             </a>
