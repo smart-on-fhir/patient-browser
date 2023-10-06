@@ -262,7 +262,7 @@ export class PatientDetail extends React.Component
                                 </button>
                                 <button
                                     type="button"
-                                    className="btn btn-default btn-sm"
+                                    className="btn btn-light btn-sm reload-button"
                                     onClick={() => this.fetch(this.props.params.index)}
                                 >
                                     <i className="fa fa-refresh"/> Reload
