@@ -132,13 +132,13 @@ export class Grid extends React.Component
     render()
     {
         return (
-            <div className={"panel panel-default" + (this.state.__enableGrouping ? " grouped" : "")}>
+            <div className={"card " + (this.state.__enableGrouping ? " grouped" : "")}>
                 {
                     this.props.title ?
-                    <div className="panel-heading">
+                    <div className="card-header">
                         {
                             this.props.groupBy && this.state.__rows.length > 1 &&
-                            <label className="pull-right">
+                            <label className="float-end">
                                 Group by {this.props.groupBy
                                 } <input
                                     type="checkbox"
@@ -150,13 +150,14 @@ export class Grid extends React.Component
                             </label>
                         }
                         <b className="text-primary">
-                            <i className="fa fa-address-card-o"/> { this.props.title }
+                            <i className="fa-regular fa-address-card"/> { this.props.title }
                         </b>
                     </div> :
                     null
                 }
-                <div className="table-responsive">
-                    <table className="table table-condensed table-hover table-striped table-bordered" style={{
+                {/* Removing padding and bottom-margin to merge card borders with table */}
+                <div className="card-body p-0 table-responsive">
+                    <table className="table table-condensed table-hover border-left-white table-striped table-bordered mb-0 " style={{
                         minWidth: this.props.cols.length * 200
                     }}>
                         <thead>

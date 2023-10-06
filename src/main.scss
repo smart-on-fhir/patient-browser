@@ -31,3 +31,9 @@ html {
 label { 
   font-weight: 700;
 }
+
+// Placeholders should be gray
+.form-control::placeholder { 
+  color: #999;
+  opacity: 1;
+}

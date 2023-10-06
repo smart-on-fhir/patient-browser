@@ -27,7 +27,7 @@ export default class Alert extends React.Component
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
                 <div className="row">
-                    <div className="col-xs-12">
+                    <div className="col-12">
                         <br/>
                         <div className={ "alert alert-" + this.props.type }>
                             {

@@ -59,9 +59,9 @@ export default class ConditionList extends React.Component
                                 }
                             }
                             return (
-                                <div>
+                                <div className="d-flex justify-content-between">
                                     <b>{ name }</b>
-                                    <small className="text-muted pull-right">
+                                    <small className="text-muted">
                                         { code } {system}
                                     </small>
                                 </div>

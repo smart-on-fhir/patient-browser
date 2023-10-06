@@ -226,21 +226,21 @@ export class PatientDetail extends React.Component
         let key = idLower && Object.keys(this.props.selection).find(k => k.toLowerCase() == idLower);
         let selected = key && this.props.selection[key] !== false;
         return (
-            <div className="panel panel-default patient col-xs-12">
+            <div className="card patient col-12">
                 <div className="row">
                     { this.state.loading ? <Loader/> : null }
-                    <div className="col-xs-2 col-sm-2 col-md-1">
-                        <div className="embed-responsive">
+                    <div className="col-2 col-md-2 col-lg-1">
+                        <div className="ratio ratio-1x1">
                             <PatientImage
                                 patient={ this.state.patient }
-                                className="embed-responsive-item"
+                                // className="embed-responsive-item"
                                 base={ this.props.settings.server.url }
                             />
                         </div>
                     </div>
-                    <div className="col-xs-10 col-md-11">
-                        <div className="patient-row">
-                            <div className="col-xs-7 patient-name">
+                    <div className="col-10 col-lg-11">
+                        <div className="row patient-row">
+                            <div className="col-7 patient-name">
                                 <h3 className="float-start text-primary">
                                     { getPatientName(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                                 </h3>
@@ -250,7 +250,7 @@ export class PatientDetail extends React.Component
                                     null
                                 }
                             </div>
-                            <div className="col-xs-5 text-end" style={{ paddingRight: 0 }}>
+                            <div className="col-5 text-end" style={{ paddingRight: 0 }}>
                                 <button
                                     type="button"
                                     className={`btn btn-sm btn-${selected ? "danger" : "primary"}`}
@@ -270,43 +270,43 @@ export class PatientDetail extends React.Component
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Gender:</div>
-                            <div className="col-xs-8 col-sm-3 col-lg-3 text-start">
+                            <div className="col-4 col-md-2 col-xl-1 text-end text-muted">Gender:</div>
+                            <div className="col-8 col-md-3 col-xl-3 text-start">
                                 { this.state.patient.gender || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">DOB:</div>
-                            <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
+                            <div className="col-4 col-md-2 col-xl-1 text-end text-muted">DOB:</div>
+                            <div className="col-8 col-md-5 col-xl-3 text-start">
                                 { this.state.patient.birthDate || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
 
-                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Age:</div>
-                            <div className="col-xs-8 col-sm-3 col-lg-3 text-start">
+                            <div className="col-4 col-md-2 col-xl-1 text-end text-muted">Age:</div>
+                            <div className="col-8 col-md-3 col-xl-3 text-start">
                                 { getPatientAge(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Email</div>
-                            <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
+                            <div className="col-4 col-md-2 col-xl-1 text-end text-muted">Email</div>
+                            <div className="col-8 col-md-5 col-xl-3 text-start">
                                 { getPatientEmail(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Phone:</div>
-                            <div className="col-xs-8 col-sm-3 col-lg-3 text-start">
+                            <div className="col-4 col-md-2 col-xl-1 text-end text-muted">Phone:</div>
+                            <div className="col-8 col-md-3 col-xl-3 text-start">
                                 { getPatientPhone(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">Address:</div>
-                            <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
+                            <div className="col-4 col-md-2 col-xl-1 text-end text-muted">Address:</div>
+                            <div className="col-8 col-md-5 col-xl-3 text-start">
                                 { getPatientHomeAddress(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">ID:</div>
-                            <div className="col-xs-8 col-sm-3 col-lg-3 text-start">
+                            <div className="col-4 col-md-2 col-xl-1 text-end text-muted">ID:</div>
+                            <div className="col-8 col-md-3 col-xl-3 text-start">
                                 { this.state.patient.id || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
-                            <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">MRN:</div>
-                            <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
+                            <div className="col-4 col-md-2 col-xl-1 text-end text-muted">MRN:</div>
+                            <div className="col-8 col-md-5 col-xl-3 text-start">
                                 { getPatientMRN(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                             </div>
                             {
                                 this.state.patient.deceasedBoolean || this.state.patient.deceasedDateTime ?
                                 (
-                                    <div className="col col-xs-4 col-sm-2 col-lg-1 text-end text-muted">
+                                    <div className="col-4 col-md-2 col-xl-1 text-end text-muted">
                                         <span className="deceased-label">Deceased:</span>
                                     </div>
                                 ) :
@@ -315,7 +315,7 @@ export class PatientDetail extends React.Component
                             {
                                 this.state.patient.deceasedBoolean || this.state.patient.deceasedDateTime ?
                                 (
-                                    <div className="col-xs-8 col-sm-5 col-lg-3 text-start">
+                                    <div className="col-8 col-md-5 col-xl-3 text-start">
                                         {
                                             this.state.patient.deceasedDateTime ?
                                             <span>{ this.state.patient.deceasedDateTime }</span> :
@@ -377,7 +377,7 @@ export class PatientDetail extends React.Component
                 <nav className="bg-primary fixed-top">
                     <div className="container-fluid">
                         <div className="row navigator">
-                            <div className="col col-xs-4 col-sm-4 col-md-3 col-lg-2">
+                            <div className="col-4 col-md-4 col-lg-3 col-xl-2">
                                 <Link
                                     to={ `/patient/${this.state.index - 1}` }
                                     className="btn btn-primary btn-block"
@@ -387,13 +387,13 @@ export class PatientDetail extends React.Component
                                     <b>Prev<span className="d-none d-sm-inline">ious Patient</span></b>
                                 </Link>
                             </div>
-                            <div className="col col-xs-4 col-sm-4 col-md-6 col-lg-8 text-center">
+                            <div className="col-4 col-md-4 col-lg-6 col-xl-8 text-center">
                                 <Link className="btn btn-block text-center" to="/">
                                     <span className="d-none d-sm-inline">Browse Patients</span>
                                     <span className="d-inline d-sm-none">Browse</span>
                                 </Link>
                             </div>
-                            <div className="col col-xs-4 col-sm-4 col-md-3 col-lg-2 text-end">
+                            <div className="col-4 col-md-4 col-lg-3 col-xl-2 text-end">
                                 <Link
                                     to={ `/patient/${this.state.index + 1}` }
                                     className="btn btn-primary btn-block"
@@ -413,7 +413,7 @@ export class PatientDetail extends React.Component
                     {
                         groups.length ?
                         <div className="row patient-details pt-4">
-                            <div className="col col-12 col-sm-3">
+                            <div className="col-12 col-md-3">
                                 <ul className="list-group">
                                 {
                                     groups.map((k, i) => (
@@ -435,14 +435,14 @@ export class PatientDetail extends React.Component
                                 }
                                 </ul>
                             </div>
-                            <div className="col col-12 col-sm-9">
+                            <div className="col-12 col-md-9">
                                 { this.renderResources(selectedSubCat) }
                             </div>
                         </div> :
                         this.state.loading ?
                             null:
                             <div className="row">
-                                <div className="col-xs-12 text-muted text-center">
+                                <div className="col-12 text-muted text-center">
                                     No additional details for this patient
                                 </div>
                             </div>
@@ -453,7 +453,7 @@ export class PatientDetail extends React.Component
                     <nav className="navbar navbar-default navbar-fixed-bottom">
                         <div className="container-fluid" style={{ width: "100%" }}>
                             <div className="row">
-                                <div className="col-xs-12" style={{ paddingTop: 8 }}>
+                                <div className="col-12" style={{ paddingTop: 8 }}>
                                     <DialogFooter/>
                                 </div>
                             </div>
