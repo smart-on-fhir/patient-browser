@@ -18,3 +18,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 html { 
   font-size: 14px !important;
 }
+
+// Custom global styles to stay in-line with old bootstrap feel 
+label { 
+  font-weight: 700;
+}
