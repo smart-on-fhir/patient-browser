@@ -406,15 +406,14 @@ export class PatientDetail extends React.Component
                         </div>
                     </div>
                 </nav>
-                <div className="container">
+                <div className="container-fluid">
 
                     { this.renderPatient() }
 
                     {
                         groups.length ?
-                        <div className="row patient-details">
-                            <br/>
-                            <div className="col-xs-12 col-sm-3">
+                        <div className="row patient-details pt-4">
+                            <div className="col col-12 col-sm-3">
                                 <ul className="list-group">
                                 {
                                     groups.map((k, i) => (
@@ -429,14 +428,14 @@ export class PatientDetail extends React.Component
                                                 })
                                             }}
                                         >
-                                            <b className="badge rounded-pill float-end">{this.state.groups[k].length}</b>
+                                            <b className="rounded-pill float-end badge">{this.state.groups[k].length}</b>
                                             <b>{k}</b>
                                         </a>
                                     ))
                                 }
                                 </ul>
                             </div>
-                            <div className="col-xs-12 col-sm-9">
+                            <div className="col col-12 col-sm-9">
                                 { this.renderResources(selectedSubCat) }
                             </div>
                         </div> :
