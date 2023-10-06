@@ -1,10 +1,18 @@
+// Boostrap styles
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
+// Font Awesome styles and font path
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '@fortawesome/fontawesome-free/scss/brands.scss';
+@import '@fortawesome/fontawesome-free/scss/regular.scss';
+@import '@fortawesome/fontawesome-free/scss/solid.scss';
 
 
 // Create your own map
 $custom-colors: (
+  "primary": #337ab7,
   "warning": #8a6d3b
 );
 

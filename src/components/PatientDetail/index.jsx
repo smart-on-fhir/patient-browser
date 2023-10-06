@@ -428,7 +428,7 @@ export class PatientDetail extends React.Component
                                                 })
                                             }}
                                         >
-                                            <b className="rounded-pill float-end badge">{this.state.groups[k].length}</b>
+                                            <b className="rounded-pill float-end badge text-bg-secondary">{this.state.groups[k].length}</b>
                                             <b>{k}</b>
                                         </a>
                                     ))
