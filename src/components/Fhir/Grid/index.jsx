@@ -2,6 +2,7 @@ import React       from "react"
 import PropTypes   from "prop-types"
 import { getPath } from "../../../lib"
 import { connect } from "react-redux"
+import                  "./Grid.less"
 
 /**
  * Renders group of resources in a grid (table) where each component represents
@@ -132,7 +133,7 @@ export class Grid extends React.Component
     render()
     {
         return (
-            <div className={"card " + (this.state.__enableGrouping ? " grouped" : "")}>
+            <div className={"data-grid card " + (this.state.__enableGrouping ? " grouped" : "")}>
                 {
                     this.props.title ?
                     <div className="card-header">
@@ -150,7 +151,7 @@ export class Grid extends React.Component
                             </label>
                         }
                         <b className="text-primary">
-                            <i className="fa-regular  fa-address-card"/> { this.props.title }
+                            <i className="fa-regular fa-address-card"/> { this.props.title }
                         </b>
                     </div> :
                     null
