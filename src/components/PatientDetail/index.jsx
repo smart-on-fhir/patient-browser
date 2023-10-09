@@ -379,7 +379,7 @@ export class PatientDetail extends React.Component
                             <div className="col-4 col-md-4 col-lg-3 col-xl-2">
                                 <Link
                                     to={ `/patient/${this.state.index - 1}` }
-                                    className="btn btn-primary btn-block"
+                                    className="w-100 btn btn-primary"
                                     disabled={ this.state.index < 1 }
                                 >
                                     <i className="fa-solid fa-chevron-left me-1"/>
@@ -387,7 +387,7 @@ export class PatientDetail extends React.Component
                                 </Link>
                             </div>
                             <div className="col-4 col-md-4 col-lg-6 col-xl-8 text-center">
-                                <Link className="btn btn-block text-center" to="/">
+                                <Link className="w-100 btn text-center" to="/">
                                     <span className="d-none d-sm-inline">Browse Patients</span>
                                     <span className="d-inline d-sm-none">Browse</span>
                                 </Link>
@@ -395,7 +395,7 @@ export class PatientDetail extends React.Component
                             <div className="col-4 col-md-4 col-lg-3 col-xl-2 text-end">
                                 <Link
                                     to={ `/patient/${this.state.index + 1}` }
-                                    className="btn btn-primary btn-block"
+                                    className="w-100 btn btn-primary"
                                     disabled={ !this.state.hasNext }
                                 >
                                     <b>Next<span className="d-none d-sm-inline"> Patient</span></b>
@@ -413,7 +413,8 @@ export class PatientDetail extends React.Component
                         groups.length ?
                         <div className="row patient-details pt-4">
                             <div className="col-12 col-md-3">
-                                <ul className="list-group">
+                                {/* bottom margin ensure this is spaced in a vertical layout */}
+                                <ul className="list-group mb-3">
                                 {
                                     groups.map((k, i) => (
                                         <a
