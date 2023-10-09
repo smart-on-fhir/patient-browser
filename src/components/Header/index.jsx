@@ -69,7 +69,7 @@ export default class Header extends React.Component
                             onChange={ e => store.dispatch(setQueryString(e.target.value)) }
                             value={ this.props.query.queryString }
                         />
-                        <button className="input-group-text btn btn-warning" type="submit">Go</button>
+                        <button className="input-group-text btn bg-warning btn-warning" type="submit">Go</button>
                     </div>
                 </form>
             </div>
@@ -248,8 +248,8 @@ export default class Header extends React.Component
 
         return (
             <div className="app-header">
-                <div style={{ flexDirection: "row" }}>
-                    <label className="float-end advanced-label text-warning">
+                <div className="position-relative" >
+                    <label className="position-absolute end-0 d-block advanced-label text-warning">
                         Advanced <span className="d-none d-sm-inline ">Mode </span> <input
                             type="checkbox"
                             checked={ _advanced }
@@ -260,7 +260,7 @@ export default class Header extends React.Component
                     </label>
                 {
                     _advanced ?
-                    <ul className="nav nav-tabs"/> :
+                    <ul className="nav nav-tabs" style={{height: '32px'}}/> :
                     <ul className="nav nav-tabs">
                         <li className="nav-item">
                             <a 

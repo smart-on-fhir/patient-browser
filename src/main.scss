@@ -1,6 +1,8 @@
 // Bootstrap: Define custom colors before anything else 
 $primary: #337ab7;
 $warning: #8a6d3b;
+$border-color: #ccc;
+// $light: gray-100
 @import "bootstrap";
 
 // Font Awesome styles and font path
@@ -19,4 +21,8 @@ label {
 .form-control::placeholder { 
   color: #999;
   opacity: 1;
+}
+
+.input-group-text { 
+  background-color: rgb(238, 238, 238)
 }
