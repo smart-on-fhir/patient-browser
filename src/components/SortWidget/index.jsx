@@ -77,7 +77,7 @@ export default class SortWidget extends React.Component
 
         return (
             <div className="sort-widget small">
-                <span className="float-start">Sort<span className="d-none d-sm-inline"> by</span>:</span>
+                <span className="float-start pe-2">Sort<span className="d-none d-sm-inline"> by</span>:</span>
                 <ul className="nav nav-pills">
                 {
                     this.props.options.map((o, i) => (
