@@ -239,13 +239,14 @@ export class PatientDetail extends React.Component
                     </div>
                     <div className="col-10 col-lg-11">
                         <div className="row patient-row">
-                            <div className="col-7 patient-name">
+                            {/* Font size is necessary for the relatively-sized badge to be sized reasonably */}
+                            <div className="col-7 fs-6 patient-name">
                                 <h3 className="float-start text-primary">
                                     { getPatientName(this.state.patient) || (this.state.loading ? "loading..." : "Unknown") }
                                 </h3>
                                 {
                                     selected ?
-                                    <i className="label label-success float-start">Selected</i> :
+                                    <i className="badge text-bg-success float-start ms-2">Selected</i> :
                                     null
                                 }
                             </div>

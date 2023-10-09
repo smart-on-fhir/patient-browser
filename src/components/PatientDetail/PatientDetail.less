@@ -66,7 +66,7 @@
             line-height: 1.45em;
         }
 
-        .label {
+        .label, .badge {
             margin   : 8px 0 0 12px;
             font-size: 13px;
         }
@@ -78,7 +78,7 @@
         button.reload-button { 
             border: 1px #ccc solid;
             &:hover { 
-                background-color: --bs-gray;
+                background-color: var(--bs-light-gray);
                 border-color: #adadad;
             }
         }
@@ -86,10 +86,6 @@
 
     .patient-image-wrap {
         margin-right: 1ex;
-    }
-
-    .patient-name {
-        font-size: 24px;
     }
 
     td, th {
@@ -165,11 +161,11 @@
     .list-group-item {
         padding-top: 7px;
         padding-bottom: 7px;
-        // display: none;
 
-        // &.active {
-        //     display: block;
-        // }
+        &.active .rounded-pill {
+            background-color: var(--bs-white) !important;
+            color           : var(--bs-primary) !important;
+        }
     }
 
     .group-header {
