@@ -116,7 +116,7 @@ export class Grid extends React.Component
                             this.state[group] !== false ? "down" : "right")
                         }/>
                         {group}
-                        <small className="badge rounded-pill text-bg-secondary ">{groups[group].length}</small>
+                        <small className="badge rounded-pill text-bg-secondary ms-1">{groups[group].length}</small>
                         </th>
                     </tr>
                 );
