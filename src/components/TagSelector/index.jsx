@@ -1,4 +1,4 @@
-import React     from "react"
+import React, { createRef }     from "react"
 import PropTypes from "prop-types"
 import $ from "jquery"
 import { renderSearchHighlight } from "../../lib"
@@ -23,6 +23,7 @@ export default class TagSelector extends React.Component
 
     constructor(...args) {
         super(...args)
+        this.menuRef = createRef()
 
         this.state = {
             // the selected items as a map of unique keys and tag objects
@@ -89,22 +90,22 @@ export default class TagSelector extends React.Component
      * it's options is selected so that the selected option is always in view.
      */
     componentDidUpdate() {
-        let menu = this.refs.menu;
+        let menu = this.menuRef.current;
         if (menu) {
             let menuHeight    = menu.clientHeight;
             let menuScrollTop = menu.scrollTop;
             let paddingTop    = parseInt($(menu).css("paddingTop"), 10);
             let paddingBottom = parseInt($(menu).css("paddingBottom"), 10);
-            let selected      = $(".selected", this.refs.menu);
+            let selected      = $(".selected", this.menuRef.current);
 
             if (selected.length) {
                 let selectedTop    = selected[0].offsetTop;
                 let selectedHeight = selected[0].offsetHeight;
                 if (selectedTop < menuScrollTop) {
-                    requestAnimationFrame(() => this.refs.menu.scrollTop = selectedTop - paddingTop)
+                    requestAnimationFrame(() => this.menuRef.current.scrollTop = selectedTop - paddingTop)
                 }
                 else if (selectedTop + selectedHeight - menuScrollTop > menuHeight) {
-                    requestAnimationFrame(() => this.refs.menu.scrollTop = selectedTop + selectedHeight +
+                    requestAnimationFrame(() => this.menuRef.current.scrollTop = selectedTop + selectedHeight +
                         paddingBottom - menuHeight);
                 }
             }
@@ -283,6 +284,7 @@ export default class TagSelector extends React.Component
                 }
             })
         }
+        console.log(tags)
 
         return tags
     }
@@ -342,7 +344,9 @@ export default class TagSelector extends React.Component
 
     render() {
         let menuItems = this.filterTags(this.state.search).map(this.renderTag, this)
+        console.log(menuItems)
         let emptyMenu = menuItems.length === 0
+        console.log(emptyMenu)
         let tags = this.state.selected.map(tag => (
             <div className={"tag" + (tag.custom ? " custom" : "") } key={ tag.key }>
                 { tag.label }
@@ -367,7 +371,7 @@ export default class TagSelector extends React.Component
         placeholder += ' ...'
 
         return (
-            <div className={ "tag-selector" + (this.state.open ? " open" : "") }>
+            <div className="tag-selector">
                 { tags.length ? <div className="tags">{tags}</div> : null }
                 <input
                     className="input form-control form-control-sm"
@@ -384,7 +388,7 @@ export default class TagSelector extends React.Component
                 {
                     emptyMenu && !this.state.search ?
                     null :
-                    <div className="menu dropdown-menu" ref="menu">
+                    <div className={"menu dropdown-menu "  + (this.state.open ? " show" : "")} ref={this.menuRef}>
                         { menuItems }
                     </div>
                 }

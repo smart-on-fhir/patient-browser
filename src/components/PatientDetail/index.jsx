@@ -380,7 +380,7 @@ export class PatientDetail extends React.Component
                             <div className="col-4 col-md-4 col-lg-3 col-xl-2">
                                 <Link
                                     to={ `/patient/${this.state.index - 1}` }
-                                    className="w-100 btn btn-primary"
+                                    className="w-100 btn btn-primary custom-btn-border"
                                     disabled={ this.state.index < 1 }
                                 >
                                     <i className="fa-solid fa-chevron-left me-1"/>
@@ -396,7 +396,7 @@ export class PatientDetail extends React.Component
                             <div className="col-4 col-md-4 col-lg-3 col-xl-2 text-end">
                                 <Link
                                     to={ `/patient/${this.state.index + 1}` }
-                                    className="w-100 btn btn-primary"
+                                    className="w-100 btn btn-primary custom-btn-border"
                                     disabled={ !this.state.hasNext }
                                 >
                                     <b>Next<span className="d-none d-sm-inline"> Patient</span></b>

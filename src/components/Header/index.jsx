@@ -104,7 +104,7 @@ export default class Header extends React.Component
                         </div>
                     </div>
                     <div className="col-sm-6">
-                        <div className="form-group">
+                        <div className="form-group age-widget">
                             <select
                                 className="form-select"
                                 onChange={ e => {
@@ -121,7 +121,6 @@ export default class Header extends React.Component
                     </div>
                     <div className={ "**custom**" === this.props.query.ageGroup ? "col-sm-12" : "col-sm-6" }>
                         <div className="form-group">
-                            {/*<label>Age:</label>*/}
                             <AgeSelector
                                 min={ this.props.query.minAge || { value: 0  , units: "years" } }
                                 max={ this.props.query.maxAge || { value: 100, units: "years" } }
