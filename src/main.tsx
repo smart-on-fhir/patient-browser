@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import ReactDOM from "react-dom/client";
 import * as bootstrap from "bootstrap";
 import { Provider } from "react-redux";
@@ -11,13 +10,10 @@ import App from "./components/App";
 import PatientList from "./components/PatientList";
 import PatientDetail from "./components/PatientDetail";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// TODO: Determine if this is necessary
-// import * as popper from "@popperjs/core";
-
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={STORE}>
+    {/* TSC is getting confused by the mixing of propTypes & redux's connect fn */}
+    {/* @ts-ignore */}
     <App>
       <HashRouter>
         <Routes>
@@ -29,11 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   </Provider>
 );
 
-// QUESTION: Is document ready necessary for a react component?
-// $(function () {
 const body = document.getElementsByTagName("body")[0];
 new bootstrap.Tooltip(body, {
   selector: ".patient-detail-page [title]",
 });
-// alert("change seen?");
-// });

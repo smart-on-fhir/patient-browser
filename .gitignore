@@ -9,3 +9,4 @@ selenium-debug.log
 
 !.gitkeep
 /build/config/*-custom.json5
+/dist

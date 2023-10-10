@@ -1,14 +1,29 @@
 {
   "name": "patient-browser-vite",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
+  "description": "A SMART-friendly browser for viewing and selecting FHIR patients for further use.",
   "type": "module",
+  "author": "Vladimir Ignatov <vlad.ignatov@gmail.com>",
+  "license": "Apache-2.0",
+  "contributors": [
+    "Dylan Phelan <dtphelan1@gmail.com>"
+  ],
+  "engines": {
+    "node": "18.x.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smart-on-fhir/patient-browser.git"
+  },
   "scripts": {
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start-prod": "npx serve -s build"
   },
+  "homepage": "https://patient-browser.smarthealthit.org/",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.2",
     "@popperjs/core": "^2.11.8",
@@ -41,6 +56,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "less": "^4.2.0",
     "sass": "^1.68.0",
+    "serve": "^14.2.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   }
