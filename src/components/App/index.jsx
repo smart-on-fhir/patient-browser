@@ -59,7 +59,6 @@ export class App extends React.Component
     }
 
     componentDidMount() {
-        console.log('component did mount')
         this.handleUiBlocking();
 
         let { config, ...params } = parseQueryString(window.location.search);

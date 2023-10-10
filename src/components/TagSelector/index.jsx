@@ -284,7 +284,6 @@ export default class TagSelector extends React.Component
                 }
             })
         }
-        console.log(tags)
 
         return tags
     }
@@ -344,9 +343,7 @@ export default class TagSelector extends React.Component
 
     render() {
         let menuItems = this.filterTags(this.state.search).map(this.renderTag, this)
-        console.log(menuItems)
         let emptyMenu = menuItems.length === 0
-        console.log(emptyMenu)
         let tags = this.state.selected.map(tag => (
             <div className={"tag" + (tag.custom ? " custom" : "") } key={ tag.key }>
                 { tag.label }
