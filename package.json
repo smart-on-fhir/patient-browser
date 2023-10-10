@@ -21,7 +21,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "start-prod": "npx serve -s build"
+    "start-prod": "npx serve -s dist"
   },
   "homepage": "https://patient-browser.smarthealthit.org/",
   "dependencies": {
