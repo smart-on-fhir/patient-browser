@@ -112,9 +112,11 @@ export class Grid extends React.Component
                 out.push(
                     <tr className="group-header" key={group}>
                         <th colSpan={this.props.cols.length} onClick={() => this.setState({[group] : this.state[group] === false ? true : false })}>
-                        <i className={"glyphicon glyphicon-triangle-" + (
-                            this.state[group] !== false ? "bottom" : "right")
-                        }/> {group} <small className="badge rounded-pill">{groups[group].length}</small>
+                        <i className={"fa-solid fa-caret-" + (
+                            this.state[group] !== false ? "down" : "right")
+                        }/>
+                        {group}
+                        <small className="badge rounded-pill text-bg-secondary ">{groups[group].length}</small>
                         </th>
                     </tr>
                 );

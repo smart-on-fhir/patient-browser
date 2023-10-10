@@ -22,4 +22,42 @@
             border-bottom: 0;
         }
     }
+
+    .group-header {
+        cursor: pointer;
+        background: linear-gradient(90deg, mix(#337ab7, #FFF, 10%), mix(#337ab7, #FFF, 5%)) !important;
+        text-indent: 0;
+        
+        & th { 
+            background-color: default;
+            background: linear-gradient(90deg, mix(#337ab7, #FFF, 10%), mix(#337ab7, #FFF, 5%)) !important;
+        }
+        & ~ tr > td:first-child {
+            text-indent: 17px;
+        }
+    }
+    .fa-caret-down,
+    .fa-caret-right {
+        // Should match the padding used on before element below 
+        width: 10px;
+        height: 10px;
+        margin-right: 0.25rem;
+    }
+
+    .group-clear + tr > td:first-child {
+        text-indent: 0;
+        &:before {
+            // Should match the padding used on fa-caret 
+            margin-right: 0.25rem;
+            height: 10px;
+            width: 10px;
+            font: var(--fa-font-solid);
+            content: "\f0da";
+            opacity: 0.3;
+
+            display: inline-block;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+    }
 }
