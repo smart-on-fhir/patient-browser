@@ -69,7 +69,7 @@ export class PatientDetail extends React.Component
         this.fetch(this.props.params.index);
     }
 
-    componentWillReceiveProps(newProps)
+    UNSAFE_componentWillReceiveProps(newProps)
     {
         if (newProps.params.index !== this.props.params.index) {
             this.fetch(newProps.params.index);

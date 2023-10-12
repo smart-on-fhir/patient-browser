@@ -66,7 +66,7 @@ export default class AgeSelector extends React.Component
         return state;
     }
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         let newState = this._propsToState(newProps);
         if (Object.keys(newState).length) {
             this.setState(newState);
