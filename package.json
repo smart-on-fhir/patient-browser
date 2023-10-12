@@ -19,6 +19,7 @@
   "scripts": {
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest",
+    "test:e2e": "npx nightwatch",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",

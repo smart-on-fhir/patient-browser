@@ -1,8 +1,8 @@
-var CFG = require("../config.cjs");
+var CFG = require("./lib/config.cjs");
 
 describe('e2e tests', function() {
     it('all e2e tests', function(browser) {
-        const Lib = require("../lib.cjs")(browser);
+        const Lib = require("./lib/index.cjs")(browser);
 
         const ELEM_ANY_PATIENT       = ".patient-search-results a"
         const ELEM_FIRST_PATIENT     = ELEM_ANY_PATIENT + ":nth-child(1)"
@@ -95,5 +95,3 @@ describe('e2e tests', function() {
         });
     });
 });
-
-// exports['@disabled'] = true;
