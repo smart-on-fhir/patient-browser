@@ -1,12 +1,12 @@
 node_modules
-# build/js/*.*
-# build/index.html
-# build/config.json5
+# dist/js/*.*
+# dist/index.html
+# dist/config.json5
 tests/e2e/bin
 tests/e2e/reports
 tests/e2e/screenshots
 selenium-debug.log
 
 !.gitkeep
-/build/config/*-custom.json5
+/dist/config/*-custom.json5
 /dist

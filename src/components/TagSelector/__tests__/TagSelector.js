@@ -1,9 +1,8 @@
-/* global describe, it, chai, $ */
-import TagSelector from ".."
+import { expect, describe, it } from 'vitest'
+import React from "react"
 import ReactDOM from "react-dom"
 import TestUtils from "react-dom/test-utils"
-import React from "react"
-import chai from "chai"
+import TagSelector from ".."
 
 const expect = chai.expect;
 

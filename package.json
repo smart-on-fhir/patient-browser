@@ -18,6 +18,7 @@
   },
   "scripts": {
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "vitest",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -44,6 +45,7 @@
     "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
+    "@miyaneee/rollup-plugin-json5": "^1.1.2",
     "@types/bootstrap": "^5.2.7",
     "@types/jquery": "^3.5.20",
     "@types/react": "^18.2.15",
@@ -51,13 +53,16 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "chai": "^4.3.10",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "less": "^4.2.0",
+    "mocha": "^10.2.0",
     "sass": "^1.68.0",
     "serve": "^14.2.1",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vitest": "^0.34.6"
   }
 }

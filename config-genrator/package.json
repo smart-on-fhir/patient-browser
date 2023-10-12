@@ -1,0 +1,21 @@
+{
+  "name": "patient-browser-config-generator",
+  "version": "1.0.0",
+  "description": "Given a FHIR server, compiles a list of all the unique conditions that can be found there and generates a config file from that...",
+  "main": "index.js",
+  "engines": {
+    "node": ">=7.9.0"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chb/patient-browser.git"
+  },
+  "dependencies": {
+    "colors": "^1.2.1",
+    "commander": "^2.15.1",
+    "json5": "^0.5.1",
+    "mixin-deep": "^1.2.0",
+    "request": "^2.85.0"
+  }
+}
