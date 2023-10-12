@@ -32,19 +32,17 @@ export default class Alert extends React.Component
                         <div className={ "alert alert-" + this.props.type }>
                             {
                                 this.props.close ?
-                                <span
-                                    aria-hidden="true"
-                                    data-dismiss="alert"
-                                    className="close"
-                                    style={{ lineHeight: "1.2rem" }}
-                                >&times;</span> :
+                                <button 
+                                    data-bs-dismiss="alert"
+                                    type="button" 
+                                    className="btn-close float-end" 
+                                    aria-label="Close"
+                                /> : 
                                 null
                             }
                             {
                                 this.props.icon ?
-                                <i className={ICONS[this.props.type]} style={{
-                                    marginRight: "1ex"
-                                }}/> :
+                                <i className={"fa-md me-2 " + ICONS[this.props.type]} /> :
                                 null
                             }
                             { this.props.children }
