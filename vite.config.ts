@@ -11,7 +11,19 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
   const isProd = env.NODE_ENV === "production" 
 
   return {
-    plugins: [react(), splitVendorChunkPlugin(), json5()],
-    ...(isProd && {build: {sourcemap: true}})
+    plugins: [
+      // Ensure vite can handle react/jsx code
+      react(), 
+      // Create a relevant vendor chunk for bundling optimization
+      splitVendorChunkPlugin(), 
+      // Load JSON5 as modules 
+      json5()
+    ],
+    // Add sourcemaps to the production build
+    ...(isProd && {build: {sourcemap: true}}),
+    // Test configuration for vitest
+    test: {
+      environment: 'jsdom', 
+    },
   }
 })
