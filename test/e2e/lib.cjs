@@ -1,4 +1,4 @@
-var CFG  = require("./config.js");
+var CFG  = require("./config.cjs");
 
 
 module.exports = function(browser) {
