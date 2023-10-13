@@ -66,7 +66,7 @@ export default class AgeSelector extends React.Component
         return state;
     }
 
-    UNSAFE_componentWillReceiveProps(newProps) {
+    componentWillReceiveProps(newProps) {
         let newState = this._propsToState(newProps);
         if (Object.keys(newState).length) {
             this.setState(newState);
@@ -189,7 +189,7 @@ export default class AgeSelector extends React.Component
             units: this.state.maxUnits
         });
         return (
-            <div className={ "age-widget-wrap form-control form-control-sm" + (this.props.group == "**custom**" ? " custom" : "")}>
+            <div className={ "age-widget-wrap form-control input-sm" + (this.props.group == "**custom**" ? " custom" : "")}>
                 <select
                     onChange={ this.onGroupChange }
                     value={ this.props.group || "" }

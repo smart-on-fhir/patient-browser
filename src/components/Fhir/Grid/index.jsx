@@ -2,7 +2,6 @@ import React       from "react"
 import PropTypes   from "prop-types"
 import { getPath } from "../../../lib"
 import { connect } from "react-redux"
-import                  "./Grid.less"
 
 /**
  * Renders group of resources in a grid (table) where each component represents
@@ -26,7 +25,7 @@ export class Grid extends React.Component
         }
     }
 
-    UNSAFE_componentWillReceiveProps(newProps) {
+    componentWillReceiveProps(newProps) {
         if (Array.isArray(newProps.rows)) {
             this.setState({
                 __rows: this.sortRows(newProps.rows, newProps.comparator)
@@ -112,11 +111,9 @@ export class Grid extends React.Component
                 out.push(
                     <tr className="group-header" key={group}>
                         <th colSpan={this.props.cols.length} onClick={() => this.setState({[group] : this.state[group] === false ? true : false })}>
-                        <i className={"fa-solid fa-caret-" + (
-                            this.state[group] !== false ? "down" : "right")
-                        }/>
-                        {group}
-                        <small className="badge rounded-pill text-bg-secondary ms-1">{groups[group].length}</small>
+                        <i className={"glyphicon glyphicon-triangle-" + (
+                            this.state[group] !== false ? "bottom" : "right")
+                        }/> {group} <small className="badge">{groups[group].length}</small>
                         </th>
                     </tr>
                 );
@@ -135,13 +132,13 @@ export class Grid extends React.Component
     render()
     {
         return (
-            <div className={"data-grid card " + (this.state.__enableGrouping ? " grouped" : "")}>
+            <div className={"panel panel-default" + (this.state.__enableGrouping ? " grouped" : "")}>
                 {
                     this.props.title ?
-                    <div className="card-header">
+                    <div className="panel-heading">
                         {
                             this.props.groupBy && this.state.__rows.length > 1 &&
-                            <label className="float-end">
+                            <label className="pull-right">
                                 Group by {this.props.groupBy
                                 } <input
                                     type="checkbox"
@@ -153,14 +150,13 @@ export class Grid extends React.Component
                             </label>
                         }
                         <b className="text-primary">
-                            <i className="fa-regular fa-address-card"/> { this.props.title }
+                            <i className="fa fa-address-card-o"/> { this.props.title }
                         </b>
                     </div> :
                     null
                 }
-                {/* Removing padding and bottom-margin to merge card borders with table */}
-                <div className="card-body p-0 table-responsive">
-                    <table className="table table-condensed table-hover border-left-white table-striped table-bordered mb-0 " style={{
+                <div className="table-responsive">
+                    <table className="table table-condensed table-hover table-striped table-bordered" style={{
                         minWidth: this.props.cols.length * 200
                     }}>
                         <thead>

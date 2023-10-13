@@ -2,10 +2,10 @@ import React     from "react";
 import PropTypes from "prop-types";
 
 const ICONS = {
-    info   : "fa-solid fa-circle-info",
-    warning: "fa-solid fa-circle-exclamation",
-    danger : "fa-solid fa-triangle-exclamation",
-    success: "fa-solid fa-thumbs-up"
+    info   : "fa fa-info-circle",
+    warning: "fa fa-exclamation-circle",
+    danger : "fa fa-exclamation-triangle",
+    success: "fa fa-thumbs-up"
 };
 
 export default class Alert extends React.Component
@@ -27,22 +27,24 @@ export default class Alert extends React.Component
         return (
             <div className="container-fluid" style={{ width: "100%" }}>
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-xs-12">
                         <br/>
                         <div className={ "alert alert-" + this.props.type }>
                             {
                                 this.props.close ?
-                                <button 
-                                    data-bs-dismiss="alert"
-                                    type="button" 
-                                    className="btn-close float-end" 
-                                    aria-label="Close"
-                                /> : 
+                                <span
+                                    aria-hidden="true"
+                                    data-dismiss="alert"
+                                    className="close"
+                                    style={{ lineHeight: "1.2rem" }}
+                                >&times;</span> :
                                 null
                             }
                             {
                                 this.props.icon ?
-                                <i className={"fa-md me-2 " + ICONS[this.props.type]} /> :
+                                <i className={ICONS[this.props.type]} style={{
+                                    marginRight: "1ex"
+                                }}/> :
                                 null
                             }
                             { this.props.children }

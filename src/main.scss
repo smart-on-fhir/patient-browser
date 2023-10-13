@@ -1,28 +1,2 @@
-// Bootstrap: Define custom colors before anything else 
-$primary: #337ab7;
-$warning: #8a6d3b;
-$border-color: #ccc;
-// $light: gray-100
 @import "bootstrap";
 
-// Font Awesome styles and font path
-$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
-@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
-@import '@fortawesome/fontawesome-free/scss/brands.scss';
-@import '@fortawesome/fontawesome-free/scss/regular.scss';
-@import '@fortawesome/fontawesome-free/scss/solid.scss';
-
-// Custom global styles to stay in-line with old bootstrap feel 
-label { 
-  font-weight: 700;
-}
-
-// Placeholders should be gray
-.form-control::placeholder { 
-  color: #999;
-  opacity: 1;
-}
-
-.input-group-text { 
-  background-color: rgb(238, 238, 238)
-}

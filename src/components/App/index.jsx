@@ -1,12 +1,12 @@
-import React                from "react"
-import PropTypes            from "prop-types";
-import $                    from "jquery"
-import JSON5                from "json5"
-import { connect }          from "react-redux"
-import Loader               from "../Loader"
-import ErrorMessage         from "../ErrorMessage"
-import { fetch, setLimit }  from "../../redux/query"
-import { merge }            from "../../redux/settings"
+import React         from "react"
+import PropTypes     from "prop-types";
+import $             from "jquery"
+import JSON5         from "json5"
+import { connect }   from "react-redux"
+import Loader        from "../Loader"
+import ErrorMessage  from "../ErrorMessage"
+import { fetch, setLimit } from "../../redux/query"
+import { merge }     from "../../redux/settings"
 import { parseQueryString } from "../../lib"
 import                    "./App.less"
 
@@ -59,6 +59,7 @@ export class App extends React.Component
     }
 
     componentDidMount() {
+
         this.handleUiBlocking();
 
         let { config, ...params } = parseQueryString(window.location.search);

@@ -48,25 +48,25 @@ export default class Footer extends React.Component
             <div className="app-footer">
                 <div className="container-fluid" style={{ width: "100%" }}>
                     <div className="row">
-                        <div className="col-3 col-md-4 text-end">
+                        <div className="col-xs-3 col-sm-4 text-right">
                             <a
                                 href="#prev"
                                 onClick={ e => { e.preventDefault(); this.props.dispatch(goPrev()) }}
                                 disabled={ !hasPrev }
                             >
-                                <i className="fa-solid fa-arrow-left"/> Prev
+                                <i className="fa fa-arrow-left"/> Prev
                             </a>
                         </div>
-                        <div className="col-6 col-md-4 text-center">
+                        <div className="col-xs-6 col-sm-4 text-center">
                             { msg }
                         </div>
-                        <div className="col-3 col-md-4 text-start">
+                        <div className="col-xs-3 col-sm-4 text-left">
                             <a
                                 href="#next"
                                 onClick={ e => { e.preventDefault(); this.props.dispatch(goNext()) }}
                                 disabled={!hasNext}
                             >
-                                Next <i className="fa-solid fa-arrow-right"/>
+                                Next <i className="fa fa-arrow-right"/>
                             </a>
                         </div>
                     </div>

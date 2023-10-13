@@ -1,7 +1,7 @@
 import React                from "react"
 import PropTypes            from "prop-types"
-import { withRouter }       from '../../lib/withRouter'
 import PatientListItem      from "../PatientListItem"
+import { withRouter }       from '../../lib/withRouter'
 import { toggle, setAll }   from "../../redux/selection"
 import { showSelectedOnly } from "../../redux/settings"
 import { setParam, fetch }  from "../../redux/query"
@@ -19,6 +19,7 @@ export class PatientList extends React.Component
     static propTypes = {
         query    : PropTypes.object,
         selection: PropTypes.object,
+        location : PropTypes.object,
         settings : PropTypes.object,
         urlParams: PropTypes.object,
         dispatch : PropTypes.func
@@ -55,7 +56,7 @@ export class PatientList extends React.Component
         if (!this.props.query.bundle || this.props.query.loading) {
             return (
                 <div className="patient-search-loading">
-                    <i className="fa-regular fa-spinner spin" /> Loading. Please wait...
+                    <i className="fa fa-spinner spin" /> Loading. Please wait...
                 </div>
             )
         }

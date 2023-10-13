@@ -23,7 +23,7 @@ export default class SortWidget extends React.Component
         sort: "name,-birthdate",
         options: [
             {
-                label: <span><span className="d-none d-sm-inline">Patient </span>ID</span>,
+                label: <span><span className="hidden-xs">Patient </span>ID</span>,
                 name : "Patient ID",
                 value: "_id"
             },
@@ -77,14 +77,14 @@ export default class SortWidget extends React.Component
 
         return (
             <div className="sort-widget small">
-                <span className="float-start pe-2">Sort<span className="d-none d-sm-inline"> by</span>:</span>
+                <span className="pull-left">Sort<span className="hidden-xs"> by</span>:</span>
                 <ul className="nav nav-pills">
                 {
                     this.props.options.map((o, i) => (
                         <li
                             key={ i }
                             role="presentation"
-                            className={ o.value in sort ? "active nav-item" : 'nav-item' }
+                            className={ o.value in sort ? "active" : null }
                         >
                             <a href="#" onClick={ e => {
                                 e.preventDefault()
@@ -101,9 +101,9 @@ export default class SortWidget extends React.Component
                                 { o.label || o.name }
                                 {
                                     sort[o.value] == "asc" ?
-                                    <span className="sort"><span className="d-none d-sm-inline"> Asc</span> <i className="fa-solid fa-sort-amount-asc"/></span> :
+                                    <span className="sort"><span className="hidden-xs"> Asc</span> <i className="fa fa-sort-amount-asc"/></span> :
                                         sort[o.value] == "desc" ?
-                                        <span className="sort"><span className="d-none d-sm-inline"> Desc</span> <i className="fa-solid fa-sort-amount-desc"/></span> :
+                                        <span className="sort"><span className="hidden-xs"> Desc</span> <i className="fa fa-sort-amount-desc"/></span> :
                                         null
                                 }
                             </a>

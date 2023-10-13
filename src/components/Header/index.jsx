@@ -51,7 +51,7 @@ export default class Header extends React.Component
         return (
             <div className="form-group">
                 <p className="text-warning" style={{ padding: "0 5px 5px", margin: 0 }}>
-                    <i className="fa-solid fa-circle-info" /> In advanced mode, provide a
+                    <i className="fa fa-info-circle" /> In advanced mode, provide a
                     query string to browse and select from a list of matching
                     patients. <a target="_blank" href="http://hl7.org/fhir/patient.html#search">More Info...</a>
                 </p>
@@ -59,8 +59,8 @@ export default class Header extends React.Component
                     e.preventDefault()
                     store.dispatch(fetch())
                 }}>
-                    <div className="input-group form-control-sm">
-                        <span className="input-group-text">/Patient?</span>
+                    <div className="input-group input-group-sm">
+                        <span className="input-group-addon">/Patient?</span>
                         <input
                             type="text"
                             className="form-control"
@@ -69,7 +69,9 @@ export default class Header extends React.Component
                             onChange={ e => store.dispatch(setQueryString(e.target.value)) }
                             value={ this.props.query.queryString }
                         />
-                        <button className="input-group-text btn bg-warning btn-warning" type="submit">Go</button>
+                        <span className="input-group-btn">
+                            <button className="btn btn-warning" type="submit">Go</button>
+                        </span>
                     </div>
                 </form>
             </div>
@@ -85,11 +87,12 @@ export default class Header extends React.Component
                 <div className="row">
                     <div className={ "**custom**" === this.props.query.ageGroup ? "col-sm-6" : "col-sm-12" }>
                         <div className="form-group">
+                            {/*<label>Name:</label>*/}
                             <div className="input-group">
-                                <span className="input-group-text"><small>Name:</small></span>
+                                <span className="input-group-addon"><small>Name:</small></span>
                                 <input
                                     type="text"
-                                    className="form-control form-control-sm"
+                                    className="form-control input-sm"
                                     placeholder="Search by name..."
                                     value={ this.props.query.params.name || "" }
                                     onChange={e => {
@@ -104,9 +107,10 @@ export default class Header extends React.Component
                         </div>
                     </div>
                     <div className="col-sm-6">
-                        <div className="form-group age-widget">
+                        <div className="form-group">
+                            {/*<label>Gender:</label>*/}
                             <select
-                                className="form-select"
+                                className="form-control input-sm"
                                 onChange={ e => {
                                     store.dispatch(setGender(e.target.value))
                                     this.fetch()
@@ -121,6 +125,7 @@ export default class Header extends React.Component
                     </div>
                     <div className={ "**custom**" === this.props.query.ageGroup ? "col-sm-12" : "col-sm-6" }>
                         <div className="form-group">
+                            {/*<label>Age:</label>*/}
                             <AgeSelector
                                 min={ this.props.query.minAge || { value: 0  , units: "years" } }
                                 max={ this.props.query.maxAge || { value: 100, units: "years" } }
@@ -247,9 +252,9 @@ export default class Header extends React.Component
 
         return (
             <div className="app-header">
-                <div className="position-relative" >
-                    <label className="position-absolute end-0 d-block advanced-label text-warning">
-                        Advanced <span className="d-none d-sm-inline ">Mode </span> <input
+                <div style={{ flexDirection: "row" }}>
+                    <label className="pull-right advanced-label text-warning">
+                        Advanced <span className="hidden-xs">Mode </span> <input
                             type="checkbox"
                             checked={ _advanced }
                             onChange={ e => {
@@ -259,30 +264,24 @@ export default class Header extends React.Component
                     </label>
                 {
                     _advanced ?
-                    <ul className="nav nav-tabs" style={{height: '32px'}}/> :
+                    <ul className="nav nav-tabs"/> :
                     <ul className="nav nav-tabs">
-                        <li className="nav-item">
-                            <a 
-                                href="" 
-                                className={ !_advanced && _tab == "demographics" ? "active nav-link" : "nav-link" }
-                                onClick={ e => {e.preventDefault(); setHashParam("_tab", "demographics")}}>
+                        <li className={ !_advanced && _tab == "demographics" ? "active" : null }>
+                            <a href="" onClick={ e => {e.preventDefault(); setHashParam("_tab", "demographics")}}>
                                 <b>Demographics</b>
                                 {
                                     demographicsCount ?
-                                    <span className="d-none d-sm-inline"> <small className="badge rounded-pill">{ demographicsCount }</small></span> :
+                                    <span className="hidden-xs"> <small className="badge">{ demographicsCount }</small></span> :
                                     null
                                 }
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a 
-                                href="" 
-                                className={ !_advanced && _tab == "conditions" ? "active nav-link" : "nav-link" }
-                                onClick={ e => {e.preventDefault(); setHashParam("_tab", "conditions")}}>
+                        <li className={ !_advanced && _tab == "conditions" ? "active" : null }>
+                            <a href="" onClick={ e => {e.preventDefault(); setHashParam("_tab", "conditions")}}>
                                 <b>Conditions</b>
                                 {
                                     conditionsCount ?
-                                    <span className="d-none d-sm-inline"> <small className="badge rounded-pill">{ conditionsCount }</small></span> :
+                                    <span className="hidden-xs"> <small className="badge">{ conditionsCount }</small></span> :
                                     null
                                 }
                             </a>
@@ -291,15 +290,12 @@ export default class Header extends React.Component
                             (this.props.settings.hideTagSelector ||
                             this.props.query.params._id) ?
                             null :
-                            <li className="nav-item">
-                                <a 
-                                    href="" 
-                                    className={ !_advanced && _tab == "tags" ? "active nav-link" : "nav-link" }
-                                    onClick={ e => {e.preventDefault(); setHashParam("_tab", "tags")}}>
+                            <li className={ !_advanced && _tab == "tags" ? "active" : null }>
+                                <a href="" onClick={ e => {e.preventDefault(); setHashParam("_tab", "tags")}}>
                                     <b>Tags</b>
                                     {
                                         tagsCount ?
-                                        <span className="d-none d-sm-inline"> <small className="badge rounded-pill">{ tagsCount }</small></span> :
+                                        <span className="hidden-xs"> <small className="badge">{ tagsCount }</small></span> :
                                         null
                                     }
                                 </a>
@@ -328,13 +324,13 @@ export default class Header extends React.Component
                     }
                     {
                         !_advanced && this.props.settings.submitStrategy == "manual" ?
-                        <div className="text-end" style={{ height: 0 }}>
+                        <div className="text-right" style={{ height: 0 }}>
                             <button
                                 type="button"
                                 onClick={ () => store.dispatch(fetch()) }
                                 className="btn btn-primary btn-submit"
                             >
-                                <i className="fa-solid fa-search"/> Search
+                                <i className="fa fa-search"/> Search
                             </button>
                         </div> :
                         null

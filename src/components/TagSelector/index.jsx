@@ -1,4 +1,4 @@
-import React, { createRef }     from "react"
+import React     from "react"
 import PropTypes from "prop-types"
 import $ from "jquery"
 import { renderSearchHighlight } from "../../lib"
@@ -23,7 +23,6 @@ export default class TagSelector extends React.Component
 
     constructor(...args) {
         super(...args)
-        this.menuRef = createRef()
 
         this.state = {
             // the selected items as a map of unique keys and tag objects
@@ -78,7 +77,7 @@ export default class TagSelector extends React.Component
         return hasChanged;
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         let nextState = {}
         if (this.stateFromProps(nextState, nextProps)) {
             this.setState(nextState);
@@ -90,22 +89,22 @@ export default class TagSelector extends React.Component
      * it's options is selected so that the selected option is always in view.
      */
     componentDidUpdate() {
-        let menu = this.menuRef.current;
+        let menu = this.refs.menu;
         if (menu) {
             let menuHeight    = menu.clientHeight;
             let menuScrollTop = menu.scrollTop;
             let paddingTop    = parseInt($(menu).css("paddingTop"), 10);
             let paddingBottom = parseInt($(menu).css("paddingBottom"), 10);
-            let selected      = $(".selected", this.menuRef.current);
+            let selected      = $(".selected", this.refs.menu);
 
             if (selected.length) {
                 let selectedTop    = selected[0].offsetTop;
                 let selectedHeight = selected[0].offsetHeight;
                 if (selectedTop < menuScrollTop) {
-                    requestAnimationFrame(() => this.menuRef.current.scrollTop = selectedTop - paddingTop)
+                    requestAnimationFrame(() => this.refs.menu.scrollTop = selectedTop - paddingTop)
                 }
                 else if (selectedTop + selectedHeight - menuScrollTop > menuHeight) {
-                    requestAnimationFrame(() => this.menuRef.current.scrollTop = selectedTop + selectedHeight +
+                    requestAnimationFrame(() => this.refs.menu.scrollTop = selectedTop + selectedHeight +
                         paddingBottom - menuHeight);
                 }
             }
@@ -348,7 +347,7 @@ export default class TagSelector extends React.Component
             <div className={"tag" + (tag.custom ? " custom" : "") } key={ tag.key }>
                 { tag.label }
                 <i
-                    className="tag-remove fa-solid fa-circle-xmark"
+                    className="tag-remove fa fa-times-circle"
                     title="Remove"
                     onMouseDown={
                         e => {
@@ -368,10 +367,10 @@ export default class TagSelector extends React.Component
         placeholder += ' ...'
 
         return (
-            <div className="tag-selector">
+            <div className={ "tag-selector" + (this.state.open ? " open" : "") }>
                 { tags.length ? <div className="tags">{tags}</div> : null }
                 <input
-                    className="input form-control form-control-sm"
+                    className="input form-control input-sm"
                     placeholder={placeholder}
                     onFocus={ this.onFocus }
                     onClick={ this.onFocus }
@@ -381,11 +380,11 @@ export default class TagSelector extends React.Component
                     onChange={ ()=>1 }
                     value={ this.state.search }
                 />
-                <i className="fa-solid fa-caret-down"/>
+                <i className="fa fa-caret-down"/>
                 {
                     emptyMenu && !this.state.search ?
                     null :
-                    <div className={"menu dropdown-menu "  + (this.state.open ? " show" : "")} ref={this.menuRef}>
+                    <div className="menu dropdown-menu" ref="menu">
                         { menuItems }
                     </div>
                 }

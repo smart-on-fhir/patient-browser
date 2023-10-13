@@ -129,7 +129,7 @@ export class DialogFooter extends React.Component
 
 
         return (
-            <div className="col-6 text-end">
+            <div className="col-xs-6 text-right">
                 <button className="btn btn-default" onClick={ () => {
                     OWNER.postMessage({ type: "close" }, "*")
                 }}>
@@ -161,7 +161,7 @@ export class DialogFooter extends React.Component
         selection = Object.keys(selection).filter(k => !!selection[k])
         return (
             <div className="row dialog-buttons">
-                <div className="col-6 text-start">
+                <div className="col-xs-6 text-left">
                     <SelectionUI
                         selection={ this.props.selection }
                         settings={ this.props.settings }

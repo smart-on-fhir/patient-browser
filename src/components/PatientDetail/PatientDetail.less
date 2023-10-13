@@ -21,22 +21,20 @@
                 background: rgba(0, 0, 0, 0.05);
             }
         }
-        .fa-regular, .fa-solid {
+        .fa {
             margin: 0 5px;
         }
         
+    }
+
+    .embed-responsive {
+        padding-bottom: 100%;
     }
 
     .page-header {
         margin : 0;
         padding-bottom: 1.5ex;
         border-bottom : 1px solid rgba(0, 0, 0, 0.1);
-    }
-    .custom-btn-border { 
-        border: #2e6da4 1px solid;
-        &:hover { 
-            border-color: #122b40;
-        }
     }
 
     .patient {
@@ -54,8 +52,14 @@
     .patient-row {
         background   : rgba(0, 0, 0, 0.05);
         border-radius: 3px;
-        margin       : 0 5px 5px 5px;
+        margin-bottom: 5px;
         padding      : 5px;
+
+        &:after {
+            content: "";
+            display: table;
+            clear  : both;
+        }
 
         ~ .row > div {
             padding: 3px 5px;
@@ -66,7 +70,7 @@
             line-height: 1.45em;
         }
 
-        .label, .badge {
+        .label {
             margin   : 8px 0 0 12px;
             font-size: 13px;
         }
@@ -75,17 +79,14 @@
             min-width: 7em;
             margin: 2px;
         }
-        button.reload-button { 
-            border: 1px #ccc solid;
-            &:hover { 
-                background-color: var(--bs-light-gray);
-                border-color: #adadad;
-            }
-        }
     }
 
     .patient-image-wrap {
         margin-right: 1ex;
+    }
+
+    .patient-name {
+        font-size: 24px;
     }
 
     td, th {
@@ -131,7 +132,7 @@
     }
 
     thead th {
-        .fa-regular, .fa-solid {
+        .glyphicon, .fa {
             text-shadow: 0 1px 2px #FFF, 0 0 0px rgb(33, 75, 111);
             color: rgba(51, 122, 183, 0.3);
         }
@@ -161,10 +162,43 @@
     .list-group-item {
         padding-top: 7px;
         padding-bottom: 7px;
+        // display: none;
 
-        &.active .rounded-pill {
-            background-color: var(--bs-white) !important;
-            color           : var(--bs-primary) !important;
+        // &.active {
+        //     display: block;
+        // }
+    }
+
+    .group-header {
+        cursor: pointer;
+        background: linear-gradient(90deg, mix(#337ab7, #FFF, 10%), mix(#337ab7, #FFF, 5%));
+        text-indent: 0;
+
+        .glyphicon-triangle-bottom {
+            position: relative;
+            top: 2px;
+        }
+
+        & ~ tr > td:first-child {
+            text-indent: 17px;
+        }
+    }
+
+    .group-clear + tr > td:first-child {
+        text-indent: 0;
+        &:before {
+            content: "\e250";
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin-right: 3px;
+            opacity: 0.3;
         }
     }
 

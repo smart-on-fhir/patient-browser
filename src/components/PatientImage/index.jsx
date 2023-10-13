@@ -6,6 +6,7 @@ import {
 } from "../../lib"
 import { update } from 'jdenticon'
 
+
 import "./PatientImage.less"
 
 function hash(input) {

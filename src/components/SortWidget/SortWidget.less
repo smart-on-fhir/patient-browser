@@ -1,11 +1,10 @@
 .sort-widget {
-    padding      : 5px;
+    padding      : 0 5px;
     float        : left;
     width        : 100%;
-    display      : flex;
-    align-items  : center;
 
     > span {
+        padding    : 6px 1ex 0 0;
         font-weight: bold;
     }
 
@@ -20,23 +19,10 @@
             }
         }
 
-        &.active a, &:hover a, a:focus {
+        &.active a, &:hover a, &:active a, a:focus {
             box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2) inset;
-            border-radius: 4px;
         }
 
-        // Style differently on hover
-        &:hover a { 
-            background-color: var(--bs-gray-200);
-        }
-
-        // Change bg and text color on active
-        &.active a { 
-            background-color: var(--bs-primary);
-            color: var(--bs-white);
-        } 
-        
-        // Style text slightly different when selected
         &.active a {
             text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
         }

@@ -149,14 +149,27 @@
         }
     }
 
-    &.show {
+    &.open {
+
         outline: none;
+        
+        .input {
+            // border-radius: 5px 5px 0 0;
+            // box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.3);
+            // border-color: #666;
+        }
+        .menu {
+            // display: block;
+            // border-color: #666;
+            // border-top: 0px none;
+            // box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.3);
+        }
     }
 
-    .fa-solid.fa-caret-down {
+    .fa.fa-caret-down {
         position: absolute;
-        right: 9px;
-        bottom: 9px;
+        right: 10px;
+        bottom: 10px;
         pointer-events: none;
     }
 }
