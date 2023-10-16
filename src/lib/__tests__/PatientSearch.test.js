@@ -3,13 +3,13 @@ import PatientSearch from "../PatientSearch"
 import moment from "moment"
 
 import { CODE_SYSTEMS } from "../constants"
-// import * as STU3 from "../../../dist/config/stu3-open-sandbox.json5"
-// import * as STU2 from "../../../dist/config/dstu2-open-sandbox.json5"
+// import * as STU3 from "../../../public/config/stu3-open-sandbox.json5"
+// import * as STU2 from "../../../public/config/dstu2-open-sandbox.json5"
 
 // @ts-ignore
-import * as STU3 from "../../../dist/config/r3.json5"
+import * as STU3 from "../../../public/config/r3.json5"
 // @ts-ignore
-import * as STU2 from "../../../dist/config/r2.json5"
+import * as STU2 from "../../../public/config/r2.json5"
 
 const SERVERS = {
     "STU2" : STU2.server,
