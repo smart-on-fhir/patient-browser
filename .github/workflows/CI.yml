@@ -26,6 +26,9 @@ jobs:
       - run: npm run test
         env:
           CI: true
+      # Build code and run as a prod server in the bg
+      - run: npm run build 
+        run: npx run start-prod &
       # Run nightwatch tests
       - run: npm run test:e2e
         env:
