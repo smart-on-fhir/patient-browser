@@ -77,7 +77,7 @@ export default class TagSelector extends React.Component
         return hasChanged;
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let nextState = {}
         if (this.stateFromProps(nextState, nextProps)) {
             this.setState(nextState);

@@ -25,7 +25,7 @@ export class Grid extends React.Component
         }
     }
 
-    componentWillReceiveProps(newProps) {
+    UNSAFE_componentWillReceiveProps(newProps) {
         if (Array.isArray(newProps.rows)) {
             this.setState({
                 __rows: this.sortRows(newProps.rows, newProps.comparator)
