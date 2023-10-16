@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.15.0]
+        browser: ["chrome"]
 
     steps:
       - uses: actions/checkout@v2
