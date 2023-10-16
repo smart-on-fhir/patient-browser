@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, dtp/vite-build-changes]
+    branches: [main]
   pull_request:
-    branches: [main, dtp/vite-build-changes]
+    branches: [main]
 
 jobs:
   build:
