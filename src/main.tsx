@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
 import { Route, Routes } from "react-router";
 import { HashRouter } from "react-router-dom";
 import STORE from "./redux";
+import { Provider } from "react-redux";
 import App from "./components/App";
 import PatientList from "./components/PatientList";
 import PatientDetail from "./components/PatientDetail";
