@@ -197,8 +197,9 @@ input[type="checkbox"], input[type="radio"] {
 select {
     &, &.form-control {
         padding            : 0 10px;
-        line-height        : 30px;
-        font               : inherit;
+        line-height        : 2;
+        font-family        : inherit;
+        font-size          : 14px;
         background-color   : transparent;
         background-image   : url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAxMDAwIDUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTSA5Ni4wMCw5Ni4wMGwtOTYuMDAsOTYuMDBsIDI1Ni4wMCwyNTYuMDBsIDI1Ni4wMC0yNTYuMDBsLTk2LjAwLTk2LjAwTCAyNTYuMDAsMjU2LjAwTCA5Ni4wMCw5Ni4wMHoiID48L3BhdGg+PC9zdmc+');
         background-position: 100% 50%;
@@ -209,6 +210,11 @@ select {
         -webkit-appearance : none;
         -moz-appearance    : none;
         -ms-appearance     : none;
+        appearance         : none;
+
+        &.input-sm {
+            font-size: 12px;
+        }
 
         &::-ms-expand {
             display: none;
