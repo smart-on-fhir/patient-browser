@@ -41,7 +41,8 @@
     "react-router-dom": "^6.16.0",
     "redux-actions": "^3.0.0",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "serve": "^14.2.1"
   },
   "devDependencies": {
     "@miyaneee/rollup-plugin-json5": "^1.1.2",
@@ -60,7 +61,6 @@
     "mocha": "^10.2.0",
     "nightwatch": "^3.2.1",
     "sass": "^1.68.0",
-    "serve": "^14.2.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vitest": "^0.34.6"
