@@ -14,7 +14,7 @@
   "dependencies": {
     "colors": "^1.2.1",
     "commander": "^2.15.1",
-    "json5": "^0.5.1",
+    "json5": "^1.0.2",
     "mixin-deep": "^1.2.0",
     "request": "^2.85.0"
   }
