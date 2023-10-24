@@ -15,13 +15,16 @@
         flex-shrink: 1;
         margin     : 0;
         height     : 100%;
-        font-size  : 13px;
+    }
+
+    * {
+        font-size  : 12px;
+        line-height: 18px;
     }
 
     select {
         border       : 1px solid transparent;
         border-radius: 4px;
-        height       : 100%;
     }
 
     &.custom > select {
@@ -60,8 +63,9 @@
     flex-basis : 30%;
     min-width  : 0;
     overflow   : hidden;
-    align-items: center;;
+    align-items: stretch;
     box-shadow : 2px 1px 2px -2px #BBB inset;
+    min-height: 24px;
 
     &:last-of-type {
         border-radius: 0 3px 3px 0;
@@ -69,19 +73,12 @@
 
     span {
         display       : flex;
-        white-space   : nowrap;
-        flex-basis    : 7ex;
-        flex-shrink   : 0;
-        flex-grow     : 0;
         margin        : 0 1ex 0 0;
-        flex-direction: column;
-        align-content : flex-end;
         background    : rgba(0, 0, 0, 0.06);
         box-shadow    : 1px 0 0 0 rgba(0, 0, 0, 0.1), 1px 0 2px 0px rgba(0, 0, 0, 0.1);
-        line-height   : 2.1em;
-        padding       : 0 1ex;
-        text-align    : right;
-        height        : 100%;
+        padding       : 0 1ex 0 2ex;
+        align-items: center;
+        justify-content: center;
         font-weight   : 500;
     }
 
@@ -102,6 +99,7 @@
         flex-grow  : 1;
         flex-basis : 6em;
         min-width  : 6em;
+        line-height: 22px !important;
     }
 
     &:hover {
@@ -133,8 +131,10 @@
             flex-grow  : 1;
             flex-shrink: 1;
             width      : 100%;
-            line-height: 2.1em;
-            height     : 2.1em;
+        }
+
+        select, input {
+            height     : 28px;
         }
 
         .age-widget {
