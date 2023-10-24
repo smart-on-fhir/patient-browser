@@ -23,11 +23,12 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "start-prod": "npx serve -s dist"
+    "start-prod": "npx http-server ./dist"
   },
   "homepage": "https://patient-browser.smarthealthit.org/",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "http-server": "^14.1.1",
     "jdenticon": "^3.2.0",
     "jquery": "^3.7.1",
     "json5": "^2.2.3",
@@ -41,8 +42,7 @@
     "react-router-dom": "^6.16.0",
     "redux-actions": "^3.0.0",
     "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.2",
-    "serve": "^14.2.1"
+    "redux-thunk": "^2.4.2"
   },
   "devDependencies": {
     "@miyaneee/rollup-plugin-json5": "^1.1.2",
