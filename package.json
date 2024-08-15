@@ -59,7 +59,7 @@
     "jsdom": "^22.1.0",
     "less": "^4.2.0",
     "mocha": "^10.2.0",
-    "nightwatch": "^3.2.1",
+    "nightwatch": "^3.7.0",
     "sass": "^1.68.0",
     "typescript": "^5.0.2",
     "vite": "^4.5.2",
